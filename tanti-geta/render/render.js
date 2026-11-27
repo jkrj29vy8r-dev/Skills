@@ -2,8 +2,9 @@
 /*
  * Randează un episod complet din cod: voce sintetizată, animații, efecte, muzică.
  *
- *   node render.js "#6 Războiul porcului ⭐" porc.mp4 [--voice=alina|piper|mbrola] [--no-music] [--green]
+ *   node render.js "#6 Războiul porcului ⭐" porc.mp4 [--voice=alina|piper|mbrola] [--music] [--green]
  *   node render.js episodul-meu.txt clip.mp4
+ *   node render.js ../episodes/razboiul-porcului.js porc.mp4      (episod-scenă)
  *
  * Vocea:
  *   alina  (implicit) Microsoft ro-RO-AlinaNeural prin edge-tts: naturală, feminină; textul merge la Microsoft.
@@ -21,7 +22,7 @@ const fs = require('fs'), path = require('path'), os = require('os');
 
 const STUDIO = path.join(__dirname, '..', 'index.html');
 const FPS = 30, SR = 48000;
-const LEAD = .35, GAP = .22, TAIL = 1.8;
+const LEAD = .3, GAP = .1, TAIL = 1.8;   // pauze scurte între replici, ca la Gus
 
 // Vocea lui Tanti Geta: [viteză, ton, volum] pe expresie (espeak-ng + MBROLA ro1)
 const VOICE = {
@@ -95,7 +96,9 @@ function speak(text, expr, tmp, i) {
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(1000);
 
-  const script = fs.existsSync(name) ? fs.readFileSync(name, 'utf8') : await page.evaluate(n => PRESETS[n] || null, name);
+  let script;
+  if (name.endsWith('.js') && fs.existsSync(name)) { await page.addScriptTag({ path: path.resolve(name) }); script = await page.evaluate(() => PRESETS[LAST_EP]); }
+  else script = fs.existsSync(name) ? fs.readFileSync(name, 'utf8') : await page.evaluate(n => PRESETS[n] || null, name);
   if (!script) {
     console.error(`Nu găsesc episodul „${name}”. Episoade: ${(await page.evaluate(() => Object.keys(PRESETS))).join(' / ')}`);
     process.exit(1);
@@ -147,7 +150,7 @@ function speak(text, expr, tmp, i) {
   for (let f = 0; f < nF; f++) env[f] = Math.max(0, Math.min(1, (env[f] / ref - .12) * 1.25));
 
   // 4. Cadrele
-  await page.evaluate(cfg => offlineStart(cfg), { script, starts, ends, total, env, fps: FPS, music: !flags.has('--no-music'), green: flags.has('--green') });
+  await page.evaluate(cfg => offlineStart(cfg), { script, starts, ends, total, env, fps: FPS, music: flags.has('--music'), green: flags.has('--green') });
   const vid = path.join(tmp, 'video.mp4');
   const ff = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
     '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-r', String(FPS), vid], { stdio: ['pipe', 'inherit', 'inherit'] });

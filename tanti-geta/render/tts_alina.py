@@ -21,16 +21,16 @@ VOICE = os.environ.get("GETA_VOICE", "ro-RO-AlinaNeural")
 
 # Ritm, ton și volum pe expresie (Alina are o voce tânără: tonul puțin mai jos o face mai „tanti”).
 PROSODY = {
-    "normal":     ("+6%", "-6Hz", "+0%"),
-    "explica":    ("+6%", "-5Hz", "+0%"),
-    "mirata":     ("+10%", "+6Hz", "+0%"),
-    "banuitoare": ("-2%", "-12Hz", "+0%"),
-    "vesela":     ("+10%", "+2Hz", "+0%"),
-    "suparata":   ("+12%", "-8Hz", "+5%"),
-    "socata":     ("+14%", "+10Hz", "+5%"),
-    "rade":       ("+10%", "+4Hz", "+0%"),
-    "sopteste":   ("-6%", "-14Hz", "-35%"),
-    "umeri":      ("+2%", "-4Hz", "+0%"),
+    "normal":     ("+18%", "-6Hz", "+0%"),
+    "explica":    ("+18%", "-5Hz", "+0%"),
+    "mirata":     ("+22%", "+6Hz", "+0%"),
+    "banuitoare": ("+10%", "-12Hz", "+0%"),
+    "vesela":     ("+22%", "+2Hz", "+0%"),
+    "suparata":   ("+24%", "-8Hz", "+5%"),
+    "socata":     ("+26%", "+10Hz", "+5%"),
+    "rade":       ("+22%", "+4Hz", "+0%"),
+    "sopteste":   ("+6%", "-14Hz", "-35%"),
+    "umeri":      ("+14%", "-4Hz", "+0%"),
 }
 
 # În medii cu proxy (HTTPS_PROXY) și certificat propriu (SSL_CERT_FILE), edge-tts trebuie să le folosească explicit.

@@ -230,6 +230,7 @@ const PROP_INFO = {
   porc: ['@porc  sau  @porc ÎNGER', 'porc care râmă în grădina cu cartofi (sau înger, cu aripi și aureolă)'],
   corabii: ['@corabii 5 | FLOTA BRITANICĂ', 'corăbii de război care intră pe rând'],
   gol: ['@gol', 'nimic în centru'],
+  scena: ['@scena 3', 'pas dintr-un episod-scenă (episoadele din episodes/*.js)'],
 };
 const PROP_ALIAS = { ceasul: 'ceas', clock: 'ceas', stopwatch: 'cronometru', cronometrul: 'cronometru', chart: 'grafic',
   id: 'buletin', pasaport: 'buletin', scroll: 'pergament', invoice: 'factura', bon: 'factura', raport: 'carnet', clipboard: 'carnet',
@@ -310,6 +311,7 @@ function parseScript(src) {
   for (const raw of src.split(/\r?\n/)) {
     const line = raw.trim(); if (!line || line.startsWith('//')) continue;
     if (line.startsWith('#')) { ep.title = line.replace(/^#+\s*/, ''); continue; }
+    if ((m = line.match(/^!episod\s+(.*)$/i))) { ep.scene = m[1].trim(); continue; }
     if ((m = line.match(/^!serie\s+(.*)$/i))) { const p = m[1].split('|').map(s => s.trim()); ep.serie = [p[0] || '', p[1] || '']; continue; }
     if ((m = line.match(/^@(\S+)\s*(.*)$/))) {
       let type = normKey(m[1]); type = PROP_ALIAS[type] || type;
@@ -813,6 +815,7 @@ const PROPS = {
     if (label && a > .2) drawTag(label, PX - 250, PY - 260, 50, 'rosu', -.05, 'center', 560);
   },
   gol() {},
+  scena() {},
 };
 const STAMP_POS = [[795, 300, .12], [285, 300, -.1], [790, 870, .08], [300, 880, -.06]];
 function drawBurst(t) {
@@ -1112,7 +1115,7 @@ function setProp(p, t) {
   const old = S.prop; S.prevProp = old || null; S.prevRev = old ? S.curIdx - old.start + 1 : 0;
   S.prop = p; S.propT0 = t; S.msgDing = false; S.typed = 0; S.lastTyped = 0;
   if (p && p.type === 'ceas') S.clockFrom = old && old.type === 'ceas' ? old.min : p.min - 75;
-  if (PB && p && actx) {
+  if (PB && p && actx && p.type !== 'scena') {
     if (p.type === 'text') { fire('boom'); S.burst = 1; }
     else if (opts.sfxAuto) (p.type === 'ceas' || p.type === 'cronometru' ? SFX.tic : SFX.whoosh)(aNow());
   }
@@ -1617,6 +1620,12 @@ document.addEventListener('keydown', e => {
 });
 document.addEventListener('visibilitychange', () => { if (document.hidden && rec && rec.state === 'recording') status('Ține tabul deschis cât înregistrezi, altfel animația se oprește.'); });
 requestAnimationFrame(frame);
+</script>
+<script src="scene.js"></script>
+<script src="episodes/razboiul-porcului.js"></script>
+<script>
+  // episoadele-scenă se înregistrează după încărcare; reîncarcă presetul ales
+  (function () { const v = lsGet(); const first = sel.options[0].value; if (!v) { sel.value = first; $('script').value = PRESETS[first]; } refreshPreview(); })();
 </script>
 </body>
 </html>

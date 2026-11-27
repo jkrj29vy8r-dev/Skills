@@ -46,6 +46,32 @@ node render.js episodul-meu.txt clip.mp4        # sau propriul tău script
 
 Opțiuni: `--voice=alina|piper|mbrola`, `--no-music` scoate muzica, `--green` pune fundal verde. Modelul Piper (~60 MB) nu e în repo și trebuie descărcat doar pentru `--voice=piper`. Dacă rulezi în spatele unui proxy, `tts_alina.py` folosește `HTTPS_PROXY` și certificatul din `SSL_CERT_FILE`.
 
+## Episoade-scenă (calitate ca la Gus)
+
+Pentru clipurile cele mai bune, un episod poate fi scris ca **scenă în cod** (`episodes/*.js`). Fiecare replică își construiește scena din elemente desenate special pentru subiect, nu din emoji:
+
+- **personaje:** fermier, muncitor, amiral cu bicorn, Kaiser cu coif cu țepușă, guvernator
+- **obiecte:** porc care merge, mănâncă, moare sau devine înger, grădină de cartofi care se golește, hartă cu granițe disputate, steaguri care fâlfâie (SUA, Marea Britanie, Germania, România), corăbii, soldați care mărșăluiesc, tunuri, corturi, calendar care derulează anii, ciocănel de judecător, bule de dialog, bancnote
+- **marcaje:** ștampile, cercuri roșii desenate de mână, X-uri, semne de întrebare
+- **un widget care rămâne pe ecran** și se bifează pe parcurs, de exemplu lista „ESCALADARE”
+
+Fiecare element intră cu `pop`, `drop`, `slideL`/`slideR` sau `stamp`. Poate deveni fantomă (`dim`), se poate muta (`move`) sau ieși din scenă (`out`), iar sunetele de intrare se pun singure.
+
+```js
+B('suparata', 'Și mănâncă | *cartofii*.', s => {
+  s.set('pig', { walk: false }); s.set('gar', { left: 2 });
+  s.add('cr', 'tag', { x: 600, y: 600, text: 'CRONC!', style: 'galben', in: 'stamp' });
+}),
+```
+
+Exemplul complet e în `episodes/razboiul-porcului.js`. Se randează cu:
+
+```bash
+cd render && node render.js ../episodes/razboiul-porcului.js porc.mp4
+```
+
+Ca la Gus, mixul pune vocea în față: fără muzică (o adaugi cu `--music`) și doar efecte scurte.
+
 ## Cum se scrie scriptul
 
 ```
