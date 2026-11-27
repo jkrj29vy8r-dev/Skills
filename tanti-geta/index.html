@@ -972,8 +972,11 @@ function fire(name) {
   if (name === 'scratch') S.shake = Math.max(S.shake, .35);
   if (name === 'confetti' || name === 'tada') spawnConfetti();
   if (name === 'ploaie') spawnEmoji(propEmojis());
-  if (actx && SFX[name]) SFX[name](actx.currentTime + .01);
+  if (actx && SFX[name]) SFX[name](aNow());
 }
+
+let OFF = null;   // randare offline (cadru cu cadru), vezi render/render.js
+const aNow = () => OFF ? OFF.t + .01 : actx.currentTime + .01;
 
 /* ---------- muzică de fundal ---------- */
 let musicTimer = null, musicGain = null, nextNoteT = 0, step = 0;
@@ -1043,7 +1046,7 @@ function setProp(p, t) {
   if (p && p.type === 'ceas') S.clockFrom = old && old.type === 'ceas' ? old.min : p.min - 75;
   if (PB && p && actx) {
     if (p.type === 'text') fire('boom');
-    else if (opts.sfxAuto) (p.type === 'ceas' || p.type === 'cronometru' ? SFX.tic : SFX.whoosh)(actx.currentTime + .01);
+    else if (opts.sfxAuto) (p.type === 'ceas' || p.type === 'cronometru' ? SFX.tic : SFX.whoosh)(aNow());
   }
 }
 function advance() {
@@ -1060,15 +1063,16 @@ function update(t, dt) {
       if (item && talking) { PB.voiced += dt; if (PB.voiced >= Math.max(.35, item.text.length / 14)) advance(); }
       if (PB.endAt && t >= PB.endAt) finish();
     } else {
-      const time = PB.mode === 'audio' ? actx.currentTime - PB.t0 : t - PB.t0;
+      const time = PB.mode === 'audio' ? actx.currentTime - PB.t0 : PB.mode === 'offline' ? OFF.t : t - PB.t0;
       while (PB.idx < PB.items.length && time >= PB.ends[PB.idx]) PB.idx++;
       if (PB.idx < PB.items.length && time >= PB.starts[PB.idx]) item = PB.items[PB.idx];
       if (PB.mode === 'audio') { mouthT = level(anaPlay); talking = mouthT > .05; }
+      else if (PB.mode === 'offline') { mouthT = OFF.env[OFF.frame] || 0; talking = mouthT > .05; }
       else if (item) {
         const lt = time - PB.starts[PB.idx], sp = PB.ends[PB.idx] - PB.starts[PB.idx] - PAUSE;
         if (lt < sp) { mouthT = charOpen(item.text[Math.floor(lt / sp * item.text.length)]) * (.78 + .22 * Math.sin(t * 29)); talking = true; }
       }
-      if (time > PB.total + 1.4) finish();
+      if (time > PB.total + 1.4 && PB.mode !== 'offline') finish();
     }
   }
   const idx = PB ? Math.min(PB.idx, PB.items.length - 1) : 0;
@@ -1077,10 +1081,10 @@ function update(t, dt) {
   setProp(items[idx] ? items[idx].prop : null, t);
   if (cap !== S.cap) { S.cap = cap; S.capT0 = t; if (PB && cap) for (const f of cap.fx) fire(f); }
   const st = cap ? cap.sticker : null;
-  if (st !== S.sticker) { S.sticker = st; S.stickerT0 = t; if (PB && st && opts.sfxAuto && actx) SFX.pop(actx.currentTime + .01); }
-  if (S.prop) for (const s of S.prop.stamps) if (!S.stampT.has(s) && S.curIdx >= s.at && (PB ? item || PB.idx >= PB.items.length : s.at <= 0)) { S.stampT.set(s, t); if (PB && actx) SFX.stamp(actx.currentTime + .01); }
-  if (S.prop && !S.msgDing && S.prop.type === 'mesaj' && t - S.propT0 > .8) { S.msgDing = true; if (PB && actx) SFX.ding(actx.currentTime + .01); }
-  if (S.prop && S.prop.type === 'carnet' && PB && actx && opts.sfxAuto && S.typed > S.lastTyped) { S.lastTyped = S.typed; if (S.typed % 2) SFX.click(actx.currentTime + .005); }
+  if (st !== S.sticker) { S.sticker = st; S.stickerT0 = t; if (PB && st && opts.sfxAuto && actx) SFX.pop(aNow()); }
+  if (S.prop) for (const s of S.prop.stamps) if (!S.stampT.has(s) && S.curIdx >= s.at && (PB ? item || PB.idx >= PB.items.length : s.at <= 0)) { S.stampT.set(s, t); if (PB && actx) SFX.stamp(aNow()); }
+  if (S.prop && !S.msgDing && S.prop.type === 'mesaj' && t - S.propT0 > .8) { S.msgDing = true; if (PB && actx) SFX.ding(aNow()); }
+  if (S.prop && S.prop.type === 'carnet' && PB && actx && opts.sfxAuto && S.typed > S.lastTyped) { S.lastTyped = S.typed; if (S.typed % 2) SFX.click(aNow()); }
   setExpr(cap ? cap.expr : (PB && PB.idx >= PB.items.length ? 'vesela' : 'normal'));
   if (PB) {
     const p = `Bucata ${Math.min(PB.idx + 1, PB.items.length)} din ${PB.items.length}` + (PB.record ? ' · se înregistrează' : '');
@@ -1110,7 +1114,8 @@ function update(t, dt) {
 }
 function frame(now) {
   const t = now / 1000, dt = lastT ? Math.min(.05, t - lastT) : .016; lastT = t;
-  update(t, dt); render(t); requestAnimationFrame(frame);
+  if (!OFF) { update(t, dt); render(t); }
+  requestAnimationFrame(frame);
 }
 function esc(s) { return s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])); }
 function updatePrompter() {
@@ -1403,6 +1408,36 @@ const PRESETS = {
 @urmeaza 🐸 BROASCA | 🐸 RÂIOASA
 +eticheta galben FOLLOW
 [bănuitoare] Data viitoare: | *minciuna* cu broasca râioasă.`,
+};
+
+/* ================= RANDARE OFFLINE ================= */
+window.offlineStart = cfg => {
+  const sr = 48000, oc = new OfflineAudioContext(2, Math.ceil((cfg.total + 2) * sr), sr);
+  actx = oc; fxBus = oc.createGain(); fxBus.gain.value = .8; fxBus.connect(oc.destination);
+  noiseBuf = oc.createBuffer(1, sr * 2, sr); const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  OFF = { t: 0, frame: 0, env: cfg.env, fps: cfg.fps };
+  opts.music = !!cfg.music; opts.sfxAuto = cfg.sfxAuto !== false; opts.green = !!cfg.green;
+  const ep = parseScript(cfg.script); S.ep = ep;
+  S.prop = undefined; S.cap = undefined; S.sticker = undefined; S.stampT = new Map(); S.parts = []; S.shake = 0; S.flash = 0;
+  PB = { mode: 'offline', ep, items: ep.items, idx: 0, record: false, endAt: 0, voiced: 0, starts: cfg.starts, ends: cfg.ends, total: cfg.total, t0: 0 };
+  if (cfg.music) { musicGain = oc.createGain(); musicGain.gain.value = .22; musicGain.connect(fxBus); for (let k = 0, tt = .05; tt < cfg.total + 1; k++, tt += STEP) scheduleStep(k % 64, tt); }
+  return ep.items.length;
+};
+window.offlineFrame = (i, q = .92) => {
+  const t = i / OFF.fps; OFF.t = t; OFF.frame = i;
+  update(t, 1 / OFF.fps); render(t);
+  return cv.toDataURL('image/jpeg', q);
+};
+window.offlineAudio = async () => {
+  const buf = await actx.startRendering(), n = buf.length, ch = buf.numberOfChannels;
+  const dv = new DataView(new ArrayBuffer(44 + n * ch * 2)), str = (o, s) => { for (let i = 0; i < s.length; i++) dv.setUint8(o + i, s.charCodeAt(i)); };
+  str(0, 'RIFF'); dv.setUint32(4, 36 + n * ch * 2, true); str(8, 'WAVEfmt '); dv.setUint32(16, 16, true); dv.setUint16(20, 1, true); dv.setUint16(22, ch, true);
+  dv.setUint32(24, buf.sampleRate, true); dv.setUint32(28, buf.sampleRate * ch * 2, true); dv.setUint16(32, ch * 2, true); dv.setUint16(34, 16, true); str(36, 'data'); dv.setUint32(40, n * ch * 2, true);
+  const chans = [...Array(ch)].map((_, c) => buf.getChannelData(c));
+  for (let i = 0, o = 44; i < n; i++) for (let c = 0; c < ch; c++, o += 2) dv.setInt16(o, Math.max(-1, Math.min(1, chans[c][i])) * 32767, true);
+  const u8 = new Uint8Array(dv.buffer); let bin = '';
+  for (let i = 0; i < u8.length; i += 0x8000) bin += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
+  return btoa(bin);
 };
 
 /* ================= PROFIL ȘI BANNER ================= */

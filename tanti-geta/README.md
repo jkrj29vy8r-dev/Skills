@@ -22,6 +22,26 @@ Totul e făcut în cod (HTML, Canvas și Web Audio): personajul, obiectele anima
 
 Ține tabul deschis cât înregistrezi.
 
+## Clip complet din cod (cu voce, fără să înregistrezi nimic)
+
+`render/render.js` face tot clipul singur:
+- vocea lui Tanti Geta, sintetizată local (espeak-ng + vocea românească MBROLA ro1), cu ton și viteză diferite pe fiecare expresie
+- animațiile, randate cadru cu cadru la 30 fps
+- efectele sonore și muzica, generate cu Web Audio
+- montajul în MP4, cu volumul normalizat pentru TikTok și Shorts
+
+```bash
+# o singură dată (Ubuntu/Debian): voce + ffmpeg + Playwright
+sudo apt install espeak-ng mbrola mbrola-ro1 ffmpeg
+npm i -g playwright && npx playwright install chromium
+
+cd tanti-geta/render
+node render.js "#6 Războiul porcului ⭐" porc.mp4 --music
+node render.js episodul-meu.txt clip.mp4        # sau propriul tău script
+```
+
+`--music` adaugă muzica de fundal, iar `--green` pune fundal verde. Vocea sintetică e bună pentru probe și pentru clipuri rapide. Pentru clipurile importante, vocea ta (modul „Fișierul meu audio”) sună mult mai natural.
+
 ## Cum se scrie scriptul
 
 ```
