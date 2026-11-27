@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Taie o înregistrare lungă (mai multe replici citite una după alta) în câte un fișier pe replică.
 
-    python3 split-voice.py bucata.mp3 voice/<episod>/lines.json PRIMA ULTIMA
+    python3 split-voice.py bucata.mp3 voice/<episod>/lines.json PRIMA ULTIMA [--cuts 2.5,3.9,...]
+
+Cu --cuts se dau explicit secundele granițelor (câte una între două replici).
+La final verifică durata fiecărei replici față de lungimea textului și semnalează ce pare greșit.
 
 Alege granițele dintre replici dintre pauzele găsite în sunet: preferă pauzele lungi
 aflate aproape de locul unde ar trebui să fie granița (după lungimea textului).
@@ -76,7 +79,11 @@ def choose(cands, expected, total):
 
 
 def main():
-    src, lines_json, first, last = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4])
+    args = [a for a in sys.argv[1:] if not a.startswith('--')]
+    src, lines_json, first, last = args[0], args[1], int(args[2]), int(args[3])
+    manual = None
+    if '--cuts' in sys.argv:
+        manual = [float(v) for v in sys.argv[sys.argv.index('--cuts') + 1].split(',')]
     meta = json.load(open(lines_json, encoding='utf-8'))
     L = meta['lines'] if isinstance(meta, dict) else meta
     seg = L[first:last + 1]
@@ -88,8 +95,21 @@ def main():
     cum = np.cumsum(lens)[:-1] / sum(lens)
     # vorbirea propriu-zisă începe/se termină puțin după/înainte de capete
     expected = list(cum * total)
-    picked = choose(cands, expected, total) if len(seg) > 1 else []
-    cuts = [0.0] + [p[0] for p in picked] + [total]
+    if manual is not None:
+        if len(manual) != len(seg) - 1:
+            raise SystemExit(f'--cuts are {len(manual)} valori, trebuie {len(seg) - 1}.')
+        cuts = [0.0] + manual + [total]
+    else:
+        picked = choose(cands, expected, total) if len(seg) > 1 else []
+        cuts = [0.0] + [p[0] for p in picked] + [total]
+    # verificare: durata fiecărei replici față de numărul de litere
+    letters = [len(re.sub(r'[^\wăâîșțĂÂÎȘȚ]', '', l['say'])) for l in seg]
+    rate = sum(letters) / total
+    suspect = []
+    for k, l in enumerate(seg):
+        dur, want = cuts[k + 1] - cuts[k], letters[k] / rate
+        if want > .6 and not (.6 < dur / want < 1.6):
+            suspect.append(f"  ⚠ {l['file']}: {dur:.2f}s, aștept ~{want:.2f}s  ({l['text']})")
     out_dir = os.path.dirname(os.path.abspath(lines_json))
     for k, l in enumerate(seg):
         a, b = cuts[k], cuts[k + 1]
@@ -98,6 +118,8 @@ def main():
                         '-af', 'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse',
                         '-ac', '1', '-b:a', '160k', dst], check=True)
         print(f"{l['file']}  {a:6.2f}–{b:6.2f}s  {l['text']}")
+    if suspect:
+        print('Tăieturi suspecte (verifică-le sau dă --cuts):'); print('\n'.join(suspect))
 
 
 if __name__ == '__main__':

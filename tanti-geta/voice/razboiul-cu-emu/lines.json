@@ -1,0 +1,167 @@
+{
+ "voice": "Elena",
+ "engine": "Higgsfield text2speech_v2 / ElevenLabs",
+ "voice_id": "ca83ca7f-c186-493d-bd69-0d765fa861b2",
+ "generated": "2026-11-27",
+ "method": "o singură bucată (bucati/bucata-0.mp3), tăiată pe replici cu render/split-voice.py",
+ "chunk_jobs": [
+  "766d30b1-c7c7-4993-a4f2-358322159421"
+ ],
+ "lines": [
+  {
+   "i": 0,
+   "text": "Australia a pierdut un război.",
+   "say": "Australia a pierdut un război.",
+   "expr": "socata",
+   "file": "line-00.mp3"
+  },
+  {
+   "i": 1,
+   "text": "Cu niște păsări.",
+   "say": "Cu niște păsări.",
+   "expr": "banuitoare",
+   "file": "line-01.mp3"
+  },
+  {
+   "i": 2,
+   "text": "Sunt Tanti Geta, și asta e bârfă adevărată.",
+   "say": "Sunt Tanti Geta, și asta e bârfă adevărată.",
+   "expr": "vesela",
+   "file": "line-02.mp3"
+  },
+  {
+   "i": 3,
+   "text": "1932, Australia de Vest.",
+   "say": "O mie nouă sute treizeci și doi, Australia de Vest.",
+   "expr": "explica",
+   "file": "line-03.mp3"
+  },
+  {
+   "i": 4,
+   "text": "20.000 de emu năvălesc peste grâu.",
+   "say": "Douăzeci de mii de emu năvălesc peste grâu.",
+   "expr": "suparata",
+   "file": "line-04.mp3"
+  },
+  {
+   "i": 5,
+   "text": "Fermierii cheamă armata.",
+   "say": "Fermierii cheamă armata.",
+   "expr": "explica",
+   "file": "line-05.mp3"
+  },
+  {
+   "i": 6,
+   "text": "Vine un maior, cu două mitraliere și 10.000 de gloanțe.",
+   "say": "Vine un maior, cu două mitraliere și zece mii de gloanțe.",
+   "expr": "explica",
+   "file": "line-06.mp3"
+  },
+  {
+   "i": 7,
+   "text": "Emu: se împrăștie.",
+   "say": "Emu: se împrăștie.",
+   "expr": "rade",
+   "file": "line-07.mp3"
+  },
+  {
+   "i": 8,
+   "text": "Fug cu 50 la oră. În zigzag!",
+   "say": "Fug cu cincizeci la oră. În zigzag!",
+   "expr": "mirata",
+   "file": "line-08.mp3"
+  },
+  {
+   "i": 9,
+   "text": "La o ambuscadă, mitraliera se blochează.",
+   "say": "La o ambuscadă, mitraliera se blochează.",
+   "expr": "suparata",
+   "file": "line-09.mp3"
+  },
+  {
+   "i": 10,
+   "text": "Pun mitraliera pe un camion.",
+   "say": "Pun mitraliera pe un camion.",
+   "expr": "explica",
+   "file": "line-10.mp3"
+  },
+  {
+   "i": 11,
+   "text": "Camionul nu le prinde.",
+   "say": "Camionul nu le prinde.",
+   "expr": "rade",
+   "file": "line-11.mp3"
+  },
+  {
+   "i": 12,
+   "text": "Armata se retrage.",
+   "say": "Armata se retrage.",
+   "expr": "umeri",
+   "file": "line-12.mp3"
+  },
+  {
+   "i": 13,
+   "text": "Revine. Mai încearcă o lună.",
+   "say": "Revine. Mai încearcă o lună.",
+   "expr": "explica",
+   "file": "line-13.mp3"
+  },
+  {
+   "i": 14,
+   "text": "Aproape 10 gloanțe pe fiecare emu.",
+   "say": "Aproape zece gloanțe pe fiecare emu.",
+   "expr": "socata",
+   "file": "line-14.mp3"
+  },
+  {
+   "i": 15,
+   "text": "Maiorul zice: înfruntă mitralierele ca niște tancuri.",
+   "say": "Maiorul zice: înfruntă mitralierele ca niște tancuri.",
+   "expr": "mirata",
+   "file": "line-15.mp3"
+  },
+  {
+   "i": 16,
+   "text": "Scor final? Emu: multe. Armata: zero.",
+   "say": "Scor final? Emu: multe. Armata: zero.",
+   "expr": "rade",
+   "file": "line-16.mp3"
+  },
+  {
+   "i": 17,
+   "text": "Eu sunt Tanti Geta.",
+   "say": "Eu sunt Tanti Geta.",
+   "expr": "explica",
+   "file": "line-17.mp3"
+  },
+  {
+   "i": 18,
+   "text": "Data viitoare: omul care a vândut Turnul Eiffel.",
+   "say": "Data viitoare: omul care a vândut Turnul Eiffel.",
+   "expr": "banuitoare",
+   "file": "line-18.mp3"
+  }
+ ],
+ "cuts": {
+  "bucata-0": [
+   2.5,
+   3.93,
+   7.79,
+   11.7,
+   14.78,
+   16.71,
+   21.16,
+   23.23,
+   26.48,
+   29.33,
+   31.3,
+   33.14,
+   34.84,
+   37.45,
+   40.22,
+   44.46,
+   49.33,
+   51.23
+  ]
+ }
+}
