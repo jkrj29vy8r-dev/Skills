@@ -142,6 +142,7 @@ const PERSON = {
   admiral: { coat: '#1f2f5c', pants: '#f4f1ea', hat: 'bicorne', hair: '#d8d8d8', gold: 1, side: 1 },
   kaiser: { coat: '#5f6f86', pants: '#2b2f3a', hat: 'pickel', hair: '#b9b9b9', must: 'kaiser', gold: 1, medals: 1 },
   governor: { coat: '#262626', pants: '#3a3a3a', hat: 'top', hair: '#9a9a9a', must: 'small' },
+  napoleon: { coat: '#24386e', pants: '#f4f1ea', hat: 'bicorne', hair: '#5a3a24', gold: 1, vest: 1 },
   major: { coat: '#8a7a4a', pants: '#6f6340', hat: 'slouch', hair: '#6b4226', must: 'small', medals: 1 },
   aussie: { coat: '#c97b3c', pants: '#4a5f7a', hat: 'straw', hair: '#8a5a2a', beard: 1 },
 };
@@ -153,11 +154,12 @@ function drawPerson(o, t) {
   ctx.translate(0, bob);
   rr(-72, -300, 144, 165, 34); stroke8(P.coat, 8);
   if (o.kind === 'farmer') { rr(-48, -250, 96, 115, 10); stroke8(P.pants, 6); ctx.strokeStyle = OUT; ctx.lineWidth = 6; seg(-40, -250, -55, -296); seg(40, -250, 55, -296); ctx.strokeStyle = 'rgba(255,255,255,.35)'; ctx.lineWidth = 4; for (let x = -60; x <= 60; x += 24) seg(x, -296, x, -255); }
+  if (P.vest) { ctx.beginPath(); ctx.moveTo(-34, -298); ctx.lineTo(34, -298); ctx.lineTo(30, -140); ctx.lineTo(-30, -140); ctx.closePath(); stroke8('#f4f1ea', 5); }
   if (P.gold) { ctx.fillStyle = '#e0b13a'; for (const s of [-1, 1]) { rr(s * 72 - 26, -306, 52, 18, 6); ctx.fill(); ctx.strokeStyle = OUT; ctx.lineWidth = 4; ctx.stroke(); } ctx.fillStyle = '#e0b13a'; for (let y = -270; y < -150; y += 28) { circ(-14, y, 6); ctx.fill(); circ(14, y, 6); ctx.fill(); } }
   if (P.medals) { for (const [x, c] of [[-40, '#d0021b'], [-22, '#3d8bfd'], [-4, '#e0b13a']]) { ctx.fillStyle = c; ctx.fillRect(x, -268, 14, 20); ctx.fillStyle = '#e0b13a'; circ(x + 7, -240, 8); ctx.fill(); } }
   const pose = o.pose || 'rest';
-  const H = { rest: [[-88, -160], [88, -160]], point: [[-88, -160], [112, -330]], shrug: [[-140, -235], [140, -235]], hips: [[-76, -185], [76, -185]], stop: [[-88, -160], [150, -270]], wave: [[-88, -160], [120, -330 + Math.sin(t * 10) * 18]] }[pose];
-  const EL = { rest: [[-92, -220], [92, -220]], point: [[-92, -220], [118, -250]], shrug: [[-120, -200], [120, -200]], hips: [[-120, -225], [120, -225]], stop: [[-92, -220], [120, -240]], wave: [[-92, -220], [125, -250]] }[pose];
+  const H = { hand: [[-88, -160], [18, -235]], rest: [[-88, -160], [88, -160]], point: [[-88, -160], [112, -330]], shrug: [[-140, -235], [140, -235]], hips: [[-76, -185], [76, -185]], stop: [[-88, -160], [150, -270]], wave: [[-88, -160], [120, -330 + Math.sin(t * 10) * 18]] }[pose];
+  const EL = { hand: [[-92, -220], [96, -210]], rest: [[-92, -220], [92, -220]], point: [[-92, -220], [118, -250]], shrug: [[-120, -200], [120, -200]], hips: [[-120, -225], [120, -225]], stop: [[-92, -220], [120, -240]], wave: [[-92, -220], [125, -250]] }[pose];
   for (const i of [0, 1]) {
     const sx = i ? 66 : -66;
     ctx.strokeStyle = OUT; ctx.lineWidth = 40; ctx.beginPath(); ctx.moveTo(sx, -282); ctx.lineTo(EL[i][0], EL[i][1]); ctx.lineTo(H[i][0], H[i][1]); ctx.stroke();
@@ -490,7 +492,8 @@ Object.assign(E, {
     ctx.fillStyle = INK; rr(-W / 2 + 6, -Hh / 2 + 8, W, Hh, 18); ctx.fill();
     rr(-W / 2, -Hh / 2, W, Hh, 18); stroke8('#1f3b2a', 7);
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = `30px ${CAP}`; ctx.fillStyle = YEL; ctx.fillText(up(o.title || 'SCOR'), 0, -Hh / 2 + 30);
-    const cols = [['ARMATA', o.army || 0, 'army', -W / 4], ['EMU', o.emu || 0, 'emu', W / 4]];
+    const lb = o.labels || ['ARMATA', 'EMU'];
+    const cols = [[lb[0], o.army ?? 0, 'army', -W / 4], [lb[1], o.emu ?? 0, 'emu', W / 4]];
     for (const [lab, v, key, x] of cols) {
       const ch = e.ch[key], k = ch !== undefined ? clamp((t - ch) / .35, 0, 1) : 1;
       ctx.font = `italic 700 26px ${FONT}`; ctx.fillStyle = '#d7e6da'; ctx.fillText(lab, x, -28);
@@ -518,5 +521,67 @@ Object.assign(E, {
     const g = Math.PI + clamp(v / max, 0, 1) * Math.PI + (a > .9 ? Math.sin(t * 30) * .02 : 0);
     ctx.strokeStyle = OUT; ctx.lineWidth = 12; ctx.lineCap = 'round'; seg(0, 0, Math.cos(g) * 150, Math.sin(g) * 150); circ(0, 0, 18); stroke8(RED, 5);
     bigText(`${Math.round(v)} KM/H`, 0, 70, 64, YEL, 420, 12);
+  },
+});
+
+
+/* ---------- elemente pentru „Napoleon și iepurii” ---------- */
+const BUNNY = ['#f2efe9', '#c9a27a', '#9a9a9a', '#e6d3b8', '#8a6a4a'];
+function drawRabbit(t, o) {
+  const col = o.col || BUNNY[0], hop = o.hop ? Math.abs(Math.sin(t * 12 + (o.seed || 0))) : 0, angry = o.angry;
+  ctx.save(); ctx.translate(0, -hop * 60); ctx.rotate(o.hop ? -.15 * Math.sin(t * 12 + (o.seed || 0)) : 0);
+  circ(-95, -55, 26); stroke8('#fff', 6);
+  ell(0, -60, 100, 70); stroke8(col, 7);
+  ell(55, 0, 30, 14); stroke8(col, 6); ell(-45, 0, 34, 16); stroke8(col, 6);
+  ctx.save(); ctx.translate(85, -120);
+  for (const s1 of [-1, 1]) { ctx.save(); ctx.rotate(s1 * .18 - .1 + Math.sin(t * 3 + s1) * .05); ell(s1 * 14 - 6, -80, 16, 52); stroke8(col, 6); ell(s1 * 14 - 6, -78, 7, 36); ctx.fillStyle = '#f4a6b8'; ctx.fill(); ctx.restore(); }
+  circ(0, 0, 52); stroke8(col, 7);
+  ctx.fillStyle = OUT; circ(18, -8, 9); ctx.fill(); ctx.fillStyle = '#fff'; circ(15, -11, 3.5); ctx.fill();
+  if (angry) { ctx.strokeStyle = OUT; ctx.lineWidth = 6; seg(2, -30, 32, -20); }
+  ctx.fillStyle = '#f48fb1'; ell(48, 6, 8, 6); ctx.fill();
+  ctx.strokeStyle = OUT; ctx.lineWidth = 3; for (const d of [-8, 0, 8]) seg(52, 10, 78, 6 + d);
+  ctx.restore(); ctx.restore();
+}
+function drawCarriage(t, drive) {
+  const b = drive ? Math.abs(Math.sin(t * 11)) * -8 : 0;
+  if (drive) for (let i = 0; i < 4; i++) { const k = (t * 1.6 + i / 4) % 1; ctx.fillStyle = `rgba(160,130,100,${.5 * (1 - k)})`; circ(-260 - k * 160, 20 - k * 40, 20 + k * 30); ctx.fill(); }
+  ctx.save(); ctx.translate(0, b);
+  rr(-200, -260, 340, 200, 40); stroke8('#2b3a6e', 8);
+  rr(-150, -230, 110, 90, 14); stroke8('#cfe8f0', 6); rr(-10, -230, 110, 90, 14); stroke8('#cfe8f0', 6);
+  ctx.fillStyle = '#e0b13a'; circ(-30, -110, 22); ctx.fill(); ctx.strokeStyle = OUT; ctx.lineWidth = 5; ctx.stroke();
+  ctx.font = `bold 26px ${FONT}`; ctx.fillStyle = OUT; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('N', -30, -109);
+  rr(140, -150, 90, 30, 10); stroke8('#5a3a24', 6);
+  ctx.restore();
+  wheel(-130, 0, 62, t, drive ? 12 : 0); wheel(90, 0, 62, t, drive ? 12 : 0);
+}
+Object.assign(E, {
+  rabbit(e, a, t) { if (e.o.flip) ctx.scale(-1, 1); drawRabbit(t, e.o); },
+  rabbits(e, a, t) {
+    const n = e.o.n || 8, r = seeded(e.o.seed || 11);
+    const P = [...Array(n)].map((_, i) => ({ x: (r() - .5) * (e.o.w || 700), y: (r() - .5) * (e.o.h || 140), s: .42 + r() * .16, c: BUNNY[i % BUNNY.length], k: i * .05, sd: r() * 9 }));
+    P.sort((p, q) => p.y - q.y);
+    const tx = e.o.toward ?? null, sp = e.o.speed || 420;
+    for (const p of P) {
+      const k = easeOut(clamp((a - p.k) / .3, 0, 1)); if (k <= 0) continue;
+      let x = p.x, y = p.y;
+      if (tx !== null) { const d = tx - p.x, m = Math.min(Math.abs(d), Math.max(0, a - .1) * sp); x = p.x + Math.sign(d) * m; }
+      if (e.o.out) { y = p.y + 80 * (1 - k); }
+      ctx.save(); ctx.translate(x, y); ctx.scale(p.s * k, p.s * k);
+      const fl = tx !== null ? tx < p.x : e.o.flip; if (fl) ctx.scale(-1, 1);
+      drawRabbit(t, { col: p.c, hop: e.o.hop, angry: e.o.angry, seed: p.sd }); ctx.restore();
+    }
+  },
+  crate(e, a, t) {
+    rr(-150, -170, 300, 170, 10); stroke8('#c08a52', 8);
+    ctx.strokeStyle = OUT; ctx.lineWidth = 6; for (let x = -100; x <= 100; x += 50) seg(x, -170, x, 0);
+    if (!e.o.open) { ctx.save(); ctx.translate(0, -120); ctx.scale(.45, .45); drawRabbit(t, { col: BUNNY[(e.x / 10 | 0) % 5] }); ctx.restore(); ctx.strokeStyle = OUT; ctx.lineWidth = 6; for (let x = -100; x <= 100; x += 50) seg(x, -170, x, 0); }
+    else { ctx.save(); ctx.translate(-150, -170); ctx.rotate(-1.1 * clamp((t - (e.ch.open ?? t)) / .3, 0, 1)); rr(0, -10, 300, 16, 6); stroke8('#c08a52', 6); ctx.restore(); }
+    rr(-160, -180, 320, 20, 8); stroke8('#a8743e', 6);
+  },
+  carriage(e, a, t) { if (e.o.flip) ctx.scale(-1, 1); drawCarriage(t, e.o.drive); },
+  whip(e, a, t) {
+    ctx.strokeStyle = OUT; ctx.lineWidth = 7; ctx.lineCap = 'round';
+    const g = Math.sin(t * 14) * .6; ctx.beginPath(); ctx.moveTo(0, 0); ctx.quadraticCurveTo(90, -120 + g * 80, 220, -40 + g * 120); ctx.stroke();
+    if (Math.sin(t * 14) > .7) bigText('PLEOSC!', 240, -90, 46, YEL, 300, 10);
   },
 });

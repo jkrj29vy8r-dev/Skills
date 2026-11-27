@@ -125,15 +125,31 @@ function speak(text, expr, tmp, i) {
   const vArg = (args.find(a => a.startsWith('--voice=')) || '').slice(8) || (flags.has('--mbrola') ? 'mbrola' : fs.existsSync(path.join(voiceDir, 'lines.json')) ? 'files' : 'alina');
   const engine = vArg === 'piper' && !fs.existsSync(MODEL) ? 'mbrola' : vArg;
   console.log('Voce:', engine === 'files' ? `fișiere salvate (${voiceDir})` : engine === 'alina' ? 'Microsoft Alina (ro-RO-AlinaNeural)' : engine === 'piper' ? `Piper (${MODEL})` : 'MBROLA ro1');
-  const clips = engine === 'files' ? speakFiles(ep.lines, voiceDir) : engine === 'alina' ? speakAlina(lines, tmp) : engine === 'piper' ? speakPiper(lines, tmp) : lines.map((l, i) => {
-    process.stdout.write(`\rVoce: replica ${i + 1}/${lines.length}   `);
-    return speak(l.text, l.expr, tmp, i);
-  });
-  let cur = LEAD; const lineStart = [], lineEnd = [];
-  for (const c of clips) { lineStart.push(cur); cur += c.length / SR; lineEnd.push(cur); cur += GAP; }
-  const total = lineEnd[lineEnd.length - 1] + TAIL;
-  const voice = new Float32Array(Math.ceil(total * SR));
-  clips.forEach((c, i) => voice.set(c, Math.round(lineStart[i] * SR)));
+  // Înregistrare continuă (o singură bucată + momentele de început ale replicilor, din align-voice.py)
+  const meta = engine === 'files' ? JSON.parse(fs.readFileSync(path.join(voiceDir, 'lines.json'), 'utf8')) : null;
+  let clips, lineStart = [], lineEnd = [], total, voice;
+  if (meta && meta.take && meta.cuts) {
+    if (meta.cuts.length !== ep.lines.length - 1) throw new Error(`lines.json are ${meta.cuts.length} granițe, episodul are nevoie de ${ep.lines.length - 1}. Rulează align-voice.py din nou.`);
+    (meta.lines || []).forEach((l, i) => { if (l.text !== ep.lines[i]) console.warn(`\n⚠ Replica ${i} s-a schimbat față de vocea salvată:\n  voce: ${l.text}\n  acum: ${ep.lines[i]}`); });
+    const raw = sh('ffmpeg', ['-v', 'error', '-i', path.join(voiceDir, meta.take), '-af', `${FILES_FX},aresample=${SR}`, '-ac', '1', '-f', 'f32le', '-']);
+    const take = new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.length)), td = take.length / SR;
+    let on = 0; while (on < take.length && Math.abs(take[on]) < .02) on++;
+    const b = [Math.max(0, on / SR - .05), ...meta.cuts, td];
+    for (let i = 0; i < ep.lines.length; i++) { lineStart.push(LEAD + b[i]); lineEnd.push(LEAD + b[i + 1]); }
+    total = LEAD + td + TAIL; voice = new Float32Array(Math.ceil(total * SR)); voice.set(take, Math.round(LEAD * SR));
+    clips = ep.lines.map(() => ({}));
+    console.log(`Voce: o singură înregistrare continuă (${meta.take}, ${td.toFixed(1)} s)`);
+  } else {
+    clips = engine === 'files' ? speakFiles(ep.lines, voiceDir) : engine === 'alina' ? speakAlina(lines, tmp) : engine === 'piper' ? speakPiper(lines, tmp) : lines.map((l, i) => {
+      process.stdout.write(`\rVoce: replica ${i + 1}/${lines.length}   `);
+      return speak(l.text, l.expr, tmp, i);
+    });
+    let cur = LEAD;
+    for (const c of clips) { lineStart.push(cur); cur += c.length / SR; lineEnd.push(cur); cur += GAP; }
+    total = lineEnd[lineEnd.length - 1] + TAIL;
+    voice = new Float32Array(Math.ceil(total * SR));
+    clips.forEach((c, i) => voice.set(c, Math.round(lineStart[i] * SR)));
+  }
 
   // 2. Când apare fiecare bucată de subtitrare (proporțional cu textul, în interiorul replicii)
   const starts = [], ends = [];

@@ -1,0 +1,158 @@
+{
+ "voice": "Elena",
+ "engine": "Higgsfield text2speech_v2 / ElevenLabs",
+ "voice_id": "ca83ca7f-c186-493d-bd69-0d765fa861b2",
+ "generated": "2026-11-27",
+ "method": "o singură bucată (bucati/bucata-0.mp3), tăiată pe replici cu render/split-voice.py",
+ "chunk_jobs": [
+  "f0d97d95-2224-4b60-9706-a400ff250217"
+ ],
+ "lines": [
+  {
+   "i": 0,
+   "text": "Napoleon a bătut jumătate din Europa.",
+   "say": "Napoleon a bătut jumătate din Europa.",
+   "expr": "socata",
+   "file": "line-00.mp3"
+  },
+  {
+   "i": 1,
+   "text": "Dar a fugit de niște iepuri.",
+   "say": "Dar a fugit de niște iepuri.",
+   "expr": "banuitoare",
+   "file": "line-01.mp3"
+  },
+  {
+   "i": 2,
+   "text": "Sunt Tanti Geta, și asta e bârfă imperială.",
+   "say": "Sunt Tanti Geta, și asta e bârfă imperială.",
+   "expr": "vesela",
+   "file": "line-02.mp3"
+  },
+  {
+   "i": 3,
+   "text": "Așa povestește un general francez în memoriile lui.",
+   "say": "Așa povestește un general francez în memoriile lui.",
+   "expr": "sopteste",
+   "file": "line-03.mp3"
+  },
+  {
+   "i": 4,
+   "text": "1807. Napoleon semnează o pace.",
+   "say": "O mie opt sute șapte. Napoleon semnează o pace.",
+   "expr": "explica",
+   "file": "line-04.mp3"
+  },
+  {
+   "i": 5,
+   "text": "Și vrea s-o sărbătorească cu o vânătoare de iepuri.",
+   "say": "Și vrea s-o sărbătorească cu o vânătoare de iepuri.",
+   "expr": "vesela",
+   "file": "line-05.mp3"
+  },
+  {
+   "i": 6,
+   "text": "Mareșalul Berthier adună sute, poate mii de iepuri.",
+   "say": "Mareșalul Bertié adună sute, poate mii de iepuri.",
+   "expr": "mirata",
+   "file": "line-06.mp3"
+  },
+  {
+   "i": 7,
+   "text": "Le dă drumul din cuști.",
+   "say": "Le dă drumul din cuști.",
+   "expr": "explica",
+   "file": "line-07.mp3"
+  },
+  {
+   "i": 8,
+   "text": "Dar iepurii nu fug.",
+   "say": "Dar iepurii nu fug.",
+   "expr": "socata",
+   "file": "line-08.mp3"
+  },
+  {
+   "i": 9,
+   "text": "Atacă!",
+   "say": "Atacă!",
+   "expr": "suparata",
+   "file": "line-09.mp3"
+  },
+  {
+   "i": 10,
+   "text": "Sar pe Napoleon și i se urcă pe picioare.",
+   "say": "Sar pe Napoleon și i se urcă pe picioare.",
+   "expr": "socata",
+   "file": "line-10.mp3"
+  },
+  {
+   "i": 11,
+   "text": "Oamenii lui dau cu biciul. Degeaba.",
+   "say": "Oamenii lui dau cu biciul. Degeaba.",
+   "expr": "explica",
+   "file": "line-11.mp3"
+  },
+  {
+   "i": 12,
+   "text": "Napoleon fuge la trăsură.",
+   "say": "Napoleon fuge la trăsură.",
+   "expr": "umeri",
+   "file": "line-12.mp3"
+  },
+  {
+   "i": 13,
+   "text": "De ce? Erau iepuri de casă, cumpărați de la țărani.",
+   "say": "De ce? Erau iepuri de casă, cumpărați de la țărani.",
+   "expr": "mirata",
+   "file": "line-13.mp3"
+  },
+  {
+   "i": 14,
+   "text": "Au crezut că vine mâncarea.",
+   "say": "Au crezut că vine mâncarea.",
+   "expr": "rade",
+   "file": "line-14.mp3"
+  },
+  {
+   "i": 15,
+   "text": "Scor final: iepuri unu, Napoleon zero.",
+   "say": "Scor final: iepuri unu, Napoleon zero.",
+   "expr": "rade",
+   "file": "line-15.mp3"
+  },
+  {
+   "i": 16,
+   "text": "Eu sunt Tanti Geta.",
+   "say": "Eu sunt Tanti Geta.",
+   "expr": "explica",
+   "file": "line-16.mp3"
+  },
+  {
+   "i": 17,
+   "text": "Data viitoare: omul care a vândut Turnul Eiffel.",
+   "say": "Data viitoare: omul care a vândut Turnul Eiffel.",
+   "expr": "banuitoare",
+   "file": "line-17.mp3"
+  }
+ ],
+ "take": "bucati/bucata-0.mp3",
+ "cuts": [
+  2.89,
+  4.83,
+  8.65,
+  12.41,
+  16.74,
+  20.14,
+  24.17,
+  25.88,
+  27.8,
+  29.06,
+  32.03,
+  34.95,
+  37.11,
+  41.34,
+  43.26,
+  47.06,
+  49.09
+ ]
+}

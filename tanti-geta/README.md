@@ -91,6 +91,18 @@ python3 render/split-voice.py voice/<episod>/bucati/bucata-0.mp3 voice/<episod>/
 
 Scriptul alege pauzele dintre replici, ținând cont că semnele de punctuație din interiorul unei replici (de exemplu „Și porcul? Singura victimă.”) fac și ele pauze. Numele străine se scriu cum se pronunță (Laimăn, San Huan).
 
+**Metoda recomandată acum (episoadele cu emu și cu Napoleon):** toată vocea se generează **dintr-o singură bucată**, ca să rămână aceeași voce de la început până la sfârșit, și **nu se mai taie**. `render/align-voice.py` află unde începe fiecare replică:
+1. Citește același text cu vocea Microsoft Alina, care dă momentul exact al fiecărui cuvânt.
+2. Aliniază automat cele două înregistrări (DTW pe MFCC).
+3. Mută granițele pe vocea Elenei și le lipește de cea mai apropiată pauză.
+
+Pe episodul cu emu a nimerit toate cele 18 granițe verificate manual.
+
+```bash
+python3 render/align-voice.py voice/<episod>/lines.json bucati/bucata-0.mp3 --save
+node render/render.js episodes/<episod>.js clip.mp4   # folosește înregistrarea continuă + granițele salvate
+```
+
 ## Cum se scrie scriptul
 
 ```
