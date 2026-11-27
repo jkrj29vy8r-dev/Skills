@@ -183,7 +183,7 @@ function speak(text, expr, tmp, i) {
   await page.evaluate(cfg => offlineStart(cfg), { script, starts, ends, total, env, fps: FPS, music: flags.has('--music'), green: flags.has('--green') });
   const vid = path.join(tmp, 'video.mp4');
   const ff = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
-    '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-r', String(FPS), vid], { stdio: ['pipe', 'inherit', 'inherit'] });
+    '-c:v', 'libx264', '-preset', 'slow', '-b:v', '7M', '-maxrate', '9M', '-bufsize', '14M', '-profile:v', 'high', '-pix_fmt', 'yuv420p', '-r', String(FPS), vid], { stdio: ['pipe', 'inherit', 'inherit'] });
   const ffDone = new Promise((res, rej) => ff.on('close', c => c === 0 ? res() : rej(new Error('ffmpeg (video) a ieșit cu ' + c))));
   for (let f = 0; f < nF; f++) {
     const d = await page.evaluate(i => offlineFrame(i), f);
