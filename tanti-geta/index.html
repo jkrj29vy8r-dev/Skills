@@ -6,7 +6,7 @@
 <title>Bârfa Științifică Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fredoka:wght@500;600;700&family=Lilita+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fredoka:wght@500;600;700&family=Rubik:wght@900&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#f6f1ea; --panel:#ffffff; --ink:#2b1d2e; --muted:#6d5f70; --line:#e6dbd1;
@@ -128,6 +128,15 @@
       </div>
     </fieldset>
 
+    <fieldset>
+      <legend>Profil și banner</legend>
+      <div class="row">
+        <button type="button" id="btnAvatar">🖼️ Poza de profil (1080×1080)</button>
+        <button type="button" id="btnBanner">🏷️ Banner YouTube (2560×1440)</button>
+      </div>
+      <div id="brandOut" style="margin-top:10px;display:grid;gap:8px"></div>
+    </fieldset>
+
     <div class="btns">
       <button id="btnPlay">▶ Previzualizează</button>
       <button id="btnRec" class="primary">⏺ Înregistrează</button>
@@ -146,9 +155,9 @@
    ========================================================= */
 const W = 1080, H = 1920, TAU = Math.PI * 2;
 const $ = id => document.getElementById(id);
-const cv = $('stage'), ctx = cv.getContext('2d');
+const cv = $('stage'); let ctx = cv.getContext('2d');
 const FONT = '"Fredoka","Trebuchet MS",system-ui,sans-serif';
-const CAP = '"Lilita One","Fredoka",Impact,sans-serif';
+const CAP = '"Rubik","Fredoka",Impact,sans-serif';   // Rubik are Ș Ț Ă Î Â
 const HAND = '"Caveat","Comic Sans MS",cursive';
 const EMOJI = '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Twemoji Mozilla",sans-serif';
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -161,7 +170,7 @@ const BG = '#fbf7ee', INK = '#1d1220', YEL = '#ffc927', RED = '#e5484d';
 const OUT = '#3b2620', SKIN = '#f3c4a2', HAIR = '#d3602f', HAIR_D = '#a8441d';
 const ROBE = '#7fa7e6', COLLAR = '#f59bbd', LIP = '#cf2346';
 const PX = 540, PY = 590;                 // centrul obiectului
-const CHX = 255, CHY = 1640, CHS = .55;    // Tanti Geta (picioarele)
+let CHX = 255, CHY = 1640, CHS = .55;      // Tanti Geta (picioarele)
 
 /* ---------- expresii ---------- */
 const BASE = { bl: 0, br: 0, frown: 0, eye: 1, happy: 0, smile: .35, tilt: 0, blush: .45, pupil: 1, gasp: 0, laugh: 0, zoom: 1 };
@@ -218,12 +227,14 @@ const PROP_INFO = {
   ziar: ['@ziar GAZETA BLOCULUI | TITLU | subtitlu | 📰', 'ziar cu titlu'],
   mesaj: ['@mesaj COSTEL | text', 'mesaj pe telefon (scrie... apoi apare)'],
   an: ['@an 1897 | subtitlu', 'calendar care numără până la an'],
+  porc: ['@porc  sau  @porc ÎNGER', 'porc care râmă în grădina cu cartofi (sau înger, cu aripi și aureolă)'],
+  corabii: ['@corabii 5 | FLOTA BRITANICĂ', 'corăbii de război care intră pe rând'],
   gol: ['@gol', 'nimic în centru'],
 };
 const PROP_ALIAS = { ceasul: 'ceas', clock: 'ceas', stopwatch: 'cronometru', cronometrul: 'cronometru', chart: 'grafic',
   id: 'buletin', pasaport: 'buletin', scroll: 'pergament', invoice: 'factura', bon: 'factura', raport: 'carnet', clipboard: 'carnet',
   cupa: 'trofeu', insula: 'harta', tara: 'harta', bum: 'text', next: 'urmeaza', gazeta: 'ziar', sms: 'mesaj', whatsapp: 'mesaj',
-  calendar: 'an', anul: 'an', nimic: 'gol' };
+  calendar: 'an', anul: 'an', nimic: 'gol', porcul: 'porc', pig: 'porc', flota: 'corabii', nave: 'corabii', corabie: 'corabii', ships: 'corabii' };
 
 const TAGS = {
   galben: { fill: YEL, ink: INK, line: INK }, rosu: { fill: RED, ink: '#fff', line: INK }, negru: { fill: INK, ink: YEL, line: INK },
@@ -564,14 +575,14 @@ const PROPS = {
     });
   },
   buletin(p, a, t) {
-    const [title = 'BULETIN', ...lines] = p.args;
+    const [rawTitle = 'BULETIN', ...lines] = p.args, TE = splitEL(rawTitle), title = TE.l || 'BULETIN';
     ctx.save(); ctx.translate(PX, PY); ctx.rotate(-.035);
     ctx.fillStyle = INK; rr(-364, -222, 740, 460, 30); ctx.fill();
     rr(-372, -232, 740, 460, 30); fillStroke('#fff', 8);
     ctx.save(); rr(-372, -232, 740, 460, 30); ctx.clip(); ctx.fillStyle = INK; ctx.fillRect(-372, -232, 740, 92); ctx.restore();
     ctx.font = `italic 44px ${CAP}`; ctx.fillStyle = YEL; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(up(title), -330, -184);
     rr(-338, -112, 232, 280, 16); fillStroke('#ece6db', 6);
-    ctx.save(); rr(-338, -112, 232, 280, 16); ctx.clip(); ctx.translate(-222, 52); ctx.scale(.47, .47); drawHead(0, 0, t); ctx.restore();
+    if (TE.e) drawEmoji(TE.e, -222, 30, 170); else { ctx.save(); rr(-338, -112, 232, 280, 16); ctx.clip(); ctx.translate(-222, 52); ctx.scale(.47, .47); drawHead(0, 0, t); ctx.restore(); }
     rr(-338, -112, 232, 280, 16); ctx.lineWidth = 6; ctx.strokeStyle = OUT; ctx.stroke();
     lines.forEach((l, i) => {
       const sz = fitFont(up(l), `italic 700 $px ${FONT}`, 42, 420); ctx.font = `italic 700 ${sz}px ${FONT}`;
@@ -746,6 +757,58 @@ const PROPS = {
     ctx.font = `150px ${CAP}`; ctx.fillStyle = INK; ctx.fillText(String(val), 0, 20);
     if (p.args[1]) { ctx.font = `italic 700 ${fitFont(up(p.args[1]), `italic 700 $px ${FONT}`, 36, 380)}px ${FONT}`; ctx.fillStyle = '#5b4a5e'; ctx.fillText(up(p.args[1]), 0, 160); }
     ctx.restore();
+  },
+  porc(p, a, t) {
+    const angel = /inger|rip/.test(normKey(p.args[0] || ''));
+    ctx.save(); ctx.translate(PX, PY + 30);
+    if (!angel) {
+      for (let x = -330; x <= 330; x += 66) { rr(x - 24, -270, 48, 240, 10); fillStroke('#e9c38f', 7); }
+      rr(-360, -205, 720, 28, 10); fillStroke('#d9ae72', 7);
+      rr(-370, 100, 740, 130, 36); fillStroke('#8a5a35', 8);
+      for (const [x, y] of [[-290, 140], [-170, 185], [270, 150], [170, 195], [-40, 200]]) drawEmoji('🥔', x, y, 70);
+    } else {
+      ctx.fillStyle = '#fff'; ctx.strokeStyle = OUT; ctx.lineWidth = 7;
+      const cl = [[-220, 175, 70], [-120, 190, 85], [0, 180, 95], [120, 192, 85], [225, 178, 70]];
+      for (const [x, y, r] of cl) { circ(x, y, r); ctx.stroke(); } for (const [x, y, r] of cl) { circ(x, y, r); ctx.fill(); }
+    }
+    const bob = angel ? Math.sin(t * 2) * 14 - 20 : -Math.abs(Math.sin(t * 5)) * 8;
+    ctx.translate(0, bob);
+    if (angel) for (const s of [-1, 1]) { ctx.save(); ctx.translate(-40, -110); ctx.rotate(s * (.5 + Math.sin(t * 6) * .25) - .2); ell(0, -70, 60, 110); fillStroke('#fff', 7); ctx.restore(); }
+    ctx.lineWidth = 8; ctx.strokeStyle = OUT;
+    for (const x of [-140, -65, 55, 125]) { rr(x - 22, 50, 44, 90, 14); fillStroke('#f48fb1', 7); }
+    ctx.beginPath(); for (let k = 0; k <= 30; k++) { const g = k * .38, r = 4 + k * .9, x = -222 - Math.cos(g) * r, y = -30 - Math.sin(g) * r; k ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.lineWidth = 9; ctx.stroke();
+    ell(-25, 0, 205, 135); fillStroke('#f7a8c0', 9);
+    ctx.save(); ctx.translate(150, -40); ctx.rotate(angel ? -.08 : .12 + Math.sin(t * 5) * .06);
+    for (const s of [-1, 1]) { ctx.beginPath(); ctx.moveTo(s * 55 - 30, -80); ctx.lineTo(s * 70, -150); ctx.lineTo(s * 55 + 30, -78); ctx.closePath(); fillStroke('#f48fb1', 7); }
+    circ(0, 0, 112); fillStroke('#f7a8c0', 9);
+    ell(86, 22, 52, 40); fillStroke('#f48fb1', 8);
+    ctx.fillStyle = '#7a2c45'; ell(72, 22, 9, 14); ctx.fill(); ell(100, 22, 9, 14); ctx.fill();
+    ctx.fillStyle = 'rgba(255,105,130,.45)'; ell(-20, 45, 26, 16); ctx.fill();
+    if (angel) { ctx.strokeStyle = OUT; ctx.lineWidth = 8; for (const x of [-30, 30]) { ctx.beginPath(); ctx.arc(x, -20, 18, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke(); } }
+    else { for (const x of [-30, 30]) { ctx.fillStyle = OUT; circ(x, -25, 13); ctx.fill(); ctx.fillStyle = '#fff'; circ(x - 4, -29, 4.5); ctx.fill(); } }
+    if (angel) { ctx.strokeStyle = OUT; ctx.lineWidth = 20; ell(0, -150, 75, 20); ctx.stroke(); ctx.strokeStyle = YEL; ctx.lineWidth = 12; ell(0, -150, 75, 20); ctx.stroke(); }
+    ctx.restore();
+    ctx.restore();
+  },
+  corabii(p, a, t) {
+    const n = clamp(parseInt(p.args[0], 10) || 3, 1, 6), label = p.args[1] || '', s = n <= 2 ? 1.1 : n <= 4 ? .85 : .7;
+    ctx.fillStyle = '#8fd0f5'; ctx.fillRect(PX - 560, PY + 70, 1120, 230);
+    ctx.strokeStyle = OUT; ctx.lineWidth = 8; seg(PX - 560, PY + 70, PX + 560, PY + 70);
+    ctx.strokeStyle = 'rgba(255,255,255,.8)'; ctx.lineWidth = 5;
+    for (let i = 0; i < 9; i++) { const x = PX - 480 + i * 120 + Math.sin(t + i) * 12, y = PY + 140 + (i % 3) * 45; ctx.beginPath(); ctx.arc(x, y, 18, Math.PI * 1.1, Math.PI * 1.9); ctx.arc(x + 32, y, 18, Math.PI * 1.1, Math.PI * 1.9); ctx.stroke(); }
+    for (let i = 0; i < n; i++) {
+      const k = easeOut(clamp((a - i * .3) / .7, 0, 1)); if (k <= 0) continue;
+      const tx = n === 1 ? PX : PX - 380 + i * 760 / (n - 1), x = lerp(PX + 800, tx, k), y = PY + 75 + Math.sin(t * 2 + i) * 6;
+      ctx.save(); ctx.translate(x, y); ctx.scale(s, s); ctx.rotate(Math.sin(t * 1.5 + i) * .03);
+      ctx.strokeStyle = OUT; ctx.lineWidth = 8;
+      for (const mx of [-45, 45]) { seg(mx, -20, mx, -255); }
+      for (const [mx, h] of [[-45, 0], [45, 0]]) for (const [y0, w0] of [[-240, 74], [-170, 92], [-95, 104]]) { ctx.beginPath(); ctx.moveTo(mx - w0 / 2, y0); ctx.quadraticCurveTo(mx, y0 - 14, mx + w0 / 2, y0); ctx.lineTo(mx + w0 / 2 + 6, y0 + 58); ctx.quadraticCurveTo(mx, y0 + 70, mx - w0 / 2 - 6, y0 + 58); ctx.closePath(); fillStroke('#fffaf0', 6); }
+      ctx.beginPath(); ctx.moveTo(45, -255); ctx.lineTo(95, -240); ctx.lineTo(45, -225); ctx.closePath(); fillStroke(RED, 5);
+      ctx.beginPath(); ctx.moveTo(-150, -25); ctx.lineTo(150, -25); ctx.lineTo(118, 45); ctx.lineTo(-118, 45); ctx.closePath(); fillStroke('#7a4b2a', 8);
+      ctx.fillStyle = INK; for (let g = -100; g <= 100; g += 40) { ctx.fillRect(g - 9, -6, 18, 16); }
+      ctx.restore();
+    }
+    if (label && a > .2) drawTag(label, PX - 250, PY - 260, 50, 'rosu', -.05, 'center', 560);
   },
   gol() {},
 };
@@ -1152,6 +1215,48 @@ function status(msg) { $('status').textContent = msg; }
 
 /* ================= EPISOADE ================= */
 const PRESETS = {
+  '#6 Războiul porcului ⭐': `# Războiul porcului
+!serie BÂRFA ȘTIINȚIFICĂ | #6
+@porc
+[șocată boom] Războiul ăsta | a avut | o singură victimă.
++stamp negru R.I.P.
+[bănuitoare zoom] Un *porc*.
+@harta SAN JUAN | 1859
+[explică] *1859*. O insulă | între *America* | și *Canada britanică*.
+@buletin 🧑‍🌾 VECINUL 1 | NUME: LYMAN CUTLAR | DIN: AMERICA | ARE: CARTOFI
+[explică] Un *american* | cu grădină de *cartofi*.
+@buletin 🐖 VECINUL 2 | NUME: CHARLES GRIFFIN | LUCRA LA: BRITANICI | ARE: UN PORC
+[șoptește] Vecinul lui, | omul *britanicilor*, | are un *porc*.
+@porc
+[supărată] Porcul intră | și mănâncă *cartofii*.
+@text PAC!
+[șocată] Americanul | împușcă *porcul*.
+@grafic Oferta americanului=10 $ | Cât a cerut vecinul=100 $
+[umeri] Oferă *10 dolari*. | Vecinul cere *100*.
+@mesaj AUTORITĂȚILE BRITANICE | Îl arestăm pe american.
+[bănuitoare] Britanicii vor să-l *aresteze*. | Americanii cheamă *armata*.
+@corabii 5 | FLOTA BRITANICĂ
+[mirată tobe] Britanicii aduc | *5 corăbii de război*.
+@grafic Soldați americani=461 | Soldați britanici=2.140 | Porci morți=1
+[explică] Peste *2.000 de britanici*, | contra *461 de americani*.
+[râde badumts] Ca la noi la bloc. | Doar că *cu tunuri*.
+@mesaj GUVERNATORUL | Debarcați soldații! Acum!
+[șoptește] Guvernatorul ordonă | *debarcarea*.
+@carnet AMIRALUL BAYNES | „Nu bag două mari națiuni în război pentru un porc.” | – amiralul Baynes
+[veselă ding] Amiralul refuză: | „Nu încep un război | pentru *un porc*.”
+@an 1872 | arbitraj
+[explică] Rămân amândoi pe insulă | *ani de zile*. | Până în *1872*.
+@buletin 👑 ARBITRU | NUME: KAISERUL WILHELM I | ȚARA: GERMANIA | DECIZIE: SUA
+[râde] Decide *Kaiserul Germaniei*. | Câștigă *americanii*.
+@porc ÎNGER
++stamp galben SINGURA VICTIMĂ
+[veselă trist] Și porcul? | Singura *victimă*.
+@buletin BULETIN DE BLOC | NUME: TANTI GETA | FUNCȚIA: VECINĂ, ETAJ 3 | SURSA: GEAMUL
+[explică] Eu sunt *Tanti Geta*.
+@urmeaza 🐦 EMU | 🪖 ARMATA
++eticheta galben FOLLOW
+[bănuitoare] Data viitoare: | o armată bătută | de *păsări*.`,
+
   '#1 Cuza, ales de două ori': `# Cuza, ales de două ori
 !serie BÂRFA ȘTIINȚIFICĂ | #1
 @harta MOLDOVA | 1859
@@ -1300,6 +1405,67 @@ const PRESETS = {
 [bănuitoare] Data viitoare: | *minciuna* cu broasca râioasă.`,
 };
 
+/* ================= PROFIL ȘI BANNER ================= */
+function withCanvas(w, h, fn) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  const keep = { ctx, CHX, CHY, CHS, p: { ...S.p }, pose: JSON.parse(JSON.stringify(S.pose)), mouth: S.mouth, look: { ...S.look }, blink: S.blinkAmt };
+  ctx = c.getContext('2d'); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  try { fn(c); } finally {
+    ctx = keep.ctx; CHX = keep.CHX; CHY = keep.CHY; CHS = keep.CHS;
+    Object.assign(S.p, keep.p); S.pose = keep.pose; S.mouth = keep.mouth; S.look = keep.look; S.blinkAmt = keep.blink;
+  }
+  return c;
+}
+function rays(cx, cy, n, r, c1, c2) {
+  for (let i = 0; i < n; i++) { ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r, i / n * TAU, (i + .5) / n * TAU); ctx.closePath(); ctx.fillStyle = i % 2 ? c1 : c2; ctx.fill(); }
+}
+function setLook(expr, extra, pose) {
+  Object.assign(S.p, EXPR[expr], extra || {}); S.mouth = 0; S.blinkAmt = 1;
+  S.pose = JSON.parse(JSON.stringify(POSES.rest)); Object.assign(S.pose, pose || {});
+}
+function renderAvatar() {
+  return withCanvas(1080, 1080, () => {
+    ctx.fillStyle = '#f6a5b8'; ctx.fillRect(0, 0, 1080, 1080);
+    rays(540, 560, 28, 1000, '#f9bccb', '#f6a5b8');
+    setLook('banuitoare', { smile: .5, blush: .8 }, { le: [-250, -300], lh: [-172, -200], re: [250, -470], rh: [150, -560], cup: 1 });
+    S.look = { x: 8, y: 0 };
+    CHX = 540; CHY = 1780; CHS = 1.5; drawGeta(1.3);
+  });
+}
+function renderBanner() {
+  return withCanvas(2560, 1440, () => {
+    ctx.fillStyle = BG; ctx.fillRect(0, 0, 2560, 1440);
+    ctx.globalAlpha = .13; const icons = ['📜', '🕰️', '🏆', '🐊', '🐖', '🧛', '🖋️', '📰', '🐦', '👑', '🗺️', '⏱️'], r = seeded(2024);
+    for (let gx = 0; gx < 16; gx++) for (let gy = 0; gy < 9; gy++) {
+      const x = gx * 170 + 60 + r() * 60, y = gy * 165 + 50 + r() * 50, sz = 70 + r() * 40;
+      if (x > 380 && x < 2140 && y > 300 && y < 1060) continue;
+      drawEmoji(icons[(gx * 5 + gy * 3) % icons.length], x, y, sz);
+    }
+    ctx.globalAlpha = 1;
+    ctx.save(); ctx.beginPath(); ctx.arc(780, 700, 330, 0, TAU); ctx.clip();
+    ctx.fillStyle = '#f6a5b8'; ctx.fillRect(400, 330, 760, 760); rays(780, 700, 24, 500, '#f9bccb', '#f6a5b8');
+    setLook('explica', { smile: .7, blush: .8 });
+    S.pose = JSON.parse(JSON.stringify(POSES.finger));
+    CHX = 780; CHY = 1500; CHS = .95; drawGeta(1.1);
+    ctx.restore();
+    ctx.lineWidth = 12; ctx.strokeStyle = INK; ctx.beginPath(); ctx.arc(780, 700, 330, 0, TAU); ctx.stroke();
+    drawTag('BÂRFA ȘTIINȚIFICĂ', 1600, 600, 130, 'roz', -.03, 'center', 960);
+    drawTag('CU TANTI GETA', 1560, 760, 92, 'negru', .02, 'center', 760);
+    bigText('ISTORIE · FAPTE CIUDATE · PE ROMÂNEȘTE', 1580, 880, 50, '#fff', 900, 12);
+    drawTag('VERIFICAT', 1990, 470, 50, 'stampila', .16, 'center', 400);
+  });
+}
+async function downloadBrand(kind) {
+  try { await document.fonts.ready; } catch (e) {}
+  const c = kind === 'avatar' ? renderAvatar() : renderBanner();
+  const url = c.toDataURL('image/png'), out = $('brandOut');
+  out.innerHTML = '';
+  const img = document.createElement('img'); img.src = url; img.style.cssText = `width:100%;border-radius:${kind === 'avatar' ? '50%' : '12px'};border:1px solid var(--line)`;
+  const a = document.createElement('a'); a.className = 'btn primary'; a.href = url; a.download = kind === 'avatar' ? 'tanti-geta-profil.png' : 'tanti-geta-banner-youtube.png';
+  a.textContent = '⬇ Descarcă ' + (kind === 'avatar' ? 'poza de profil' : 'bannerul');
+  out.append(img, a);
+}
+
 /* ================= UI ================= */
 const LS_KEY = 'tantiGeta.shorts.v1';
 function lsGet() { try { return localStorage.getItem(LS_KEY); } catch (e) { return null; } }
@@ -1326,6 +1492,8 @@ $('audioFile').addEventListener('change', async e => {
     $('audioInfo').textContent = `${f.name}, ${m}:${String(s).padStart(2, '0')}`;
   } catch (err) { audioBuf = null; $('audioInfo').textContent = 'Nu pot citi fișierul. Încearcă .mp3, .m4a sau .wav.'; }
 });
+$('btnAvatar').addEventListener('click', () => downloadBrand('avatar'));
+$('btnBanner').addEventListener('click', () => downloadBrand('banner'));
 for (const id of ['sfxAuto', 'music', 'green']) $(id).addEventListener('change', e => opts[id] = e.target.checked);
 $('btnPlay').addEventListener('click', () => start(false));
 $('btnRec').addEventListener('click', () => start(true));

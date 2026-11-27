@@ -76,9 +76,23 @@ Subtitrările se taie automat în bucăți de 2–4 cuvinte. Numerele ies automa
 | ziar | `@ziar GAZETA BLOCULUI \| TITLU \| subtitlu \| 📰` | Ziar cu titlu |
 | mesaj | `@mesaj COSTEL \| text` | Telefon: „scrie…” apoi apare mesajul |
 | an | `@an 1897 \| subtitlu` | Calendar care numără până la an |
+| porc | `@porc` sau `@porc ÎNGER` | Porc care râmă în grădina cu cartofi, sau înger cu aripi și aureolă |
+| corabii | `@corabii 5 \| FLOTA BRITANICĂ` | Corăbii de război care intră pe rând |
 | gol | `@gol` | Nimic în centru |
 
+În `@buletin`, dacă titlul începe cu un emoji (`@buletin 👑 ARBITRU | ...`), poza din buletin devine emoji-ul. Altfel e Tanti Geta.
+
+## Profil și banner
+
+În studio, la „Profil și banner”, poți descărca oricând:
+- **Poza de profil** 1080×1080, cu Tanti Geta privind pieziș, cu cafeaua în mână. Se decupează bine în cerc pe TikTok, YouTube și Instagram.
+- **Bannerul YouTube** 2560×1440. Textul și personajul sunt în zona de 1546×423 din centru, care se vede pe toate dispozitivele.
+
+Variantele gata exportate sunt în `branding/`.
+
 ## Episoade gata scrise
+
+0. ⭐ **Războiul porcului** (1859): războiul în care singura victimă a fost un porc. *Episodul recomandat pentru lansare.*
 
 1. **Cuza, ales de două ori** (unirea din 1859)
 2. **Războiul cu emu** (Australia, 1932)
