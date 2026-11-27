@@ -83,6 +83,14 @@ Pentru un episod nou:
 
 Dacă schimbi o replică în script, randarea te avertizează. Trebuie regenerată doar replica aceea.
 
+**Pronunție mai bună în română:** vocile generate pronunță mai corect când primesc **text lung** decât replici scurte. De aceea, pentru „Războiul porcului”, textul a fost generat în 4 bucăți lungi (`voice/razboiul-porcului/bucati/`), cu fiecare replică pe paragraf separat, apoi tăiat automat pe replici:
+
+```bash
+python3 render/split-voice.py voice/<episod>/bucati/bucata-0.mp3 voice/<episod>/lines.json 0 8
+```
+
+Scriptul alege pauzele dintre replici, ținând cont că semnele de punctuație din interiorul unei replici (de exemplu „Și porcul? Singura victimă.”) fac și ele pauze. Numele străine se scriu cum se pronunță (Laimăn, San Huan).
+
 ## Cum se scrie scriptul
 
 ```
