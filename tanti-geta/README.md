@@ -1,85 +1,92 @@
-# Tanti Geta: personaj 2D pentru content în română
+# Tanti Geta: Bârfa științifică
 
-**Bârfa științifică cu Tanti Geta.** Vecina de la geam, cu halat înflorat, bigudiuri, ochelari roșii, perna pe pervaz, covor pe perete și mușcate, îți bârfește fapte adevărate din istorie, natură și viață, cu comparații de tipul „crocodil vs. aligator”.
+Tanti Geta e vecina de la etajul 3, cu halat înflorat, bigudiuri, ochelari roșii, papuci pufoși și cafeaua în mână. Povestește istorie, fapte ciudate și comparații din natură, în cadre rapide, ca în seria *Weird History* a lui Gus.
 
-Totul e făcut în cod (HTML, Canvas și Web Audio): personajul, animațiile, efectele video, sunetele și muzica. Nu folosește imagini sau servicii externe. Deschizi `index.html` în Chrome și ai studioul.
+Totul e făcut în cod (HTML, Canvas și Web Audio): personajul, obiectele animate, efectele, sunetele și muzica. Nu folosește imagini sau servicii externe.
 
-**Biblia personajului, formule de hook-uri și strategia pentru TikTok și YouTube Shorts sunt în [STRATEGIE.md](STRATEGIE.md).**
+| Fișier | Ce e |
+|---|---|
+| `index.html` | **Studioul principal, în stilul Gus:** fundal crem, obiect animat în centru, subtitrări scurte cu cuvântul-cheie galben, Tanti Geta jos în stânga, ștampile și etichete |
+| `geam.html` | Stilul vechi, cu Tanti Geta la geamul blocului |
+| `STRATEGIE.md` | Biblia personajului, hook-uri, strategia pentru TikTok și YouTube Shorts |
 
 ## Cum faci un clip
 
-1. Deschide `index.html` în Chrome (pe calculator merge cel mai bine).
-2. Alege un episod gata scris sau scrie-ți scriptul în căsuță.
+1. Deschide `index.html` în Chrome, pe calculator.
+2. Alege un episod gata scris sau scrie-ți scriptul.
 3. Alege de unde vine vocea:
-   - **Microfon live** (recomandat): apeși Înregistrează și citești replicile pe măsură ce apar. Gura ei se mișcă după vocea ta. Treci la replica următoare cu **Space** sau atingând imaginea. **Pune-ți căști**, ca efectele să nu intre în microfon.
-   - **Fișierul meu audio**: înregistrezi vocea separat, o încarci, iar replicile se împart pe durata fișierului.
-   - **Automat, fără voce**: gura se mișcă după text. Bun pentru probă sau dacă pui vocea după, în CapCut.
-4. Apasă **⏺ Înregistrează**. După o numărătoare de 3 secunde, clipul se face singur, cu efectele și muzica în el.
-5. Descarcă clipul (1080×1920). În Chrome iese de obicei .mp4. Unele browsere scot .webm.
+   - **Fișierul meu audio** (recomandat): înregistrezi tot episodul cu vocea ta, de exemplu cu reportofonul de pe telefon, și îl încarci. Studioul găsește singur porțiunile în care vorbești și potrivește subtitrările pe ele.
+   - **Microfon live:** citești din prompterul de sub butoane. Subtitrările merg înainte cât timp vorbești și te așteaptă când faci pauză. Cu Space sau atingând imaginea sari la următoarea. Pune-ți căști.
+   - **Automat, fără voce:** pentru probă, sau dacă pui vocea după, în CapCut.
+4. Apasă **⏺ Înregistrează**. După numărătoarea inversă iese clipul 1080×1920, cu efectele în el.
 
-Ține tabul deschis cât înregistrezi, altfel animația se oprește.
-
-**Opțiuni la „Aspect și sunet”:** fundal verde (chroma key) pentru CapCut, subtitrări și carduri pornite sau oprite, sunete automate (whoosh la card nou, pop la subtitrare), muzică de fundal (se dă mai încet automat când vorbește).
+Ține tabul deschis cât înregistrezi.
 
 ## Cum se scrie scriptul
 
 ```
-# Crocodil sau aligator?
-!serie BÂRFA ȘTIINȚIFICĂ · EP. 1
-!hook 🐊 | CROCODIL SAU ALIGATOR?
-[șocată] Dacă te mușcă ăsta, măcar să știi cine te-a mușcat!
-[șoptește] Psst. Vino la geam.
-!vs 📐 | Crocodil | Bot ascuțit, ca un V || 🥄 | Aligator | Bot lat, ca un U
-[explică] Unu: botul.
-[râde badumts] Ca Costel.
-[veselă tada] Tanti Geta închide geamul. Pa!
+# Cuza, ales de două ori
+!serie BÂRFA ȘTIINȚIFICĂ | #1
+@harta MOLDOVA | 1859
+[explică] În *1859*, | Moldova își alege domn.
++stamp galben ALES!
+[veselă] Pe *Alexandru Ioan Cuza*.
+@unire MOLDOVA | ȚARA ROMÂNEASCĂ | UN SINGUR DOMN
+[râde badumts] Un domn. | Două țări. | *Zero întrebări*.
+@urmeaza 🐦 EMU | 🪖 ARMATA
++eticheta galben FOLLOW
+[bănuitoare] Data viitoare: | cum a pierdut o armată | cu niște *păsări*.
 ```
 
 | Ce scrii | Ce face |
 |---|---|
-| `# Titlu` | Titlul afișat sus |
-| `!serie TEXT` | Eticheta roz de sus (ex. `BÂRFA ȘTIINȚIFICĂ · EP. 7`) |
-| `!hook emoji \| TEXT` | Text uriaș galben care intră cu „BUM” și tremur, pentru primele secunde |
-| `!card emoji \| titlu \| detaliu` | Card cu o singură idee (intră din dreapta cu whoosh) |
-| `!vs emoji \| titlu \| detaliu \|\| emoji \| titlu \| detaliu` | Card de comparație |
-| `[expresie efecte] text` | O replică, cu expresie și oricâte efecte |
-| `// ceva` | Comentariu, nu apare în clip |
+| `# Titlu` | Numele fișierului video |
+| `!serie TEXT \| #1` | Eticheta roz din colț și numărul episodului |
+| `@obiect argumente` | Schimbă obiectul din centru (vezi lista de mai jos) |
+| `+stamp culoare TEXT` | Ștampilă pe obiect, de la replica următoare |
+| `+eticheta culoare TEXT \| SUBTEXT` | Etichetă în dreapta-jos, cât ține replica următoare (ex. `FOLLOW`, `FALS.`) |
+| `[expresie efecte] Text` | Replică. `*cuvinte*` ies galbene, `\|` taie subtitrarea unde vrei |
 
-**Expresii:** `normal`, `mirată`, `bănuitoare`, `veselă`, `supărată`, `explică` (ridică degetul), `șocată` (mâinile la obraji, gura „O”, zoom), `râde` (se scutură de râs), `șoptește` (mâna la gură, zoom mare, subtitrare roz).
+**Culori pentru ștampile și etichete:** `galben`, `rosu`, `negru`, `verde`, `albastru`, `roz`, `alb`, `stampila` (contur roșu, ca o ștampilă adevărată).
 
-**Efecte:**
+**Expresii:** `normal`, `mirată`, `bănuitoare`, `veselă`, `supărată`, `explică` (ridică degetul), `șocată` (mâinile la obraji), `râde`, `șoptește` (mâna la gură, zoom), `umeri` (ridică din umeri).
 
-| Efect | Ce face |
-|---|---|
-| `zoom` | zoom pe față cât ține replica |
-| `shake` / `tremur` | tremură ecranul |
-| `flash` | bliț alb |
-| `boom` | BUM dramatic + tremur + bliț |
-| `whoosh` | fâșșș de tranziție |
-| `pop` | pop scurt |
-| `ding` | clopoțel de „știați că” |
-| `badumts` | ba-dum-ts după poantă |
-| `tobe` | rafală de tobe pentru suspans |
-| `tada` | ta-daaa + confetti |
-| `scratch` | zgârietură de disc („stai, ce?”) |
-| `trist` | trombon trist (fail) |
-| `boing` | boing caraghios |
-| `tic` | ceas de suspans |
-| `confetti` | ploaie de confetti |
-| `ploaie` | ploaie cu emoji-urile de pe cardul curent |
+**Efecte:** `zoom`, `shake`, `flash`, `boom`, `whoosh`, `pop`, `ding`, `badumts`, `tobe`, `tada`, `scratch`, `trist`, `boing`, `tic`, `stamp`, `kaching`, `confetti`, `ploaie`.
 
-În studio, la „Cum scriu scriptul și efectele”, poți apăsa pe fiecare efect ca să-l auzi.
+Subtitrările se taie automat în bucăți de 2–4 cuvinte. Numerele ies automat galbene dacă nu marchezi nimic cu `*`.
 
-Subtitrările sunt în stil TikTok: text mare, cu contur, iar cuvântul spus acum e galben. Replicile lungi sunt tăiate automat. Sus apare o bară de progres.
+### Obiecte
+
+| Obiect | Exemplu | Ce face |
+|---|---|---|
+| emoji | `@emoji 🐊 🐊` sau `@🐊` | Emoji mari care plutesc |
+| ceas | `@ceas 9:00 \| GATA` | Limbile se învârt până la ora dată |
+| cronometru | `@cronometru 38:00` | Numără până la timp |
+| grafic | `@grafic Pauza mea=60 MIN \| Războiul=38 MIN` | Bare care cresc |
+| buletin | `@buletin BULETIN \| NUME: GETA \| FUNCȚIA: VECINĂ` | Card de identitate cu poza ei |
+| pergament | `@pergament ULTIMATUM \| rând \| rând \| Semnat: X` | Rândurile apar pe rând |
+| factura | `@factura FACTURĂ \| Obuze \| Mai multe \| TOTAL: MULT` | Bon cu total roșu |
+| carnet | `@carnet CARNETUL CU BÂRFE \| „text” \| – Geta` | Text care se scrie singur, de mână |
+| trofeu | `@trofeu 38 \| MIN \| RECORD` | Trofeu auriu cu sclipiri |
+| harta | `@harta ZANZIBAR \| 1896` | Insulă cu nume și an |
+| unire | `@unire MOLDOVA \| ȚARA ROMÂNEASCĂ \| ROMÂNIA` | Două bucăți de pământ care se unesc în tricolor |
+| text | `@text BUM!` | Explozie de text |
+| vs | `@vs 🐊 CROCODIL \| 🐊 ALIGATOR` | Comparație |
+| urmeaza | `@urmeaza 🐊 CROCODIL \| 🐊 ALIGATOR` | Ecranul „Data viitoare:” |
+| ziar | `@ziar GAZETA BLOCULUI \| TITLU \| subtitlu \| 📰` | Ziar cu titlu |
+| mesaj | `@mesaj COSTEL \| text` | Telefon: „scrie…” apoi apare mesajul |
+| an | `@an 1897 \| subtitlu` | Calendar care numără până la an |
+| gol | `@gol` | Nimic în centru |
 
 ## Episoade gata scrise
 
-1. Crocodil sau aligator?
-2. Albina sau viespea?
-3. Dracula n-a fost vampir
-4. Broasca râioasă și minciuna cu negii
-5. Iepure de câmp sau de casă?
-6. Stiloul și Petrache Poenaru
+1. **Cuza, ales de două ori** (unirea din 1859)
+2. **Războiul cu emu** (Australia, 1932)
+3. **Crocodil sau aligator?**
+4. **Dracula n-a fost vampir**
+5. **Petrache Poenaru și stiloul**
+
+Fiecare se termină cu „Eu sunt Tanti Geta” și „Data viitoare:” cu episodul următor. Așa se leagă într-o serie.
 
 ## Idei pentru episoade noi
 

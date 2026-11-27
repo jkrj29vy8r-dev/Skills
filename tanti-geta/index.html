@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tanti Geta Studio</title>
+<title>Bârfa Științifică Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fredoka:wght@500;600;700&family=Lilita+One&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#f6f1ea; --panel:#ffffff; --ink:#2b1d2e; --muted:#6d5f70; --line:#e6dbd1;
@@ -26,24 +26,26 @@
   body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Fredoka",system-ui,sans-serif}
   .wrap{max-width:1120px;margin:0 auto;padding:24px 16px 48px;display:grid;gap:28px;grid-template-columns:1fr}
   @media (min-width:900px){
-    .wrap{grid-template-columns:minmax(0,1fr) 500px;align-items:start}
+    .wrap{grid-template-columns:minmax(0,1fr) 520px;align-items:start}
     .stage-col{position:sticky;top:16px}
   }
   #stage{display:block;margin:0 auto;width:min(100%, calc(86vh * 9 / 16));height:auto;aspect-ratio:9/16;
-    border-radius:20px;box-shadow:0 12px 40px rgba(40,20,30,.22);background:#000;cursor:pointer}
+    border-radius:20px;box-shadow:0 12px 40px rgba(40,20,30,.22);background:#fbf7ee;cursor:pointer}
   .hint{color:var(--muted);font-size:14px;text-align:center;margin:10px 0 0}
   .panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px}
   h1{margin:0 0 4px;font-size:30px;line-height:1.1}
   h1 span{color:var(--accent)}
   .lede{margin:0 0 18px;color:var(--muted)}
+  .lede a{color:var(--accent)}
   label.f{display:block;font-weight:600;margin:14px 0 6px}
   select,textarea,input[type=file]{width:100%;font:inherit;color:var(--ink);background:var(--field);
     border:1px solid var(--line);border-radius:12px;padding:10px 12px}
-  textarea{min-height:320px;font:14px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;resize:vertical}
+  textarea{min-height:340px;font:13.5px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;resize:vertical}
   details.help{margin-top:8px;font-size:14px;color:var(--muted)}
   details.help summary{cursor:pointer;color:var(--ink);font-weight:600}
-  details.help code{background:var(--soft);padding:1px 5px;border-radius:6px;color:var(--ink)}
+  details.help code{background:var(--soft);padding:1px 5px;border-radius:6px;color:var(--ink);font-size:12.5px}
   details.help ul{padding-left:18px;margin:8px 0}
+  details.help li{margin:3px 0}
   .fxlist{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
   .fxlist button{padding:4px 10px;font-size:13px;border-radius:999px;font-weight:500}
   fieldset{border:1px solid var(--line);border-radius:14px;margin:16px 0 0;padding:10px 14px 14px}
@@ -53,7 +55,6 @@
   .opt small{display:block;color:var(--muted);font-size:13px;line-height:1.35}
   .row{display:flex;gap:10px 18px;flex-wrap:wrap;align-items:center}
   .row label{display:flex;gap:8px;align-items:center;cursor:pointer}
-  .row select{width:auto}
   input[type=checkbox]{accent-color:var(--accent)}
   #audioRow{margin-top:6px}
   #audioInfo{font-size:13px;color:var(--muted);display:block;margin-top:4px}
@@ -62,6 +63,10 @@
     background:var(--field);color:var(--ink);cursor:pointer;text-align:center;text-decoration:none;display:inline-block}
   button.primary,.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
   button:disabled{opacity:.45;cursor:not-allowed}
+  .prompter{margin-top:14px;border:2px solid var(--accent);border-radius:14px;padding:12px 14px;background:var(--soft)}
+  .prompter .now{font-size:22px;font-weight:600;line-height:1.3}
+  .prompter .now b{background:var(--accent);color:var(--accent-ink);border-radius:6px;padding:0 4px}
+  .prompter .next{margin-top:6px;color:var(--muted);font-size:15px}
   #status{min-height:24px;margin:12px 0 0;font-weight:500}
   #out{margin-top:10px;display:grid;gap:10px}
   #out video{width:100%;max-height:420px;border-radius:14px;background:#000}
@@ -71,13 +76,13 @@
 <body>
 <main class="wrap">
   <section class="stage-col">
-    <canvas id="stage" width="1080" height="1920" aria-label="Tanti Geta la geam"></canvas>
+    <canvas id="stage" width="1080" height="1920" aria-label="Tanti Geta, bârfa științifică"></canvas>
     <p class="hint" id="hint">Previzualizare 1080×1920, gata de TikTok și YouTube Shorts.</p>
   </section>
 
   <section class="panel">
-    <h1>Tanti Geta <span>studio</span></h1>
-    <p class="lede">Bârfa științifică, direct de la geam. Scrii scriptul cu efecte, apeși „Înregistrează” și iese clipul vertical cu sunete, zoom-uri și subtitrări animate.</p>
+    <h1>Bârfa științifică <span>studio</span></h1>
+    <p class="lede">Tanti Geta povestește istorie și fapte ciudate în cadre rapide, cu obiecte animate, ștampile și subtitrări scurte. Stilul vechi, cu geamul, e în <a href="geam.html">geam.html</a>.</p>
 
     <label class="f" for="preset">Episod gata scris</label>
     <select id="preset"></select>
@@ -85,55 +90,51 @@
     <label class="f" for="script">Script</label>
     <textarea id="script" spellcheck="false"></textarea>
     <details class="help">
-      <summary>Cum scriu scriptul și efectele</summary>
+      <summary>Cum scriu scriptul</summary>
       <ul>
-        <li><code># Titlu</code> e titlul episodului. <code>!serie BÂRFA ȘTIINȚIFICĂ · EP. 7</code> e eticheta roz de sus.</li>
-        <li><code>!hook 🐊 | TEXT MARE</code> e textul uriaș din primele secunde, care intră cu „bum”.</li>
-        <li><code>!card 🐊 | Titlu | Detaliu</code> e un card cu o idee. <code>!vs 🐊 | A | detaliu || 🐊 | B | detaliu</code> e o comparație.</li>
-        <li><code>[expresie efecte] Text</code> e o replică. De exemplu: <code>[șocată boom zoom] Nu se poate!</code></li>
-        <li>Expresii: <b>normal, mirată, bănuitoare, veselă, supărată, explică, șocată, râde, șoptește</b>.</li>
-        <li>Efecte (le pui după expresie, oricâte):</li>
+        <li><code># Titlu</code> e numele fișierului. <code>!serie BÂRFA ȘTIINȚIFICĂ | #1</code> e eticheta din colț.</li>
+        <li><code>@obiect argumente</code> schimbă obiectul din centru. Rămâne până la următorul <code>@</code>.</li>
+        <li><code>+stamp culoare TEXT</code> pune o ștampilă pe obiect, de la replica următoare. Culori: galben, rosu, negru, verde, albastru, roz, alb, stampila.</li>
+        <li><code>+eticheta culoare TEXT | SUBTEXT</code> pune o etichetă în dreapta-jos, cât ține replica următoare.</li>
+        <li><code>[expresie efecte] Text cu *cuvinte cheie*.</code> e o replică. Cuvintele dintre steluțe ies galbene. Subtitrările se taie singure în bucăți scurte, iar cu <code>|</code> tai tu unde vrei.</li>
+        <li>Expresii: <b>normal, mirată, bănuitoare, veselă, supărată, explică, șocată, râde, șoptește, umeri</b>.</li>
       </ul>
+      <b>Obiecte:</b>
+      <ul id="propHelp"></ul>
+      <b>Efecte</b> (apasă ca să le auzi):
       <div class="fxlist" id="fxlist"></div>
-      <small>Apasă pe un efect ca să-l auzi. <b>zoom</b> ține cât replica, restul pornesc la începutul ei.</small>
     </details>
 
     <fieldset>
       <legend>Vocea</legend>
-      <label class="opt"><input type="radio" name="mode" value="mic" checked>
-        <span><b>Microfon live</b> (recomandat)<small>Citești replicile pe măsură ce apar, iar gura ei se mișcă după vocea ta. Treci la replica următoare cu Space sau atingând imaginea. Pune-ți căști, ca efectele să nu intre în microfon.</small></span></label>
-      <label class="opt"><input type="radio" name="mode" value="audio">
-        <span><b>Fișierul meu audio</b><small>Înregistrezi vocea separat, apoi o încarci aici. Replicile se împart pe durata fișierului.</small></span></label>
-      <div id="audioRow" class="hidden">
+      <label class="opt"><input type="radio" name="mode" value="audio" checked>
+        <span><b>Fișierul meu audio</b> (recomandat)<small>Înregistrezi tot episodul cu vocea ta, apoi îl încarci. Subtitrările se aliniază singure pe porțiunile în care vorbești.</small></span></label>
+      <div id="audioRow">
         <input type="file" id="audioFile" accept="audio/*">
         <span id="audioInfo">Niciun fișier ales.</span>
       </div>
+      <label class="opt"><input type="radio" name="mode" value="mic">
+        <span><b>Microfon live</b><small>Citești textul din prompter. Subtitrările merg înainte singure cât timp vorbești și te așteaptă când faci pauză. Space sau atingerea imaginii sar la următoarea. Pune-ți căști.</small></span></label>
       <label class="opt"><input type="radio" name="mode" value="auto">
         <span><b>Automat, fără voce</b><small>Gura se mișcă după text. Bun pentru probă sau dacă pui vocea după, în CapCut.</small></span></label>
     </fieldset>
 
     <fieldset>
-      <legend>Aspect și sunet</legend>
+      <legend>Opțiuni</legend>
       <div class="row">
-        <label>Fundal
-          <select id="bg">
-            <option value="bloc">Geamul de la bloc</option>
-            <option value="green">Verde (chroma key)</option>
-          </select>
-        </label>
-        <label><input type="checkbox" id="subs" checked> Subtitrări</label>
-        <label><input type="checkbox" id="cards" checked> Carduri</label>
-        <label><input type="checkbox" id="sfxAuto" checked> Sunete automate (whoosh, pop)</label>
-        <label><input type="checkbox" id="music" checked> Muzică de fundal</label>
+        <label><input type="checkbox" id="sfxAuto" checked> Sunete automate</label>
+        <label><input type="checkbox" id="music"> Muzică de fundal</label>
+        <label><input type="checkbox" id="green"> Fundal verde</label>
       </div>
     </fieldset>
 
     <div class="btns">
       <button id="btnPlay">▶ Previzualizează</button>
       <button id="btnRec" class="primary">⏺ Înregistrează</button>
-      <button id="btnNext" disabled>⏭ Replica următoare</button>
+      <button id="btnNext" disabled>⏭ Următoarea</button>
       <button id="btnStop" disabled>⏹ Stop</button>
     </div>
+    <div id="prompter" class="prompter hidden"><div class="now" id="pNow"></div><div class="next" id="pNext"></div></div>
     <p id="status" role="status"></p>
     <div id="out"></div>
   </section>
@@ -141,22 +142,28 @@
 
 <script>
 /* =========================================================
-   Tanti Geta Studio: personaj 2D, efecte video și sonore,
-   totul generat în cod (Canvas + Web Audio).
+   Bârfa științifică cu Tanti Geta: totul desenat în cod.
    ========================================================= */
 const W = 1080, H = 1920, TAU = Math.PI * 2;
 const $ = id => document.getElementById(id);
 const cv = $('stage'), ctx = cv.getContext('2d');
 const FONT = '"Fredoka","Trebuchet MS",system-ui,sans-serif';
+const CAP = '"Lilita One","Fredoka",Impact,sans-serif';
+const HAND = '"Caveat","Comic Sans MS",cursive';
 const EMOJI = '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Twemoji Mozilla",sans-serif';
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, k) => a + (b - a) * k;
+const easeOut = x => 1 - Math.pow(1 - x, 3);
+const easeInOut = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
 const easeOutBack = x => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
 
+const BG = '#fbf7ee', INK = '#1d1220', YEL = '#ffc927', RED = '#e5484d';
 const OUT = '#3b2620', SKIN = '#f3c4a2', HAIR = '#d3602f', HAIR_D = '#a8441d';
 const ROBE = '#7fa7e6', COLLAR = '#f59bbd', LIP = '#cf2346';
+const PX = 540, PY = 590;                 // centrul obiectului
+const CHX = 255, CHY = 1640, CHS = .55;    // Tanti Geta (picioarele)
 
-/* ---------- expresii (parametri faciali + poză mâini + zoom) ---------- */
+/* ---------- expresii ---------- */
 const BASE = { bl: 0, br: 0, frown: 0, eye: 1, happy: 0, smile: .35, tilt: 0, blush: .45, pupil: 1, gasp: 0, laugh: 0, zoom: 1 };
 const EXPR = {
   normal: {},
@@ -165,86 +172,162 @@ const EXPR = {
   vesela: { bl: .5, br: .5, happy: 1, smile: 1, tilt: .05, blush: 1 },
   suparata: { bl: -.3, br: -.3, frown: 1, eye: .85, smile: -.7, blush: .8, pupil: .9 },
   explica: { bl: .6, br: .1, smile: .3, tilt: .04, blush: .5, pose: 'finger' },
-  socata: { bl: 1.3, br: 1.3, eye: 1.42, pupil: .55, smile: -.2, gasp: 1, blush: .9, pose: 'cheeks', zoom: 1.1 },
+  socata: { bl: 1.3, br: 1.3, eye: 1.42, pupil: .55, smile: -.2, gasp: 1, blush: .9, pose: 'cheeks', zoom: 1.08 },
   rade: { bl: .6, br: .6, happy: 1, smile: 1, blush: 1.2, laugh: 1, tilt: .06 },
-  sopteste: { bl: .9, br: -.2, eye: .7, smile: .25, tilt: -.08, blush: .6, pose: 'whisper', zoom: 1.28 },
+  sopteste: { bl: .9, br: -.2, eye: .7, smile: .25, tilt: -.08, blush: .6, pose: 'whisper', zoom: 1.22 },
+  umeri: { bl: .9, br: .9, eye: .9, smile: -.05, tilt: .07, blush: .4, pose: 'shrug' },
 };
 for (const k in EXPR) EXPR[k] = { ...BASE, pose: 'rest', ...EXPR[k] };
-const ALIASES = { surprinsa: 'mirata', uimita: 'mirata', suspicioasa: 'banuitoare', fericita: 'vesela',
-  nervoasa: 'suparata', furioasa: 'suparata', arata: 'explica', deget: 'explica', speriata: 'socata', soc: 'socata',
-  razand: 'rade', haha: 'rade', soptita: 'sopteste', secret: 'sopteste', barfa: 'sopteste', psst: 'sopteste' };
+const ALIASES = { surprinsa: 'mirata', uimita: 'mirata', suspicioasa: 'banuitoare', fericita: 'vesela', nervoasa: 'suparata',
+  furioasa: 'suparata', arata: 'explica', deget: 'explica', speriata: 'socata', soc: 'socata', razand: 'rade', haha: 'rade',
+  soptita: 'sopteste', secret: 'sopteste', barfa: 'sopteste', psst: 'sopteste', shrug: 'umeri', habar: 'umeri' };
+const POSES = {
+  rest:    { le: [-250, -500], lh: [-172, -415], re: [235, -505], rh: [172, -440], finger: 0, cup: 1, palms: 0 },
+  finger:  { le: [-268, -690], lh: [-245, -872], re: [235, -505], rh: [172, -440], finger: 1, cup: 1, palms: 0 },
+  shrug:   { le: [-235, -470], lh: [-322, -560], re: [235, -470], rh: [322, -560], finger: 0, cup: 0, palms: 1 },
+  cheeks:  { le: [-245, -560], lh: [-150, -745], re: [245, -560], rh: [150, -745], finger: 0, cup: 0, palms: 0 },
+  whisper: { le: [-235, -560], lh: [-88, -712], re: [235, -505], rh: [172, -440], finger: 0, cup: 1, palms: 0 },
+};
 
 /* ---------- efecte ---------- */
 const FX_INFO = {
-  zoom: 'zoom pe față cât ține replica', shake: 'tremură ecranul', flash: 'bliț alb', boom: 'BUM dramatic + tremur',
-  whoosh: 'fâșșș de tranziție', pop: 'pop scurt', ding: 'clopoțel de „știați că”', badumts: 'ba-dum-ts după poantă',
-  tobe: 'rafală de tobe pentru suspans', tada: 'ta-daaa + confetti', scratch: 'zgârietură de disc', trist: 'trombon trist (fail)',
-  boing: 'boing caraghios', tic: 'ceas de suspans', confetti: 'ploaie de confetti', ploaie: 'ploaie cu emoji-ul de pe card',
+  zoom: 'zoom pe obiect cât ține replica', shake: 'tremură ecranul', flash: 'bliț alb', boom: 'BUM + tremur',
+  whoosh: 'fâșșș', pop: 'pop', ding: 'clopoțel', badumts: 'ba-dum-ts după poantă', tobe: 'tobe de suspans',
+  tada: 'ta-daaa + confetti', scratch: 'zgârietură de disc', trist: 'trombon trist', boing: 'boing', tic: 'ceas',
+  stamp: 'bufnet de ștampilă', kaching: 'casa de marcat', confetti: 'confetti', ploaie: 'ploaie de emoji',
 };
-const FX_ALIAS = { tremur: 'shake', cutremur: 'shake', blitz: 'flash', bum: 'boom', fas: 'whoosh', rimshot: 'badumts',
-  drumroll: 'tobe', suspans: 'tic', ceas: 'tic', fail: 'trist', trombon: 'trist', disc: 'scratch', zgarietura: 'scratch' };
+const FX_ALIAS = { tremur: 'shake', bum: 'boom', rimshot: 'badumts', drumroll: 'tobe', suspans: 'tic', ceas: 'tic',
+  fail: 'trist', trombon: 'trist', disc: 'scratch', stampila: 'stamp', bani: 'kaching' };
 
-const DEFAULT_CARD = { type: 'card', emoji: '👵', title: 'Tanti Geta', detail: 'Știe tot. Spune tot.' };
+/* ---------- obiecte (props) ---------- */
+const PROP_INFO = {
+  emoji: ['@emoji 🐊 🐊', 'unul sau mai multe emoji mari'],
+  ceas: ['@ceas 9:00 | GATA', 'ceas cu limbile care se învârt până la ora dată'],
+  cronometru: ['@cronometru 38:00', 'cronometru care numără până la timp'],
+  grafic: ['@grafic Pauza mea=60 MIN | Războiul=38 MIN', 'bare care cresc'],
+  buletin: ['@buletin BULETIN | NUME: GETA | FUNCȚIA: VECINĂ', 'card de identitate cu poza ei'],
+  pergament: ['@pergament ULTIMATUM | rând | rând | Semnat: X', 'pergament, rândurile apar pe rând'],
+  factura: ['@factura FACTURĂ | Obuze | Mai multe obuze | TOTAL: MULT', 'bon cu total'],
+  carnet: ['@carnet CARNETUL CU BÂRFE | „text scris de mână” | – Geta', 'carnet cu text care se scrie singur'],
+  trofeu: ['@trofeu 38 | MIN | RECORD', 'trofeu auriu'],
+  harta: ['@harta ZANZIBAR | 1896', 'insulă cu nume și an'],
+  unire: ['@unire MOLDOVA | ȚARA ROMÂNEASCĂ | ROMÂNIA', 'două bucăți de pământ care se unesc'],
+  text: ['@text BUM!', 'explozie de text'],
+  vs: ['@vs 🐊 CROCODIL | 🐊 ALIGATOR', 'comparație'],
+  urmeaza: ['@urmeaza 🐊 CROCODIL | 🐊 ALIGATOR', '„Data viitoare:”'],
+  ziar: ['@ziar GAZETA BLOCULUI | TITLU | subtitlu | 📰', 'ziar cu titlu'],
+  mesaj: ['@mesaj COSTEL | text', 'mesaj pe telefon (scrie... apoi apare)'],
+  an: ['@an 1897 | subtitlu', 'calendar care numără până la an'],
+  gol: ['@gol', 'nimic în centru'],
+};
+const PROP_ALIAS = { ceasul: 'ceas', clock: 'ceas', stopwatch: 'cronometru', cronometrul: 'cronometru', chart: 'grafic',
+  id: 'buletin', pasaport: 'buletin', scroll: 'pergament', invoice: 'factura', bon: 'factura', raport: 'carnet', clipboard: 'carnet',
+  cupa: 'trofeu', insula: 'harta', tara: 'harta', bum: 'text', next: 'urmeaza', gazeta: 'ziar', sms: 'mesaj', whatsapp: 'mesaj',
+  calendar: 'an', anul: 'an', nimic: 'gol' };
+
+const TAGS = {
+  galben: { fill: YEL, ink: INK, line: INK }, rosu: { fill: RED, ink: '#fff', line: INK }, negru: { fill: INK, ink: YEL, line: INK },
+  verde: { fill: '#3f9b5a', ink: '#fff', line: INK }, albastru: { fill: '#3d8bfd', ink: '#fff', line: INK },
+  roz: { fill: '#f6a5b8', ink: '#8a1730', line: INK }, alb: { fill: '#fff', ink: INK, line: INK },
+  stampila: { fill: null, ink: '#d62f3a', line: '#d62f3a', stamp: 1 },
+};
 
 function seeded(seed) { return () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }; }
-const ROBE_FLOWERS = (() => { const r = seeded(11), a = [];
-  for (let i = 0; i < 36; i++) a.push({ x: -275 + r() * 550, y: r() * 230, r: 12 + r() * 10, c: ['#ffffff', '#ffb3cf', '#ffe08a'][i % 3] });
+const FLOWERS = (() => { const r = seeded(5), a = [];
+  for (let i = 0; i < 44; i++) a.push({ x: -260 + r() * 520, y: -680 + r() * 540, r: 13 + r() * 9, c: ['#ffffff', '#ffb3cf', '#ffe08a'][i % 3] });
   return a; })();
 
 /* ---------- stare ---------- */
 const S = {
-  p: { ...EXPR.normal }, target: EXPR.normal,
-  hands: { lx: 460, ly: 1738, rx: 620, ry: 1738, finger: 0 },
-  mouth: 0, blinkAmt: 1, blinkPhase: -1, nextBlink: 2,
-  look: { x: 0, y: 0 }, lookT: { x: 0, y: 0 }, nextLook: 1,
-  card: null, cardAnim: 1, sub: '', subAnim: 1, subProg: -1, subExpr: 'normal',
-  camZoom: 1, shake: 0, flash: 0, parts: [], progress: 0,
-  countdown: 0, preview: null, ep: null, curItem: null, duck: false,
+  p: { ...EXPR.normal }, target: EXPR.normal, pose: JSON.parse(JSON.stringify(POSES.rest)),
+  mouth: 0, blinkAmt: 1, blinkPhase: -1, nextBlink: 2, look: { x: 0, y: 0 }, lookT: { x: 0, y: 0 }, nextLook: 1,
+  prop: null, propT0: 0, clockFrom: 0, msgDing: false, lastTyped: 0,
+  cap: null, capT0: 0, sticker: null, stickerT0: 0, stampT: new Map(), curIdx: 0,
+  cam: { z: 1, x: 540, y: 960 }, shake: 0, flash: 0, parts: [],
+  countdown: 0, preview: null, ep: null,
 };
-const opts = { bg: 'bloc', subs: true, cards: true, sfxAuto: true, music: true };
+const opts = { sfxAuto: true, music: false, green: false };
 
 /* ================= PARSARE SCRIPT ================= */
 function normKey(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim(); }
-function parts(s) { const p = (s || '').split('|').map(x => x.trim()); return { emoji: p[0] || '', title: p[1] || '', detail: p.slice(2).join(' | ') }; }
-function chunkText(text, max = 52) {
-  const sentences = text.match(/[^.!?…]+[.!?…]*["”»]?\s*/g) || [text];
-  const out = []; let cur = '';
-  const push = () => { if (cur.trim()) out.push(cur.trim()); cur = ''; };
-  for (let s of sentences) {
-    s = s.trim(); if (!s) continue;
-    if (s.length > max) {
-      push(); let w = '';
-      for (const word of s.split(/\s+/)) {
-        if ((w + ' ' + word).trim().length > max) { out.push(w.trim()); w = word; } else w = (w + ' ' + word).trim();
-      }
-      cur = w; continue;
-    }
-    if ((cur + ' ' + s).trim().length > max) push();
-    cur = (cur + ' ' + s).trim();
+function takeStyle(s) {
+  const m = s.trim().match(/^(\S+)\s+(.*)$/);
+  if (m && TAGS[normKey(m[1])]) return { style: normKey(m[1]), text: m[2].trim() };
+  return { style: null, text: s.trim() };
+}
+function lineWords(text) {
+  const hasStar = text.includes('*');
+  let hl = false; const words = [];
+  for (const tok of text.replace(/\|/g, ' | ').split(/\s+/)) {
+    if (!tok) continue;
+    if (tok === '|') { if (words.length) words[words.length - 1].brk = true; continue; }
+    let w = '', h = false;
+    for (const ch of tok) { if (ch === '*') { hl = !hl; continue; } w += ch; if (hl && /\S/.test(ch)) h = true; }
+    if (!w) continue;
+    if (!hasStar && /\d/.test(w)) h = true;
+    words.push({ w, hl: h });
   }
-  push(); return out;
+  return words;
+}
+function chunkWords(words, max = 21) {
+  const out = []; let cur = [], len = 0;
+  for (const wd of words) {
+    const add = (cur.length ? 1 : 0) + wd.w.length;
+    if (cur.length && len + add > max) { out.push(cur); cur = []; len = 0; }
+    len += (cur.length ? 1 : 0) + wd.w.length; cur.push(wd);
+    if (wd.brk || /[.!?…:;]["”»]?$/.test(wd.w) || (/,$/.test(wd.w) && len >= 12)) { out.push(cur); cur = []; len = 0; }
+  }
+  if (cur.length) out.push(cur);
+  return out;
+}
+function parseTime(s) { const m = String(s || '').match(/(\d+)\s*[:.]\s*(\d+)/); return m ? [+m[1], +m[2]] : [+(s || 0) || 0, 0]; }
+function makeProp(type, args, start) {
+  const p = { type, args, start, stamps: [] };
+  if (type === 'ceas') { const [h, m] = parseTime(args[0]); p.min = h * 60 + m; }
+  if (type === 'cronometru') { const [a, b] = parseTime(args[0]); p.sec = a * 60 + b; }
+  if (type === 'grafic') p.bars = args.map(s => {
+    const [l, v = ''] = s.split('=');
+    const num = parseFloat(v.replace(/[^\d.,]/g, '').replace(/\.(?=\d{3}\b)/g, '').replace(',', '.')) || 0;
+    return { l: (l || '').trim(), vs: v.trim(), v: num };
+  });
+  return p;
 }
 function parseScript(src) {
-  const ep = { title: '', serie: '', items: [], firstCard: null }; let card = null, m;
+  const ep = { title: '', serie: ['BÂRFA ȘTIINȚIFICĂ', ''], items: [], lines: [] };
+  let prop = null, pendingSticker = null, m;
   for (const raw of src.split(/\r?\n/)) {
     const line = raw.trim(); if (!line || line.startsWith('//')) continue;
     if (line.startsWith('#')) { ep.title = line.replace(/^#+\s*/, ''); continue; }
-    if ((m = line.match(/^!serie\s+(.*)$/i))) { ep.serie = m[1].trim(); continue; }
-    if ((m = line.match(/^!vs\s+(.*)$/i))) { const [a, b] = m[1].split('||'); card = { type: 'vs', a: parts(a), b: parts(b) }; ep.firstCard ||= card; continue; }
-    if ((m = line.match(/^!card\s+(.*)$/i))) { card = { type: 'card', ...parts(m[1]) }; ep.firstCard ||= card; continue; }
-    if ((m = line.match(/^!hook\s+(.*)$/i))) { const p = m[1].split('|').map(x => x.trim()); card = p.length > 1 ? { type: 'hook', emoji: p[0], title: p.slice(1).join(' ') } : { type: 'hook', emoji: '', title: p[0] }; ep.firstCard ||= card; continue; }
+    if ((m = line.match(/^!serie\s+(.*)$/i))) { const p = m[1].split('|').map(s => s.trim()); ep.serie = [p[0] || '', p[1] || '']; continue; }
+    if ((m = line.match(/^@(\S+)\s*(.*)$/))) {
+      let type = normKey(m[1]); type = PROP_ALIAS[type] || type;
+      let args = m[2] ? m[2].split('|').map(s => s.trim()) : [];
+      if (!PROP_INFO[type]) { args = [(m[1] + ' ' + m[2]).trim()]; type = /[a-z]/i.test(m[1]) ? 'text' : 'emoji'; }
+      prop = makeProp(type, args, ep.items.length);
+      continue;
+    }
+    if ((m = line.match(/^\+(stamp|stampila|ștampilă|eticheta|etichetă|sticker)\s+(.*)$/i))) {
+      const kind = normKey(m[1]);
+      const { style, text } = takeStyle(m[2]);
+      if (kind === 'eticheta' || kind === 'sticker') { const [a, b = ''] = text.split('|').map(s => s.trim()); pendingSticker = { text: a, sub: b, style: style || 'galben' }; }
+      else if (prop) prop.stamps.push({ text, style: style || ['galben', 'rosu', 'negru'][prop.stamps.length % 3], at: ep.items.length, slot: prop.stamps.length });
+      continue;
+    }
     let expr = 'normal', text = line; const fx = [];
     if ((m = line.match(/^\[([^\]]*)\]\s*(.*)$/))) {
       text = m[2];
       for (let tok of normKey(m[1]).split(/[\s,+]+/).filter(Boolean)) {
         if (EXPR[tok] || ALIASES[tok]) { expr = EXPR[tok] ? tok : ALIASES[tok]; continue; }
-        tok = FX_ALIAS[tok] || tok;
-        if (FX_INFO[tok]) fx.push(tok);
+        tok = FX_ALIAS[tok] || tok; if (FX_INFO[tok]) fx.push(tok);
       }
     }
-    if (!text) continue;
-    const zoom = fx.includes('zoom');
-    chunkText(text).forEach((c, i) => ep.items.push({ text: c, expr, card, zoom, fx: i === 0 ? fx.filter(f => f !== 'zoom') : [] }));
+    const words = lineWords(text); if (!words.length) continue;
+    const lineIdx = ep.lines.length; ep.lines.push(words.map(w => w.w).join(' '));
+    const zoom = fx.includes('zoom'), sticker = pendingSticker; pendingSticker = null;
+    chunkWords(words).forEach((ws, i) => ep.items.push({
+      words: ws, text: ws.map(w => w.w).join(' '), expr, prop, sticker, zoom, line: lineIdx,
+      fx: i === 0 ? fx.filter(f => f !== 'zoom') : [],
+    }));
   }
   return ep;
 }
@@ -254,112 +337,38 @@ function rr(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x 
 function circ(x, y, r) { ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); }
 function ell(x, y, rx, ry) { ctx.beginPath(); ctx.ellipse(x, y, Math.max(rx, .1), Math.max(ry, .1), 0, 0, TAU); }
 function seg(x1, y1, x2, y2) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); }
+function fillStroke(fill, lw = 8, line = OUT) { ctx.fillStyle = fill; ctx.fill(); ctx.lineWidth = lw; ctx.strokeStyle = line; ctx.stroke(); }
 function wrap(text, maxW) {
   const words = text.split(/\s+/), lines = []; let cur = '';
   for (const w of words) { const t = cur ? cur + ' ' + w : w; if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t; }
   if (cur) lines.push(cur); return lines;
 }
-function fitWrap(text, weight, size, maxW, maxLines, minSize = 24) {
-  let lines;
-  for (;;) { ctx.font = `${weight} ${size}px ${FONT}`; lines = wrap(text, maxW); if (lines.length <= maxLines || size <= minSize) break; size -= 2; }
+function fitFont(text, font, size, maxW, min = 18) { for (;;) { ctx.font = font.replace('$', size); if (ctx.measureText(text).width <= maxW || size <= min) return size; size -= 2; } }
+function fitWrap(text, font, size, maxW, maxLines, min = 18) {
+  let lines; for (;;) { ctx.font = font.replace('$', size); lines = wrap(text, maxW); if (lines.length <= maxLines || size <= min) break; size -= 2; }
   return { lines: lines.slice(0, maxLines), size };
 }
-
-/* ================= DESEN: decor ================= */
-function cloud(x, y, k) { for (const [dx, dy, r] of [[0, 0, 50], [55, -20, 60], [115, 0, 48], [55, 18, 50]]) { circ(x + dx * k, y + dy * k, r * k); ctx.fill(); } }
-function drawBackdrop(t) {
-  const g = ctx.createLinearGradient(0, 0, 0, 900); g.addColorStop(0, '#a9dcff'); g.addColorStop(1, '#ffe6cf');
-  ctx.fillStyle = g; ctx.fillRect(-60, -60, W + 120, 960);
-  ctx.fillStyle = 'rgba(255,255,255,.85)';
-  cloud(((t * 12) % 1400) - 250, 330, 1); cloud(((t * 8 + 700) % 1400) - 250, 820, .8);
-  ctx.fillStyle = '#ecdcc0'; ctx.fillRect(-60, 880, W + 120, H - 820);
-  ctx.strokeStyle = '#d7c3a0'; ctx.lineWidth = 4;
-  for (let y = 880; y < H + 60; y += 250) seg(-60, y, W + 60, y);
-  seg(60, 880, 60, H + 60); seg(1020, 880, 1020, H + 60);
+function up(s) { return (s || '').toLocaleUpperCase('ro'); }
+function drawEmoji(e, x, y, size) { if (!e) return; ctx.font = `${size}px ${EMOJI}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#000'; ctx.fillText(e, x, y); }
+function drawTag(text, x, y, size, style = 'galben', rot = 0, align = 'center', maxW = 520) {
+  const st = TAGS[style] || TAGS.galben; text = up(text);
+  size = fitFont(text, `$px ${CAP}`, size, maxW - size);
+  const w = ctx.measureText(text).width, padX = size * .42, h = size * 1.28, bw = w + padX * 2;
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+  const x0 = align === 'left' ? 0 : -bw / 2;
+  if (st.fill) { ctx.fillStyle = 'rgba(29,18,32,.9)'; rr(x0 + 5, -h / 2 + 6, bw, h, 7); ctx.fill(); ctx.fillStyle = st.fill; rr(x0, -h / 2, bw, h, 7); ctx.fill(); }
+  ctx.lineWidth = st.stamp ? 7 : 5; ctx.strokeStyle = st.line; rr(x0, -h / 2, bw, h, 7); ctx.stroke();
+  if (st.stamp) { ctx.lineWidth = 3; rr(x0 + 8, -h / 2 + 8, bw - 16, h - 16, 4); ctx.stroke(); }
+  ctx.fillStyle = st.ink; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(text, x0 + padX, size * .06);
+  ctx.restore(); return bw;
 }
-function curtain(x, dir, t) {
-  const y = 1150, w = 150, h = 630, sway = Math.sin(t * .9 + dir) * 6;
-  ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + dir * w, y);
-  ctx.quadraticCurveTo(x + dir * (w * .45 + sway), y + h * .55, x + dir * w * .9, y + h);
-  ctx.lineTo(x, y + h); ctx.closePath();
-  ctx.fillStyle = 'rgba(250,248,240,.93)'; ctx.fill();
-  ctx.save(); ctx.clip(); ctx.fillStyle = 'rgba(196,184,168,.6)';
-  let row = 0;
-  for (let yy = y + 20; yy < y + h; yy += 34, row++) for (let xx = 10; xx < w; xx += 34) { circ(x + dir * (xx + (row % 2) * 17), yy, 6); ctx.fill(); }
-  ctx.strokeStyle = 'rgba(160,150,135,.5)'; ctx.lineWidth = 3;
-  for (let k = 1; k < 4; k++) { ctx.beginPath(); ctx.moveTo(x + dir * k * 36, y); ctx.quadraticCurveTo(x + dir * (k * 30 + sway), y + h * .5, x + dir * k * 32, y + h); ctx.stroke(); }
-  ctx.restore();
-}
-function drawWindow(t) {
-  ctx.fillStyle = '#f4f1ea'; rr(100, 1120, 880, 680, 14); ctx.fill(); ctx.strokeStyle = OUT; ctx.lineWidth = 6; ctx.stroke();
-  const g = ctx.createLinearGradient(0, 1150, 0, 1780); g.addColorStop(0, '#4a3a40'); g.addColorStop(1, '#2a2024');
-  ctx.fillStyle = g; ctx.fillRect(130, 1150, 820, 630);
-  ctx.fillStyle = '#6b1f2a'; ctx.fillRect(240, 1185, 600, 380);
-  ctx.strokeStyle = '#d9a441'; ctx.lineWidth = 10; ctx.strokeRect(262, 1207, 556, 336);
-  ctx.lineWidth = 4; ctx.strokeRect(284, 1229, 512, 292);
-  for (let i = 0; i < 7; i++) for (let j = 0; j < 4; j++) {
-    const x = 315 + i * 75, y = 1265 + j * 72, s = 20;
-    ctx.fillStyle = (i + j) % 2 ? '#d9a441' : '#2f5d7c';
-    ctx.beginPath(); ctx.moveTo(x, y - s); ctx.lineTo(x + s, y); ctx.lineTo(x, y + s); ctx.lineTo(x - s, y); ctx.closePath(); ctx.fill();
-  }
-  const glow = ctx.createRadialGradient(540, 1200, 20, 540, 1200, 520);
-  glow.addColorStop(0, 'rgba(255,205,130,.22)'); glow.addColorStop(1, 'rgba(255,205,130,0)');
-  ctx.fillStyle = glow; ctx.fillRect(130, 1150, 820, 630);
-  curtain(130, 1, t); curtain(950, -1, t);
-  ctx.fillStyle = '#c9a46a'; ctx.fillRect(122, 1146, 836, 12);
-}
-function flower(x, y, r, c) {
-  ctx.fillStyle = c;
-  for (let k = 0; k < 5; k++) { const a = k * TAU / 5; circ(x + Math.cos(a) * r * .8, y + Math.sin(a) * r * .8, r * .6); ctx.fill(); }
-  ctx.fillStyle = c === '#ffe08a' ? '#e76f51' : '#ffcf3f'; circ(x, y, r * .38); ctx.fill();
-}
-function drawPot(x, t) {
-  ctx.lineWidth = 4; ctx.strokeStyle = '#2f6b25'; ctx.fillStyle = '#4f9a3c';
-  for (const [dx, dy, r] of [[-44, 1655, 32], [42, 1650, 30], [0, 1632, 34], [-20, 1600, 26], [24, 1606, 26]]) { circ(x + dx, dy, r); ctx.fill(); ctx.stroke(); }
-  const sw = Math.sin(t * 1.3 + x) * 4;
-  for (const [dx, dy] of [[-34, 1585], [30, 1575], [0, 1548]]) {
-    const cx = x + dx + sw, cy = dy;
-    for (let k = 0; k < 7; k++) { const a = k * TAU / 7; ctx.fillStyle = '#e63946'; circ(cx + Math.cos(a) * 18, cy + Math.sin(a) * 18, 12); ctx.fill(); }
-    ctx.fillStyle = '#ff8fa3'; circ(cx, cy, 9); ctx.fill();
-  }
-  ctx.fillStyle = '#c8693e'; ctx.strokeStyle = OUT; ctx.lineWidth = 5;
-  ctx.beginPath(); ctx.moveTo(x - 62, 1690); ctx.lineTo(x + 62, 1690); ctx.lineTo(x + 48, 1776); ctx.lineTo(x - 48, 1776); ctx.closePath(); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = '#d97b4d'; rr(x - 68, 1680, 136, 24, 8); ctx.fill(); ctx.stroke();
-}
-function drawSill() {
-  ctx.fillStyle = 'rgba(0,0,0,.15)'; ctx.fillRect(80, 1834, 920, 18);
-  ctx.fillStyle = '#d9d2c6'; ctx.fillRect(70, 1776, 940, 58);
-  ctx.fillStyle = '#ebe5da'; ctx.fillRect(70, 1776, 940, 16);
-  ctx.strokeStyle = OUT; ctx.lineWidth = 5; ctx.strokeRect(70, 1776, 940, 58);
-}
-function drawPillow() {
-  ctx.fillStyle = '#fbf6ec'; ctx.strokeStyle = OUT; ctx.lineWidth = 6;
-  rr(205, 1700, 670, 94, 44); ctx.fill(); ctx.stroke();
-  ctx.strokeStyle = '#c62835'; ctx.lineWidth = 3; seg(245, 1722, 835, 1722); seg(245, 1774, 835, 1774);
-  for (let x = 252, i = 0; x <= 830; x += 48, i++) {
-    const s = 11; ctx.fillStyle = i % 2 ? '#2b2b2b' : '#c62835';
-    ctx.beginPath(); ctx.moveTo(x, 1748 - s); ctx.lineTo(x + s, 1748); ctx.lineTo(x, 1748 + s); ctx.lineTo(x - s, 1748); ctx.closePath(); ctx.fill();
-  }
+function bigText(text, x, y, size, fill = '#fff', maxW = 980, lw = 16) {
+  text = up(text); size = fitFont(text, `$px ${CAP}`, size, maxW);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
+  ctx.lineWidth = lw; ctx.strokeStyle = INK; ctx.strokeText(text, x, y); ctx.fillStyle = fill; ctx.fillText(text, x, y);
 }
 
-/* ================= DESEN: Tanti Geta ================= */
-function drawBody(cx, sh) {
-  ctx.fillStyle = SKIN; ctx.fillRect(cx - 46, sh - 120, 92, 140);
-  ctx.strokeStyle = OUT; ctx.lineWidth = 6; seg(cx - 46, sh - 120, cx - 46, sh); seg(cx + 46, sh - 120, cx + 46, sh);
-  ctx.beginPath();
-  ctx.moveTo(cx - 265, 1800); ctx.lineTo(cx - 262, sh + 95);
-  ctx.quadraticCurveTo(cx - 255, sh + 5, cx - 150, sh - 5); ctx.lineTo(cx + 150, sh - 5);
-  ctx.quadraticCurveTo(cx + 255, sh + 5, cx + 262, sh + 95); ctx.lineTo(cx + 265, 1800); ctx.closePath();
-  ctx.fillStyle = ROBE; ctx.fill();
-  ctx.save(); ctx.clip(); for (const f of ROBE_FLOWERS) flower(cx + f.x, sh + f.y, f.r, f.c); ctx.restore();
-  ctx.strokeStyle = OUT; ctx.lineWidth = 6; ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(cx - 80, sh - 6); ctx.lineTo(cx, sh + 115); ctx.lineTo(cx + 80, sh - 6); ctx.closePath();
-  ctx.fillStyle = SKIN; ctx.fill();
-  ctx.strokeStyle = COLLAR; ctx.lineWidth = 24; ctx.lineCap = 'round';
-  ctx.beginPath(); ctx.moveTo(cx - 90, sh - 4); ctx.lineTo(cx, sh + 120); ctx.lineTo(cx + 90, sh - 4); ctx.stroke();
-  ctx.fillStyle = '#fff6e0'; ctx.strokeStyle = 'rgba(90,60,40,.5)'; ctx.lineWidth = 2;
-  for (let k = 0; k <= 10; k++) { const a = Math.PI * (.15 + .7 * k / 10); circ(cx + Math.cos(a) * 60, sh - 30 + Math.sin(a) * 60, 7); ctx.fill(); ctx.stroke(); }
-}
+/* ================= TANTI GETA (corp întreg) ================= */
 function drawMouth(x, y, o, smile, gasp) {
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
   o = Math.max(o, gasp * .5);
@@ -372,7 +381,7 @@ function drawMouth(x, y, o, smile, gasp) {
   const path = () => { ctx.beginPath(); ctx.moveTo(x - w / 2, y0); ctx.quadraticCurveTo(x, y - h * .35 - 6, x + w / 2, y0); ctx.quadraticCurveTo(x, y + h * .9 + smile * 8, x - w / 2, y0); ctx.closePath(); };
   path(); ctx.fillStyle = '#5a1426'; ctx.fill();
   ctx.save(); ctx.clip();
-  ctx.fillStyle = '#ffffff'; ctx.fillRect(x - w / 2, y - h * .35 - 8, w, 10 + h * .22);
+  ctx.fillStyle = '#fff'; ctx.fillRect(x - w / 2, y - h * .35 - 8, w, 10 + h * .22);
   ctx.fillStyle = '#e8798f'; ell(x, y + h * .5, w * .32, h * .28); ctx.fill();
   ctx.restore();
   ctx.strokeStyle = LIP; ctx.lineWidth = 9; path(); ctx.stroke();
@@ -380,15 +389,15 @@ function drawMouth(x, y, o, smile, gasp) {
 function drawHead(hx, hy, t) {
   const P = S.p;
   ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-  ctx.strokeStyle = OUT; ctx.lineWidth = 6; ctx.fillStyle = HAIR;
+  ctx.strokeStyle = OUT; ctx.lineWidth = 7; ctx.fillStyle = HAIR;
   ell(hx, hy - 20, 205, 188); ctx.fill(); ctx.stroke();
   for (const s of [-1, 1]) { circ(hx + s * 178, hy + 48, 52); ctx.fill(); ctx.stroke(); circ(hx + s * 165, hy + 112, 42); ctx.fill(); ctx.stroke(); }
   ctx.fillStyle = SKIN; for (const s of [-1, 1]) { ell(hx + s * 156, hy + 18, 26, 38); ctx.fill(); ctx.stroke(); }
   ctx.strokeStyle = '#e3b23c'; ctx.lineWidth = 7;
   for (const s of [-1, 1]) { ctx.save(); ctx.translate(hx + s * 158, hy + 50); ctx.rotate(Math.sin(t * 2.3 + s) * (.22 + P.laugh * .3)); circ(0, 24, 17); ctx.stroke(); ctx.restore(); }
-  ctx.strokeStyle = OUT; ctx.lineWidth = 6; ctx.fillStyle = SKIN; ell(hx, hy + 12, 158, 172); ctx.fill(); ctx.stroke();
+  ctx.strokeStyle = OUT; ctx.lineWidth = 7; ctx.fillStyle = SKIN; ell(hx, hy + 12, 158, 172); ctx.fill(); ctx.stroke();
   const fr = []; for (let k = 0; k < 8; k++) { const a = (205 + k * 130 / 7) * Math.PI / 180; fr.push([hx + Math.cos(a) * 150, hy - 40 + Math.sin(a) * 125]); }
-  ctx.lineWidth = 12; ctx.strokeStyle = OUT; for (const [x, y] of fr) { circ(x, y, 56); ctx.stroke(); }
+  ctx.lineWidth = 13; ctx.strokeStyle = OUT; for (const [x, y] of fr) { circ(x, y, 56); ctx.stroke(); }
   ctx.fillStyle = HAIR; for (const [x, y] of fr) { circ(x, y, 56); ctx.fill(); }
   ctx.strokeStyle = HAIR_D; ctx.lineWidth = 5;
   for (const s of [-1, 1]) { ctx.beginPath(); ctx.moveTo(hx + s * 20, hy - 150); ctx.quadraticCurveTo(hx + s * 80, hy - 140, hx + s * 112, hy - 92); ctx.stroke(); }
@@ -396,7 +405,7 @@ function drawHead(hx, hy, t) {
   for (let i = 0; i < 5; i++) {
     const dx = (i - 2) * 72, x = hx + dx, y = hy - 200 + Math.pow(dx / 150, 2) * 55 - (P.gasp * 14 * Math.abs(Math.sin(t * 20 + i)));
     ctx.save(); ctx.translate(x, y); ctx.rotate(dx / 260);
-    ctx.fillStyle = cols[i]; ctx.strokeStyle = OUT; ctx.lineWidth = 5; rr(-34, -27, 68, 54, 22); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = cols[i]; ctx.strokeStyle = OUT; ctx.lineWidth = 6; rr(-34, -27, 68, 54, 22); ctx.fill(); ctx.stroke();
     ctx.strokeStyle = 'rgba(255,255,255,.65)'; ctx.lineWidth = 4; for (const lx of [-14, 0, 14]) seg(lx, -18, lx, 18);
     ctx.restore();
   }
@@ -405,25 +414,21 @@ function drawHead(hx, hy, t) {
   for (const s of [-1, 1]) {
     const ex = hx + s * 64, ey = hy - 8;
     ctx.fillStyle = '#93c2f2'; ell(ex, ey - 10, 36, 6 + 30 * Math.min(op, 1.25) * (1 - P.happy * .8)); ctx.fill();
-    if (P.happy > .5) {
-      ctx.strokeStyle = OUT; ctx.lineWidth = 7; ctx.beginPath(); ctx.arc(ex, ey + 12, 24, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke();
-      continue;
-    }
+    if (P.happy > .5) { ctx.strokeStyle = OUT; ctx.lineWidth = 8; ctx.beginPath(); ctx.arc(ex, ey + 12, 24, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke(); continue; }
     const ry = 34 * op;
-    if (ry < 5) { ctx.strokeStyle = OUT; ctx.lineWidth = 6; seg(ex - 28, ey, ex + 28, ey); continue; }
-    ctx.fillStyle = '#ffffff'; ell(ex, ey, 30, ry); ctx.fill();
+    if (ry < 5) { ctx.strokeStyle = OUT; ctx.lineWidth = 7; seg(ex - 28, ey, ex + 28, ey); continue; }
+    ctx.fillStyle = '#fff'; ell(ex, ey, 30, ry); ctx.fill();
     ctx.save(); ell(ex, ey, 30, ry); ctx.clip();
-    const pr = 14 * P.pupil;
-    ctx.fillStyle = '#2b1b18'; circ(ex + S.look.x, ey + S.look.y, pr); ctx.fill();
-    ctx.fillStyle = '#ffffff'; circ(ex + S.look.x - 5, ey + S.look.y - 5, 4.5); ctx.fill();
+    ctx.fillStyle = '#2b1b18'; circ(ex + S.look.x, ey + S.look.y, 14 * P.pupil); ctx.fill();
+    ctx.fillStyle = '#fff'; circ(ex + S.look.x - 5, ey + S.look.y - 5, 4.5); ctx.fill();
     ctx.restore();
-    ctx.strokeStyle = OUT; ctx.lineWidth = 6; ctx.beginPath(); ctx.ellipse(ex, ey, 30, ry, 0, Math.PI, TAU); ctx.stroke();
+    ctx.strokeStyle = OUT; ctx.lineWidth = 7; ctx.beginPath(); ctx.ellipse(ex, ey, 30, ry, 0, Math.PI, TAU); ctx.stroke();
     ctx.lineWidth = 5; seg(ex + s * 27, ey - ry * .45, ex + s * 41, ey - ry * .85);
   }
-  ctx.strokeStyle = '#b8323f'; ctx.lineWidth = 7; ctx.fillStyle = 'rgba(255,255,255,.12)';
+  ctx.strokeStyle = '#b8323f'; ctx.lineWidth = 8; ctx.fillStyle = 'rgba(255,255,255,.12)';
   for (const s of [-1, 1]) { circ(hx + s * 64, hy - 8, 52); ctx.fill(); ctx.stroke(); seg(hx + s * 116, hy - 14, hx + s * 155, hy - 4); }
   ctx.beginPath(); ctx.moveTo(hx - 13, hy - 14); ctx.quadraticCurveTo(hx, hy - 26, hx + 13, hy - 14); ctx.stroke();
-  ctx.strokeStyle = '#5a3424'; ctx.lineWidth = 10;
+  ctx.strokeStyle = '#5a3424'; ctx.lineWidth = 11;
   for (const s of [-1, 1]) {
     const ex = hx + s * 64, raise = s < 0 ? P.bl : P.br, y = hy - 76 - raise * 20;
     ctx.beginPath(); ctx.moveTo(ex - s * 36, y + P.frown * 16); ctx.quadraticCurveTo(ex, y - 14 - raise * 4, ex + s * 42, y + 6 - P.frown * 4); ctx.stroke();
@@ -433,152 +438,366 @@ function drawHead(hx, hy, t) {
   drawMouth(hx, hy + 112, S.mouth, P.smile, P.gasp);
   ctx.fillStyle = '#5a3424'; circ(hx + 64, hy + 98, 5); ctx.fill();
 }
-function drawArm(x1, y1, x2, y2) {
-  ctx.lineCap = 'round';
-  ctx.strokeStyle = OUT; ctx.lineWidth = 86; seg(x1, y1, x2, y2);
-  ctx.strokeStyle = ROBE; ctx.lineWidth = 74; seg(x1, y1, x2, y2);
-  ctx.strokeStyle = COLLAR; seg(lerp(x1, x2, .8), lerp(y1, y2, .8), x2, y2);
+function flower(x, y, r, c) {
+  ctx.fillStyle = c;
+  for (let k = 0; k < 5; k++) { const a = k * TAU / 5; circ(x + Math.cos(a) * r * .8, y + Math.sin(a) * r * .8, r * .6); ctx.fill(); }
+  ctx.fillStyle = c === '#ffe08a' ? '#e76f51' : '#ffcf3f'; circ(x, y, r * .38); ctx.fill();
 }
-function drawHand(x, y, g, t) {
-  ctx.fillStyle = SKIN; ctx.strokeStyle = OUT; ctx.lineWidth = 6;
-  if (g > .4) {
-    const k = clamp((g - .4) / .6, 0, 1);
-    ctx.save(); ctx.translate(x, y); ctx.rotate(Math.sin(t * 9) * .22 * k);
-    rr(-12, -40 - 62 * k, 24, 70 * k + 20, 12); ctx.fill(); ctx.stroke(); ctx.restore();
+function drawArm(sx, sy, e, h) {
+  ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  const path = () => { ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(e[0], e[1]); ctx.lineTo(h[0], h[1]); };
+  ctx.strokeStyle = OUT; ctx.lineWidth = 78; path(); ctx.stroke();
+  ctx.strokeStyle = ROBE; ctx.lineWidth = 64; path(); ctx.stroke();
+  ctx.strokeStyle = COLLAR; ctx.beginPath(); ctx.moveTo(lerp(e[0], h[0], .72), lerp(e[1], h[1], .72)); ctx.lineTo(h[0], h[1]); ctx.stroke();
+}
+function drawHand(x, y, finger, palms, t) {
+  ctx.fillStyle = SKIN; ctx.strokeStyle = OUT; ctx.lineWidth = 7;
+  if (finger > .4) {
+    const k = clamp((finger - .4) / .6, 0, 1);
+    ctx.save(); ctx.translate(x, y); ctx.rotate(Math.sin(t * 9) * .2 * k);
+    rr(-12, -38 - 58 * k, 24, 64 * k + 20, 12); ctx.fill(); ctx.stroke(); ctx.restore();
   }
-  circ(x, y, 38); ctx.fill(); ctx.stroke();
+  if (palms > .5) { ell(x, y, 40, 26); } else circ(x, y, 34);
+  ctx.fill(); ctx.stroke();
 }
-function handTargets(pose) {
-  const cx = 540, y = 1738, hy = 1360;
-  if (pose === 'finger') return { lx: cx - 80, ly: y, rx: cx + 300, ry: 1500, finger: 1 };
-  if (pose === 'cheeks') return { lx: cx - 150, ly: hy + 75, rx: cx + 150, ry: hy + 75, finger: 0 };
-  if (pose === 'whisper') return { lx: cx - 86, ly: hy + 108, rx: cx + 80, ry: y, finger: 0 };
-  return { lx: cx - 80, ly: y, rx: cx + 80, ry: y, finger: 0 };
+function drawCup(x, y, t) {
+  ctx.strokeStyle = 'rgba(120,110,100,.55)'; ctx.lineWidth = 5;
+  for (const dx of [-12, 12]) { ctx.beginPath(); for (let k = 0; k <= 10; k++) { const yy = y - 60 - k * 7; const xx = x + dx + Math.sin(k * .9 + t * 4 + dx) * 6; k ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); } ctx.stroke(); }
+  ctx.strokeStyle = OUT; ctx.lineWidth = 7;
+  ctx.beginPath(); ctx.arc(x + 36, y - 18, 16, -Math.PI / 2, Math.PI / 2); ctx.stroke();
+  rr(x - 36, y - 48, 72, 60, 14); fillStroke('#fff', 7);
+  ctx.fillStyle = '#e5484d'; for (const [dx, dy] of [[-16, -30], [10, -20], [-6, -6], [18, -38]]) { circ(x + dx, y + dy, 5); ctx.fill(); }
 }
 function drawGeta(t) {
-  const P = S.p, cx = 540, laugh = P.laugh * Math.abs(Math.sin(t * 13)) * 12;
-  const bob = Math.sin(t * 1.7) * 5 - laugh;
-  const hy = 1360 + bob, sh = 1575 + bob * .6;
-  drawBody(cx, sh);
-  const tilt = P.tilt + Math.sin(t * .8) * .02 + S.mouth * .025 * Math.sin(t * 6) + P.laugh * .04 * Math.sin(t * 9);
-  ctx.save(); ctx.translate(cx, hy + 170); ctx.rotate(tilt); ctx.translate(-cx, -(hy + 170));
-  drawHead(cx, hy, t);
+  const P = S.p, Q = S.pose, laugh = P.laugh * Math.abs(Math.sin(t * 13)) * 16;
+  const bob = Math.sin(t * 2) * 5 - laugh, sy = -640 + bob, hy = -820 + bob;
+  ctx.save(); ctx.translate(CHX, CHY); ctx.scale(CHS, CHS);
+  ctx.fillStyle = 'rgba(29,18,32,.08)'; ell(0, 4, 240, 28); ctx.fill();
+  ctx.strokeStyle = OUT; ctx.lineWidth = 7;
+  rr(-74, -175, 46, 160, 20); fillStroke(SKIN, 7); rr(28, -175, 46, 160, 20); fillStroke(SKIN, 7);
+  for (const s of [-1, 1]) { ell(s * 56, -16, 70, 28); fillStroke('#ff8fb8', 7); circ(s * 74, -34, 20); fillStroke('#fff', 6); }
+  ctx.fillStyle = SKIN; ctx.fillRect(-42, sy - 80, 84, 100);
+  ctx.beginPath(); ctx.moveTo(-150, sy); ctx.quadraticCurveTo(-205, sy + 10, -212, sy + 90); ctx.lineTo(-255, -150);
+  ctx.quadraticCurveTo(0, -122, 255, -150); ctx.lineTo(212, sy + 90); ctx.quadraticCurveTo(205, sy + 10, 150, sy); ctx.closePath();
+  ctx.fillStyle = ROBE; ctx.fill();
+  ctx.save(); ctx.clip(); for (const f of FLOWERS) flower(f.x, f.y + bob * .5, f.r, f.c); ctx.restore();
+  ctx.lineWidth = 8; ctx.strokeStyle = OUT; ctx.stroke();
+  const by = -400 + bob * .5;
+  ctx.lineCap = 'round'; ctx.strokeStyle = OUT; ctx.lineWidth = 36; seg(-224, by, 224, by); ctx.strokeStyle = COLLAR; ctx.lineWidth = 26; seg(-222, by, 222, by);
+  ctx.lineWidth = 6; ctx.strokeStyle = OUT; ctx.fillStyle = COLLAR;
+  for (const s of [-1, 1]) { ell(70 + s * 32, by, 30, 20); ctx.fill(); ctx.stroke(); }
+  rr(58, by + 8, 16, 70, 8); ctx.fill(); ctx.stroke(); rr(78, by + 8, 16, 58, 8); ctx.fill(); ctx.stroke();
+  circ(70, by, 14); ctx.fill(); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(-72, sy - 4); ctx.lineTo(0, sy + 105); ctx.lineTo(72, sy - 4); ctx.closePath(); ctx.fillStyle = SKIN; ctx.fill();
+  ctx.strokeStyle = COLLAR; ctx.lineWidth = 24; ctx.beginPath(); ctx.moveTo(-84, sy - 2); ctx.lineTo(0, sy + 112); ctx.lineTo(84, sy - 2); ctx.stroke();
+  const tilt = P.tilt + Math.sin(t * .8) * .02 + S.mouth * .03 * Math.sin(t * 6) + P.laugh * .05 * Math.sin(t * 9);
+  ctx.save(); ctx.translate(0, hy + 170); ctx.rotate(tilt); ctx.translate(0, -(hy + 170));
+  drawHead(0, hy, t);
   ctx.restore();
-  drawSill(); drawPillow();
-  const h = S.hands;
-  drawArm(cx - 262, 1730, h.lx, h.ly); drawHand(h.lx, h.ly, 0, t);
-  drawArm(cx + 262, 1730, h.rx, h.ry); drawHand(h.rx, h.ry, h.finger, t);
-  drawPot(140, t); drawPot(940, t);
+  drawArm(-165, sy + 45, Q.le, Q.lh); drawArm(165, sy + 45, Q.re, Q.rh);
+  if (Q.cup > .5) drawCup(Q.rh[0] + 30, Q.rh[1] - 8, t);
+  drawHand(Q.lh[0], Q.lh[1], Q.finger, Q.palms, t);
+  drawHand(Q.rh[0], Q.rh[1], 0, Q.palms, t);
+  ctx.restore();
 }
 
-/* ================= DESEN: text, carduri, subtitrări ================= */
-function drawHeader() {
-  const ep = S.ep || S.preview;
-  const label = (ep && ep.serie) || 'BÂRFA ȘTIINȚIFICĂ';
-  const lt = fitWrap(label, 700, 44, 900, 1, 26);
-  ctx.font = `700 ${lt.size}px ${FONT}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  const w = ctx.measureText(lt.lines[0] || '').width;
-  ctx.fillStyle = '#e83e7c'; rr(540 - w / 2 - 36, 50, w + 72, 80, 40); ctx.fill();
-  ctx.fillStyle = '#fff'; ctx.fillText(lt.lines[0] || '', 540, 92);
-  const title = (ep && ep.title) || 'Tanti Geta vă explică';
-  const { lines, size } = fitWrap(title, 700, 62, 960, 2, 40);
-  ctx.font = `700 ${size}px ${FONT}`; ctx.lineJoin = 'round';
-  lines.forEach((l, i) => {
-    const y = 192 + i * (size + 8);
-    ctx.strokeStyle = '#2b1d2e'; ctx.lineWidth = 12; ctx.strokeText(l, 540, y);
-    ctx.fillStyle = '#fff'; ctx.fillText(l, 540, y);
-  });
+/* ================= OBIECTE ================= */
+function splitEL(s) {
+  const p = (s || '').trim().split(/\s+/);
+  if (p[0] && !/[a-z0-9ăâîșțşţ]/i.test(p[0])) return { e: p[0], l: p.slice(1).join(' ') };
+  return { e: '', l: (s || '').trim() };
 }
-function drawEmoji(e, x, y, size) { if (!e) return; ctx.font = `${size}px ${EMOJI}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#000'; ctx.fillText(e, x, y); }
-function drawHook(c, a, t) {
-  const s = lerp(1.8, 1, easeOutBack(a)) * (1 + .025 * Math.sin(t * 6));
-  ctx.save(); ctx.globalAlpha = clamp(a * 4, 0, 1);
-  ctx.translate(540, 600); ctx.rotate(-.04); ctx.scale(s, s); ctx.translate(-540, -600);
-  const { lines, size } = fitWrap(c.title || '', 700, 104, 960, 3, 56);
-  const lh = size + 6, block = lines.length * lh;
-  const y0 = c.emoji ? 690 - block / 2 + lh / 2 : 600 - block / 2 + lh / 2;
-  if (c.emoji) drawEmoji(c.emoji, 540, y0 - 190, 210);
-  ctx.font = `700 ${size}px ${FONT}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
-  lines.forEach((l, i) => {
-    const y = y0 + i * lh;
-    ctx.lineWidth = 24; ctx.strokeStyle = '#1d1220'; ctx.strokeText(l, 540, y);
-    ctx.fillStyle = '#ffd400'; ctx.fillText(l, 540, y);
-  });
-  ctx.restore();
+function landBlob(cx, cy, k, fill, extra) {
+  const pts = [[0, 0, 120], [-80, -45, 85], [70, -60, 90], [85, 45, 80], [-65, 60, 80], [10, 75, 70]].map(([x, y, r]) => [cx + x * k, cy + y * k, r * k]);
+  ctx.lineWidth = 14; ctx.strokeStyle = OUT; for (const [x, y, r] of pts) { circ(x, y, r); ctx.stroke(); }
+  ctx.fillStyle = fill; for (const [x, y, r] of pts) { circ(x, y, r); ctx.fill(); }
+  return pts;
 }
-function drawCard(t) {
-  const c = S.card || DEFAULT_CARD, a = clamp(S.cardAnim, 0, 1);
-  if (c.type === 'hook') return drawHook(c, a, t);
-  ctx.save();
-  ctx.translate((1 - easeOutBack(a)) * 1100, 0);
-  ctx.shadowColor = 'rgba(60,30,40,.25)'; ctx.shadowBlur = 30; ctx.shadowOffsetY = 10;
-  ctx.fillStyle = '#fffaf5'; rr(60, 310, 960, 580, 46); ctx.fill();
-  ctx.shadowColor = 'transparent'; ctx.strokeStyle = '#2b1d2e'; ctx.lineWidth = 6; ctx.stroke();
-  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  if (c.type === 'vs') {
-    const sides = [[c.a, 302, '#e6f6ea', 80], [c.b || {}, 778, '#e9efff', 555]];
-    for (const [d, x, bg, bx] of sides) {
-      ctx.fillStyle = bg; rr(bx, 332, 445, 536, 34); ctx.fill();
-      drawEmoji(d.emoji, x, 450, 130);
-      const tt = fitWrap(d.title || '', 700, 52, 400, 1, 30);
-      ctx.font = `700 ${tt.size}px ${FONT}`; ctx.fillStyle = '#2b1d2e'; ctx.fillText(tt.lines[0] || '', x, 578);
-      const dd = fitWrap(d.detail || '', 500, 38, 395, 5, 28);
-      ctx.font = `500 ${dd.size}px ${FONT}`; ctx.fillStyle = '#5b4a5e';
-      dd.lines.forEach((l, i) => ctx.fillText(l, x, 645 + i * (dd.size + 8)));
-    }
-    const vs = 1 + .08 * Math.sin(t * 7);
-    ctx.save(); ctx.translate(540, 450); ctx.scale(vs, vs);
-    ctx.fillStyle = '#e83e7c'; circ(0, 0, 54); ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 6; ctx.stroke();
-    ctx.font = `700 44px ${FONT}`; ctx.fillStyle = '#fff'; ctx.fillText('VS', 0, 3);
+function propList(p, a, rev) { return Math.max(rev, Math.floor(a / .8) + 1); }
+const PROPS = {
+  emoji(p, a, t) {
+    const list = (p.args[0] || '👵').split(/\s+/).filter(Boolean), n = list.length;
+    const size = n === 1 ? 400 : n === 2 ? 300 : 220, gap = size * 1.05;
+    ctx.fillStyle = 'rgba(29,18,32,.07)'; ell(PX, PY + size * .5, size * .42 * Math.max(1, n * .85), 24); ctx.fill();
+    list.forEach((e, i) => drawEmoji(e, PX + (i - (n - 1) / 2) * gap, PY + Math.sin(t * 2.2 + i) * 9, size));
+  },
+  ceas(p, a) {
+    const m = lerp(S.clockFrom, p.min, easeInOut(clamp(a / .9, 0, 1)));
+    circ(PX, PY, 238); fillStroke('#fff', 14);
+    ctx.strokeStyle = OUT;
+    for (let i = 0; i < 60; i++) { const g = i / 60 * TAU, r1 = i % 5 ? 214 : 200; ctx.lineWidth = i % 5 ? 3 : 7; seg(PX + Math.cos(g) * r1, PY + Math.sin(g) * r1, PX + Math.cos(g) * 224, PY + Math.sin(g) * 224); }
+    ctx.font = `600 46px ${FONT}`; ctx.fillStyle = OUT; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    for (let h = 1; h <= 12; h++) { const g = h / 12 * TAU - Math.PI / 2; ctx.fillText(h, PX + Math.cos(g) * 165, PY + Math.sin(g) * 165 + 2); }
+    const ha = ((m / 60) % 12) / 12 * TAU - Math.PI / 2, ma = (m % 60) / 60 * TAU - Math.PI / 2;
+    ctx.lineCap = 'round'; ctx.lineWidth = 16; seg(PX, PY, PX + Math.cos(ha) * 105, PY + Math.sin(ha) * 105);
+    ctx.lineWidth = 10; seg(PX, PY, PX + Math.cos(ma) * 172, PY + Math.sin(ma) * 172);
+    circ(PX, PY, 16); fillStroke(RED, 6);
+    if (p.args[1] && a > 1) drawTag(p.args[1], PX, PY + 300, 50, 'negru', -.03);
+  },
+  cronometru(p, a, t) {
+    const prog = clamp(a / 1.3, 0, 1), cur = p.sec * easeOut(prog);
+    rr(PX - 42, PY - 282, 84, 44, 10); fillStroke(RED, 8);
+    rr(PX - 15, PY - 244, 30, 30, 4); fillStroke('#c9c9c9', 6);
+    circ(PX, PY, 228); fillStroke('#fdf6e3', 14);
+    ctx.strokeStyle = OUT; for (let i = 0; i < 12; i++) { const g = i / 12 * TAU; ctx.lineWidth = 6; seg(PX + Math.cos(g) * 192, PY + Math.sin(g) * 192, PX + Math.cos(g) * 214, PY + Math.sin(g) * 214); }
+    const ang = (prog < 1 ? a * TAU * 1.4 : (cur % 60) / 60 * TAU) - Math.PI / 2;
+    ctx.strokeStyle = RED; ctx.lineWidth = 9; ctx.lineCap = 'round'; seg(PX, PY, PX + Math.cos(ang) * 175, PY + Math.sin(ang) * 175);
+    circ(PX, PY, 14); fillStroke(OUT, 4);
+    const mm = Math.floor(cur / 60), ss = Math.floor(cur % 60);
+    rr(PX - 115, PY + 62, 230, 80, 14); fillStroke(INK, 6);
+    ctx.font = `64px ${CAP}`; ctx.fillStyle = YEL; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(`${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')}`, PX, PY + 106);
+  },
+  grafic(p, a) {
+    const bars = p.bars || [], n = Math.max(bars.length, 1), bw = Math.min(180, 600 / n), gap = bw * .5;
+    const total = n * bw + (n - 1) * gap, base = PY + 210, max = Math.max(...bars.map(b => b.v), 1);
+    const COL = ['#3d8bfd', RED, '#3f9b5a', YEL];
+    ctx.strokeStyle = OUT; ctx.lineWidth = 9; ctx.lineCap = 'round'; seg(PX - total / 2 - 50, base, PX + total / 2 + 50, base);
+    bars.forEach((b, i) => {
+      const x = PX - total / 2 + i * (bw + gap), g = easeOut(clamp((a - .15 - i * .2) / .6, 0, 1)), h = Math.max(8, b.v / max * 430 * g);
+      ctx.beginPath(); ctx.rect(x, base - h, bw, h); fillStroke(COL[i % 4], 8);
+      if (g > .5) { const sz = fitFont(up(b.vs), `$px ${CAP}`, 42, bw + 30); ctx.font = `${sz}px ${CAP}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        const vy = h > 70 ? base - h + 36 : base - h - 30; ctx.lineWidth = 9; ctx.strokeStyle = INK; ctx.strokeText(up(b.vs), x + bw / 2, vy); ctx.fillStyle = '#fff'; ctx.fillText(up(b.vs), x + bw / 2, vy); }
+      const L = fitWrap(up(b.l), `italic 700 $px ${FONT}`, 30, bw + gap - 6, 2, 20);
+      ctx.font = `italic 700 ${L.size}px ${FONT}`; ctx.fillStyle = OUT; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      L.lines.forEach((l, j) => ctx.fillText(l, x + bw / 2, base + 22 + j * (L.size + 4)));
+    });
+  },
+  buletin(p, a, t) {
+    const [title = 'BULETIN', ...lines] = p.args;
+    ctx.save(); ctx.translate(PX, PY); ctx.rotate(-.035);
+    ctx.fillStyle = INK; rr(-364, -222, 740, 460, 30); ctx.fill();
+    rr(-372, -232, 740, 460, 30); fillStroke('#fff', 8);
+    ctx.save(); rr(-372, -232, 740, 460, 30); ctx.clip(); ctx.fillStyle = INK; ctx.fillRect(-372, -232, 740, 92); ctx.restore();
+    ctx.font = `italic 44px ${CAP}`; ctx.fillStyle = YEL; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(up(title), -330, -184);
+    rr(-338, -112, 232, 280, 16); fillStroke('#ece6db', 6);
+    ctx.save(); rr(-338, -112, 232, 280, 16); ctx.clip(); ctx.translate(-222, 52); ctx.scale(.47, .47); drawHead(0, 0, t); ctx.restore();
+    rr(-338, -112, 232, 280, 16); ctx.lineWidth = 6; ctx.strokeStyle = OUT; ctx.stroke();
+    lines.forEach((l, i) => {
+      const sz = fitFont(up(l), `italic 700 $px ${FONT}`, 42, 420); ctx.font = `italic 700 ${sz}px ${FONT}`;
+      ctx.fillStyle = i === lines.length - 1 && lines.length > 1 ? '#d62f3a' : OUT; ctx.textAlign = 'left';
+      ctx.fillText(up(l), -78, -62 + i * 66);
+    });
     ctx.restore();
-  } else {
-    const hasE = !!c.emoji, ty = hasE ? 665 : 520;
-    drawEmoji(c.emoji, 540, 485, 180);
-    const tt = fitWrap(c.title || '', 700, 66, 880, 1, 36);
-    ctx.font = `700 ${tt.size}px ${FONT}`; ctx.fillStyle = '#2b1d2e'; ctx.fillText(tt.lines[0] || '', 540, ty);
-    const dd = fitWrap(c.detail || '', 500, 44, 860, hasE ? 3 : 5, 30);
-    ctx.font = `500 ${dd.size}px ${FONT}`; ctx.fillStyle = '#5b4a5e';
-    dd.lines.forEach((l, i) => ctx.fillText(l, 540, ty + 70 + i * (dd.size + 10)));
+  },
+  pergament(p, a, t, rev) {
+    const [title = '', ...lines] = p.args, vis = propList(p, a, rev);
+    ctx.save(); ctx.translate(PX, PY); ctx.rotate(.02);
+    rr(-272, -218, 544, 436, 6); fillStroke('#f4e4b9', 8);
+    rr(-302, -252, 604, 54, 27); fillStroke('#e2c88a', 8); rr(-302, 198, 604, 54, 27); fillStroke('#e2c88a', 8);
+    const ts = fitFont(up(title), `$px ${CAP}`, 58, 480); ctx.font = `${ts}px ${CAP}`; ctx.fillStyle = '#c0392b'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(up(title), 0, -150);
+    lines.slice(0, vis).forEach((l, i) => {
+      const sig = /^semnat/i.test(l), sz = fitFont(up(l), `italic 700 $px ${FONT}`, sig ? 30 : 40, 470);
+      ctx.font = `italic 700 ${sz}px ${FONT}`; ctx.fillStyle = sig ? '#7a5a3a' : '#5a3b26'; ctx.fillText(up(l), 0, -72 + i * 62);
+    });
+    ctx.restore();
+  },
+  factura(p, a, t, rev) {
+    const [title = 'FACTURĂ', ...rest] = p.args, vis = propList(p, a, rev);
+    const items = rest.filter(s => !/^total/i.test(s)), tot = rest.find(s => /^total/i.test(s));
+    ctx.save(); ctx.translate(PX, PY); ctx.rotate(-.02);
+    rr(-252, -272, 504, 544, 8); fillStroke('#fff', 8);
+    ctx.save(); rr(-252, -272, 504, 544, 8); ctx.clip(); ctx.fillStyle = INK; ctx.fillRect(-252, -272, 504, 92); ctx.restore();
+    ctx.font = `52px ${CAP}`; ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(up(title), 0, -224);
+    items.slice(0, vis).forEach((l, i) => {
+      const y = -125 + i * 64; rr(-212, y - 22, 20, 44, 8); fillStroke('#b9b9b9', 4);
+      const sz = fitFont(up(l), `italic 700 $px ${FONT}`, 34, 300); ctx.font = `italic 700 ${sz}px ${FONT}`; ctx.fillStyle = OUT; ctx.textAlign = 'left'; ctx.fillText(up(l), -178, y);
+      ctx.font = `700 30px ${FONT}`; ctx.fillStyle = '#9a9a9a'; ctx.textAlign = 'right'; ctx.fillText('LEI', 212, y);
+    });
+    ctx.setLineDash([14, 10]); ctx.strokeStyle = OUT; ctx.lineWidth = 4; seg(-212, 172, 212, 172); ctx.setLineDash([]);
+    ctx.font = `42px ${CAP}`; ctx.fillStyle = OUT; ctx.textAlign = 'left'; ctx.fillText('TOTAL:', -212, 220);
+    if (tot && vis > items.length) {
+      const v = up(tot.replace(/^total\s*:?\s*/i, '')); ctx.save(); ctx.translate(140, 218); ctx.rotate(-.08);
+      ctx.font = `${fitFont(v, `$px ${CAP}`, 46, 230)}px ${CAP}`; ctx.fillStyle = '#d62f3a'; ctx.textAlign = 'center'; ctx.fillText(v, 0, 0); ctx.restore();
+    }
+    ctx.restore();
+  },
+  carnet(p, a) {
+    const [title = 'CARNETUL CU BÂRFE', text = '', sig = ''] = p.args;
+    ctx.save(); ctx.translate(PX, PY);
+    rr(-268, -292, 536, 584, 26); fillStroke('#b5733d', 8);
+    rr(-232, -248, 464, 506, 8); fillStroke('#fffdf7', 5);
+    rr(-86, -322, 172, 64, 16); fillStroke('#cfcfcf', 7);
+    const ts = fitFont(up(title), `$px ${CAP}`, 44, 420); ctx.font = `${ts}px ${CAP}`; ctx.fillStyle = '#c0392b'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText(up(title), -204, -192);
+    ctx.strokeStyle = '#d7e3f5'; ctx.lineWidth = 3; for (let y = -116; y < 230; y += 72) seg(-206, y, 206, y);
+    const n = Math.floor(clamp((a - .3) * 22, 0, text.length)); S.typed = n;
+    ctx.font = `600 66px ${HAND}`; ctx.fillStyle = '#2a5bd7'; ctx.textBaseline = 'alphabetic';
+    const lines = wrap(text.slice(0, n), 410);
+    lines.slice(0, 5).forEach((l, i) => ctx.fillText(l, -204, -124 + i * 72));
+    if (n >= text.length && sig) { ctx.textAlign = 'right'; ctx.font = `600 46px ${HAND}`; ctx.fillText(sig, 206, 214); }
+    ctx.restore();
+  },
+  trofeu(p, a, t) {
+    const [num = '1', unit = '', plaque = ''] = p.args;
+    ctx.save(); ctx.translate(PX, PY - 20);
+    ctx.lineCap = 'round';
+    for (const s of [-1, 1]) { ctx.strokeStyle = OUT; ctx.lineWidth = 44; ctx.beginPath(); ctx.arc(s * 175, -140, 70, s < 0 ? Math.PI * .5 : -Math.PI * .5, s < 0 ? Math.PI * 1.5 : Math.PI * .5); ctx.stroke(); ctx.strokeStyle = '#f5c542'; ctx.lineWidth = 28; ctx.stroke(); }
+    ctx.beginPath(); ctx.moveTo(-185, -235); ctx.lineTo(185, -235); ctx.quadraticCurveTo(180, 40, 0, 62); ctx.quadraticCurveTo(-180, 40, -185, -235); ctx.closePath(); fillStroke('#f5c542', 9);
+    ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 12; ctx.beginPath(); ctx.moveTo(-130, -200); ctx.quadraticCurveTo(-135, -60, -70, 0); ctx.stroke();
+    ctx.beginPath(); ctx.rect(-32, 58, 64, 70); fillStroke('#e0ab2e', 8);
+    rr(-150, 124, 300, 86, 10); fillStroke('#5a3b26', 8);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = `${fitFont(up(num), `$px ${CAP}`, 130, 300)}px ${CAP}`; ctx.fillStyle = '#7a5200'; ctx.fillText(up(num), 0, -125);
+    if (unit) { ctx.font = `${fitFont(up(unit), `$px ${CAP}`, 44, 260)}px ${CAP}`; ctx.fillText(up(unit), 0, -42); }
+    if (plaque) { ctx.font = `${fitFont(up(plaque), `$px ${CAP}`, 34, 270)}px ${CAP}`; ctx.fillStyle = YEL; ctx.fillText(up(plaque), 0, 168); }
+    ctx.restore();
+    if (a > .2) for (let i = 0; i < 4; i++) { const g = t * 2 + i * 1.6; drawEmoji('✨', PX + Math.cos(g) * 280, PY - 80 + Math.sin(g * 1.3) * 160, 50); }
+  },
+  harta(p, a, t) {
+    const [name = '', year = ''] = p.args;
+    ctx.save(); ctx.translate(PX, PY);
+    rr(-335, -228, 670, 456, 40); fillStroke('#8fd0f5', 9);
+    ctx.save(); rr(-335, -228, 670, 456, 40); ctx.clip(); ctx.strokeStyle = 'rgba(255,255,255,.8)'; ctx.lineWidth = 5;
+    for (const [x, y] of [[-250, -140], [180, -170], [-220, 150], [230, 120], [40, 190], [-40, -190]]) { const xx = x + Math.sin(t + x) * 10; ctx.beginPath(); ctx.arc(xx, y, 18, Math.PI * 1.1, Math.PI * 1.9); ctx.arc(xx + 32, y, 18, Math.PI * 1.1, Math.PI * 1.9); ctx.stroke(); }
+    ctx.restore();
+    landBlob(0, 10, 1.05, '#f3dc92'); landBlob(0, 0, .8, '#9fd36a');
+    ctx.strokeStyle = OUT; ctx.lineWidth = 22; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(0, 30); ctx.quadraticCurveTo(10, -50, 22, -110); ctx.stroke();
+    ctx.strokeStyle = '#8a5a35'; ctx.lineWidth = 12; ctx.stroke();
+    ctx.fillStyle = '#3f9b5a'; ctx.strokeStyle = OUT; ctx.lineWidth = 6;
+    for (const g of [-2.6, -1.9, -1.2, -.5]) { ctx.save(); ctx.translate(22, -110); ctx.rotate(g + Math.sin(t * 2) * .05); ell(55, 0, 60, 18); ctx.fill(); ctx.stroke(); ctx.restore(); }
+    ctx.restore();
+    if (year && a > .25) drawTag(year, PX - 230, PY - 205, 52, 'rosu', -.08);
+    if (name && a > .4) drawTag(name, PX + 160, PY + 215, 44, 'verde', .02, 'center', 560);
+  },
+  unire(p, a, t) {
+    const [A = '', B = '', C = ''] = p.args, m = easeInOut(clamp((a - .5) / 1, 0, 1)), merged = a > 1.6;
+    const dx = lerp(210, 92, m);
+    if (!merged) {
+      landBlob(PX - dx, PY, .95, '#8ab6ff'); landBlob(PX + dx, PY, .95, '#ffd56b');
+      drawTag(A, PX - dx, PY - 210, 40, 'albastru', -.05, 'center', 440); drawTag(B, PX + dx, PY + 210, 40, 'galben', .04, 'center', 460);
+    } else {
+      const pts = [...landBlob(PX - 92, PY, .95, '#fff'), ...landBlob(PX + 92, PY, .95, '#fff')];
+      ctx.save(); ctx.beginPath(); for (const [x, y, r] of pts) { ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, TAU); } ctx.clip();
+      const L = PX - 300, w = 200; ctx.fillStyle = '#002b7f'; ctx.fillRect(L, PY - 250, w, 500); ctx.fillStyle = '#fcd116'; ctx.fillRect(L + w, PY - 250, w, 500); ctx.fillStyle = '#ce1126'; ctx.fillRect(L + 2 * w, PY - 250, w, 500);
+      ctx.restore();
+      const k = easeOutBack(clamp((a - 1.6) * 3, 0, 1));
+      ctx.save(); ctx.translate(PX, PY + 225); ctx.scale(k, k); drawTag(C, 0, 0, 56, 'negru', -.03, 'center', 700); ctx.restore();
+      for (let i = 0; i < 5; i++) drawEmoji('❤️', PX + Math.cos(i * 1.3 + t) * 300, PY - 150 + Math.sin(i * 2 + t * 1.5) * 90, 54);
+    }
+  },
+  text(p, a, t) {
+    const txt = p.args[0] || 'BUM!';
+    ctx.save(); ctx.translate(PX, PY); ctx.rotate(Math.sin(t * 3) * .04 - .05); const k = .9 + .1 * Math.sin(t * 8); ctx.scale(k, k);
+    ctx.beginPath(); for (let i = 0; i < 32; i++) { const g = i / 32 * TAU, r = i % 2 ? 230 : 310; i ? ctx.lineTo(Math.cos(g) * r, Math.sin(g) * r * .85) : ctx.moveTo(Math.cos(g) * r, Math.sin(g) * r * .85); } ctx.closePath();
+    fillStroke(YEL, 12, RED);
+    bigText(txt, (Math.random() - .5) * 4, (Math.random() - .5) * 4, 130, RED, 440, 16);
+    ctx.restore();
+  },
+  vs(p, a, t) {
+    const L = splitEL(p.args[0]), R = splitEL(p.args[1]);
+    drawEmoji(L.e, PX - 235, PY - 50 + Math.sin(t * 2) * 8, 230); drawEmoji(R.e, PX + 235, PY - 50 + Math.sin(t * 2 + 1) * 8, 230);
+    if (L.l) drawTag(L.l, PX - 235, PY + 150, 44, 'verde', -.04, 'center', 440);
+    if (R.l) drawTag(R.l, PX + 235, PY + 150, 44, 'verde', .04, 'center', 440);
+    ctx.save(); ctx.translate(PX, PY - 40); const k = 1 + .06 * Math.sin(t * 7); ctx.scale(k, k); bigText('VS', 0, 0, 120, RED); ctx.restore();
+  },
+  urmeaza(p, a, t) {
+    const L = splitEL(p.args[0]), R = splitEL(p.args[1]);
+    bigText('DATA VIITOARE:', PX, PY - 250, 78);
+    drawTag(L.l || L.e, PX, PY - 125, 58, 'verde', -.03, 'center', 900);
+    bigText('VS', PX, PY - 35, 76, RED);
+    drawTag(R.l || R.e, PX, PY + 55, 58, 'verde', .03, 'center', 900);
+    drawEmoji(L.e, PX - 130, PY + 200 + Math.sin(t * 3) * 6, 140); drawEmoji(R.e, PX + 130, PY + 200 + Math.sin(t * 3 + 1) * 6, 140);
+  },
+  ziar(p, a, t) {
+    const [mast = 'GAZETA BLOCULUI', head = '', sub = '', emo = '📰'] = p.args;
+    ctx.save(); ctx.translate(PX, PY); ctx.rotate(-.03);
+    rr(-312, -272, 624, 544, 6); fillStroke('#f6f2e6', 8);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = INK;
+    ctx.font = `900 ${fitFont(mast, `900 $px Georgia, serif`, 52, 560)}px Georgia, serif`; ctx.fillText(mast, 0, -215);
+    ctx.lineWidth = 4; ctx.strokeStyle = INK; seg(-285, -175, 285, -175); seg(-285, -166, 285, -166);
+    const Hd = fitWrap(up(head), `$px ${CAP}`, 62, 560, 2, 34); ctx.font = `${Hd.size}px ${CAP}`;
+    Hd.lines.forEach((l, i) => ctx.fillText(l, 0, -120 + i * (Hd.size + 6)));
+    if (sub) { ctx.font = `italic 600 ${fitFont(sub, `italic 600 $px ${FONT}`, 30, 560)}px ${FONT}`; ctx.fillStyle = '#5b4a5e'; ctx.fillText(sub, 0, 8); }
+    rr(-282, 40, 240, 200, 6); fillStroke('#e2dccb', 4); drawEmoji(emo, -162, 140, 120);
+    ctx.strokeStyle = '#c9c2b0'; ctx.lineWidth = 9; for (let y = 52; y <= 230; y += 26) seg(-12, y, y === 230 ? 160 : 282, y);
+    ctx.restore();
+  },
+  mesaj(p, a, t) {
+    const [who = 'COSTEL', msg = ''] = p.args;
+    ctx.save(); ctx.translate(PX, PY);
+    rr(-198, -292, 396, 584, 54); fillStroke(INK, 8);
+    rr(-176, -262, 352, 526, 38); ctx.fillStyle = '#ece5dd'; ctx.fill();
+    ctx.save(); rr(-176, -262, 352, 526, 38); ctx.clip(); ctx.fillStyle = '#128c7e'; ctx.fillRect(-176, -262, 352, 96); ctx.restore();
+    circ(-122, -214, 26); fillStroke('#d9d9d9', 4);
+    ctx.font = `700 ${fitFont(up(who), `700 $px ${FONT}`, 32, 230)}px ${FONT}`; ctx.fillStyle = '#fff'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(up(who), -84, -214);
+    if (a < .8) {
+      rr(-152, -134, 130, 66, 33); ctx.fillStyle = '#fff'; ctx.fill();
+      for (let i = 0; i < 3; i++) { ctx.fillStyle = '#9a9a9a'; circ(-118 + i * 30, -101 - Math.abs(Math.sin(t * 8 + i)) * 8, 8); ctx.fill(); }
+    } else {
+      ctx.font = `600 40px ${FONT}`; const lines = wrap(msg, 262).slice(0, 7), w = Math.max(...lines.map(l => ctx.measureText(l).width)) + 44, h = lines.length * 50 + 62;
+      const k = easeOutBack(clamp((a - .8) * 5, 0, 1)); ctx.save(); ctx.translate(-152, -138); ctx.scale(k, k);
+      rr(0, 0, w, h, 22); ctx.fillStyle = '#fff'; ctx.fill();
+      ctx.fillStyle = INK; ctx.textBaseline = 'top'; lines.forEach((l, i) => ctx.fillText(l, 22, 18 + i * 50));
+      ctx.font = `500 22px ${FONT}`; ctx.fillStyle = '#8a8a8a'; ctx.textAlign = 'right'; ctx.fillText('21:47', w - 16, h - 30);
+      ctx.restore();
+    }
+    ctx.restore();
+  },
+  an(p, a) {
+    const y = parseInt(p.args[0], 10) || 2000, val = Math.round(lerp(y - 40, y, easeOut(clamp(a / .9, 0, 1))));
+    ctx.save(); ctx.translate(PX, PY);
+    rr(-215, -232, 430, 464, 30); fillStroke('#fff', 9);
+    ctx.save(); rr(-215, -232, 430, 464, 30); ctx.clip(); ctx.fillStyle = RED; ctx.fillRect(-215, -232, 430, 112); ctx.restore();
+    rr(-215, -232, 430, 464, 30); ctx.lineWidth = 9; ctx.strokeStyle = OUT; ctx.stroke();
+    for (const s of [-1, 1]) { rr(s * 110 - 14, -262, 28, 66, 14); fillStroke('#7c7c7c', 6); }
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = `48px ${CAP}`; ctx.fillStyle = '#fff'; ctx.fillText('ANUL', 0, -174);
+    ctx.font = `150px ${CAP}`; ctx.fillStyle = INK; ctx.fillText(String(val), 0, 20);
+    if (p.args[1]) { ctx.font = `italic 700 ${fitFont(up(p.args[1]), `italic 700 $px ${FONT}`, 36, 380)}px ${FONT}`; ctx.fillStyle = '#5b4a5e'; ctx.fillText(up(p.args[1]), 0, 160); }
+    ctx.restore();
+  },
+  gol() {},
+};
+const STAMP_POS = [[795, 300, .12], [285, 300, -.1], [790, 870, .08], [300, 880, -.06]];
+function drawPropLayer(t) {
+  const p = S.prop; if (!p) return;
+  const a = t - S.propT0, k = easeOutBack(clamp(a * 3.5, 0, 1));
+  const rev = S.curIdx - p.start + 1;
+  ctx.save(); ctx.globalAlpha = clamp(a * 6, 0, 1);
+  ctx.translate(PX, PY + Math.sin(t * 1.6) * 5); ctx.scale(.55 + .45 * k, .55 + .45 * k); ctx.translate(-PX, -PY);
+  (PROPS[p.type] || PROPS.emoji)(p, a, t, rev);
+  ctx.restore();
+  for (const st of p.stamps) {
+    const t0 = S.stampT.get(st); if (t0 === undefined) continue;
+    const sa = clamp((t - t0) * 5, 0, 1), [x, y, r] = STAMP_POS[st.slot % 4];
+    ctx.save(); ctx.globalAlpha = clamp(sa * 3, 0, 1); ctx.translate(x, y); const sc = lerp(2.4, 1, easeOut(sa)); ctx.scale(sc, sc);
+    drawTag(st.text, 0, 0, 40, st.style, r, 'center', 520); ctx.restore();
   }
+}
+function drawSticker(t) {
+  const s = S.sticker; if (!s) return;
+  const k = easeOutBack(clamp((t - S.stickerT0) * 5, 0, 1));
+  ctx.save(); ctx.translate(800, 1240); ctx.scale(k, k);
+  drawTag(s.text, 0, 0, 62, s.style, -.05, 'center', 420);
+  if (s.sub) drawTag(s.sub, 6, 74, 34, 'negru', .02, 'center', 400);
   ctx.restore();
 }
-function layoutWords(words, maxW, size) {
-  ctx.font = `700 ${size}px ${FONT}`;
-  const space = ctx.measureText(' ').width + size * .22, lines = []; let cur = [], w = 0;
-  words.forEach((wd, i) => {
-    const ww = ctx.measureText(wd).width;
-    if (cur.length && w + space + ww > maxW) { lines.push({ idx: cur, w }); cur = []; w = 0; }
-    w += (cur.length ? space : 0) + ww; cur.push(i);
-  });
-  if (cur.length) lines.push({ idx: cur, w });
-  return { lines, space };
+function drawHeader() {
+  const ep = S.ep || S.preview; const [a, b] = ep ? ep.serie : ['BÂRFA ȘTIINȚIFICĂ', ''];
+  const w = drawTag(a, 44, 112, 40, 'roz', -.03, 'left', 700);
+  if (b) drawTag(b, 44 + w + 10, 106, 40, 'negru', -.03, 'left', 200);
 }
-function drawCaption() {
-  if (!S.sub) return;
-  const words = S.sub.split(/\s+/).filter(Boolean);
-  let size = 72, L;
-  for (;;) { L = layoutWords(words, 950, size); if (L.lines.length <= 3 || size <= 40) break; size -= 4; }
-  let active = -1;
-  if (S.subProg >= 0) {
-    const target = S.subProg * S.sub.length; let acc = 0;
-    for (let i = 0; i < words.length; i++) { acc += words[i].length + 1; if (target < acc) { active = i; break; } }
-    if (active < 0) active = words.length - 1;
+function drawCaption(t) {
+  const it = S.cap; if (!it) return;
+  const words = it.words.map(w => ({ w: up(w.w), hl: w.hl }));
+  let size = 92;
+  ctx.font = `${size}px ${CAP}`;
+  const one = words.reduce((a, w) => a + ctx.measureText(w.w).width, 0) + size * .28 * (words.length - 1);
+  if (one > 1000) size = Math.max(64, Math.floor(size * 1000 / one));
+  let lines;
+  for (;;) {
+    ctx.font = `${size}px ${CAP}`; const sp = size * .28; lines = []; let cur = [], cw = 0;
+    for (const wd of words) { const ww = ctx.measureText(wd.w).width; if (cur.length && cw + sp + ww > 1000) { lines.push({ ws: cur, w: cw }); cur = []; cw = 0; } cw += (cur.length ? sp : 0) + ww; cur.push({ ...wd, ww }); }
+    if (cur.length) lines.push({ ws: cur, w: cw });
+    if (lines.length <= 2 || size <= 52) break; size -= 6;
   }
-  const lh = size + 14, yc = 1010, y0 = yc - (L.lines.length * lh) / 2 + lh / 2;
-  const k = .82 + .18 * easeOutBack(clamp(S.subAnim, 0, 1));
-  const whisper = S.subExpr === 'sopteste';
+  const sp = size * .28, lh = size * 1.05, yc = 985, k = .8 + .2 * easeOutBack(clamp((t - S.capT0) * 7, 0, 1));
   ctx.save(); ctx.translate(540, yc); ctx.scale(k, k); ctx.translate(-540, -yc);
-  ctx.font = `700 ${size}px ${FONT}`; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
-  L.lines.forEach((ln, li) => {
-    let x = 540 - ln.w / 2; const y = y0 + li * lh;
-    for (const i of ln.idx) {
-      const wd = words[i], ww = ctx.measureText(wd).width, on = i === active;
-      ctx.save(); ctx.translate(x + ww / 2, y); if (on) ctx.scale(1.08, 1.08);
-      ctx.lineWidth = 16; ctx.strokeStyle = '#1d1220'; ctx.strokeText(wd, -ww / 2, 0);
-      ctx.fillStyle = on ? '#ffd400' : (whisper ? '#ffc2dc' : '#ffffff'); ctx.fillText(wd, -ww / 2, 0);
-      ctx.restore();
-      x += ww + L.space;
-    }
+  ctx.font = `${size}px ${CAP}`; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
+  lines.forEach((ln, i) => {
+    let x = 540 - ln.w / 2; const y = yc + (i - (lines.length - 1) / 2) * lh;
+    for (const wd of ln.ws) { ctx.lineWidth = 17; ctx.strokeStyle = INK; ctx.strokeText(wd.w, x, y); ctx.fillStyle = wd.hl ? YEL : '#fff'; ctx.fillText(wd.w, x, y); x += wd.ww + sp; }
   });
   ctx.restore();
 }
@@ -590,33 +809,25 @@ function drawParticles() {
     ctx.restore();
   }
 }
-function drawCountdown() {
-  ctx.fillStyle = 'rgba(20,10,15,.5)'; ctx.fillRect(0, 0, W, H);
-  ctx.font = `700 420px ${FONT}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#fff';
-  ctx.fillText(String(S.countdown), 540, 900);
-  ctx.font = `600 56px ${FONT}`; ctx.fillText('Pregătește-te…', 540, 1180);
-}
 function render(t) {
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-  ctx.fillStyle = opts.bg === 'green' ? '#00b140' : '#ecdcc0'; ctx.fillRect(0, 0, W, H);
-  const sx = (Math.random() - .5) * 2 * S.shake * 24, sy = (Math.random() - .5) * 2 * S.shake * 24;
-  const z = S.camZoom * (1 + S.shake * .05);
-  ctx.save(); ctx.translate(sx, sy); ctx.translate(540, 1380); ctx.scale(z, z); ctx.translate(-540, -1380);
-  if (opts.bg !== 'green') { drawBackdrop(t); drawWindow(t); }
-  drawGeta(t);
+  ctx.fillStyle = opts.green ? '#00b140' : BG; ctx.fillRect(0, 0, W, H);
+  const sx = (Math.random() - .5) * 2 * S.shake * 22, sy = (Math.random() - .5) * 2 * S.shake * 22, C = S.cam;
+  ctx.save(); ctx.translate(sx, sy); ctx.translate(C.x, C.y); ctx.scale(C.z, C.z); ctx.translate(-C.x, -C.y);
+  drawPropLayer(t); drawGeta(t); drawSticker(t);
   ctx.restore();
-  ctx.save(); ctx.translate(sx * .5, sy * .5);
-  if (opts.bg !== 'green') drawHeader();
-  if (opts.cards) drawCard(t);
-  if (opts.subs) drawCaption();
+  ctx.save(); ctx.translate(sx * .4, sy * .4);
+  drawHeader(); drawCaption(t);
   ctx.restore();
   drawParticles();
   if (S.flash > 0) { ctx.fillStyle = `rgba(255,255,255,${clamp(S.flash, 0, 1) * .85})`; ctx.fillRect(0, 0, W, H); }
-  if (PB) { ctx.fillStyle = 'rgba(255,255,255,.45)'; ctx.fillRect(0, 0, W, 12); ctx.fillStyle = '#e83e7c'; ctx.fillRect(0, 0, W * S.progress, 12); }
-  if (S.countdown) drawCountdown();
+  if (S.countdown) {
+    ctx.fillStyle = 'rgba(20,10,15,.55)'; ctx.fillRect(0, 0, W, H);
+    bigText(String(S.countdown), 540, 900, 420, '#fff'); bigText('Pregătește-te…', 540, 1180, 64, '#fff');
+  }
 }
 
-/* ================= SUNETE (sintetizate) ================= */
+/* ================= SUNETE ================= */
 let actx = null, anaPlay = null, anaMic = null, recDest = null, fxBus = null, noiseBuf = null;
 function ensureAudio() {
   if (!actx) {
@@ -624,7 +835,7 @@ function ensureAudio() {
     recDest = actx.createMediaStreamDestination();
     anaPlay = actx.createAnalyser(); anaPlay.fftSize = 1024; anaPlay.connect(actx.destination);
     anaMic = actx.createAnalyser(); anaMic.fftSize = 1024;
-    fxBus = actx.createGain(); fxBus.gain.value = .9; fxBus.connect(actx.destination); fxBus.connect(recDest);
+    fxBus = actx.createGain(); fxBus.gain.value = .8; fxBus.connect(actx.destination); fxBus.connect(recDest);
     const len = actx.sampleRate * 2; noiseBuf = actx.createBuffer(1, len, actx.sampleRate);
     const d = noiseBuf.getChannelData(0); for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
   }
@@ -654,9 +865,9 @@ function chord(fs, t, d, peak) {
 }
 const SFX = {
   boom: t => { tone('sine', 120, 38, t, .9, .95); tone('triangle', 60, 30, t, .6, .5); noiseHit(t, .22, .45, 'lowpass', 500); },
-  whoosh: t => noiseHit(t, .38, .3, 'bandpass', 350, 1.4, 2800, fxBus, .14),
-  pop: t => tone('sine', 480, 1150, t, .06, .14),
-  ding: t => { tone('sine', 1318.5, 0, t, 1.3, .2); tone('sine', 1975.5, 0, t, .9, .1); },
+  whoosh: t => noiseHit(t, .32, .26, 'bandpass', 350, 1.4, 2800, fxBus, .12),
+  pop: t => tone('sine', 480, 1150, t, .06, .16),
+  ding: t => { tone('sine', 1318.5, 0, t, 1.2, .2); tone('sine', 1975.5, 0, t, .8, .1); },
   badumts: t => { tone('sine', 200, 120, t, .16, .7); tone('sine', 150, 90, t + .19, .2, .7); noiseHit(t + .4, 1.1, .3, 'highpass', 6500); },
   tobe: t => { for (let i = 0; i < 30; i++) noiseHit(t + i * .047, .07, .06 + .22 * i / 30, 'bandpass', 1900, .9); noiseHit(t + 1.45, 1.3, .38, 'highpass', 4500); tone('sine', 130, 50, t + 1.45, .5, .6); },
   tada: t => { chord([523.25, 659.25, 783.99], t, .1, .09); chord([523.25, 659.25, 783.99, 1046.5], t + .15, 1, .09); },
@@ -672,10 +883,13 @@ const SFX = {
     });
   },
   boing: t => { const o = tone('sine', 170, 520, t, .45, .35); const l = actx.createOscillator(), lg = actx.createGain(); l.frequency.value = 16; lg.gain.value = 70; l.connect(lg); lg.connect(o.frequency); l.start(t); l.stop(t + .5); },
-  tic: t => { for (let i = 0; i < 4; i++) { tone('square', 1700, 0, t + i * .5, .025, .08); tone('square', 1250, 0, t + i * .5 + .25, .025, .06); } },
+  tic: t => { for (let i = 0; i < 4; i++) { tone('square', 1700, 0, t + i * .5, .025, .07); tone('square', 1250, 0, t + i * .5 + .25, .025, .05); } },
+  stamp: t => { tone('sine', 110, 45, t, .22, .9); noiseHit(t, .08, .4, 'lowpass', 900); },
+  kaching: t => { noiseHit(t, .06, .3, 'highpass', 3000); tone('sine', 2093, 0, t + .05, .5, .18); tone('sine', 2637, 0, t + .12, .7, .15); },
+  click: t => noiseHit(t, .018, .05, 'highpass', 4000),
 };
 function spawnConfetti() {
-  const cols = ['#ff4f8b', '#ffd400', '#4fc3f7', '#8ee07a', '#c59bff', '#ff8a3d'];
+  const cols = ['#ff4f8b', YEL, '#4fc3f7', '#8ee07a', '#c59bff', '#ff8a3d'];
   for (let i = 0; i < 150; i++) S.parts.push({ x: Math.random() * W, y: -Math.random() * 500 - 20, vx: (Math.random() - .5) * 240, vy: 380 + Math.random() * 420,
     rot: Math.random() * TAU, vr: (Math.random() - .5) * 12, w: 14 + Math.random() * 14, h: 8 + Math.random() * 8, c: cols[i % cols.length], ph: Math.random() * TAU });
 }
@@ -684,37 +898,35 @@ function spawnEmoji(list) {
   for (let i = 0; i < 34; i++) S.parts.push({ e: list[i % list.length], x: Math.random() * W, y: -Math.random() * 900 - 80, vx: (Math.random() - .5) * 60,
     vy: 520 + Math.random() * 520, rot: (Math.random() - .5) * .8, vr: (Math.random() - .5) * 2, size: 70 + Math.random() * 70, ph: 0 });
 }
-function cardEmojis() {
-  const c = S.card; if (!c) return [];
-  return (c.type === 'vs' ? [c.a.emoji, c.b && c.b.emoji] : [c.emoji]).filter(Boolean);
+function propEmojis() {
+  const p = S.prop; if (!p) return [];
+  return p.args.join(' ').split(/\s+/).filter(s => s && !/[a-z0-9ăâîșț]/i.test(s) && !/^[|=:.,!?–-]+$/.test(s));
 }
 function fire(name) {
   if (name === 'shake') S.shake = Math.max(S.shake, 1);
   if (name === 'flash') S.flash = 1;
-  if (name === 'boom') { S.shake = Math.max(S.shake, .8); S.flash = Math.max(S.flash, .35); }
+  if (name === 'boom') { S.shake = Math.max(S.shake, .8); S.flash = Math.max(S.flash, .3); }
   if (name === 'scratch') S.shake = Math.max(S.shake, .35);
   if (name === 'confetti' || name === 'tada') spawnConfetti();
-  if (name === 'ploaie') spawnEmoji(cardEmojis());
+  if (name === 'ploaie') spawnEmoji(propEmojis());
   if (actx && SFX[name]) SFX[name](actx.currentTime + .01);
 }
 
-/* ---------- muzică de fundal (oom-pah vesel, generat) ---------- */
+/* ---------- muzică de fundal ---------- */
 let musicTimer = null, musicGain = null, nextNoteT = 0, step = 0;
 const STEP = 60 / 118 / 4;
 const PROG = [[130.81, [261.63, 329.63, 392]], [110, [220, 261.63, 329.63]], [87.31, [174.61, 220, 261.63]], [98, [196, 246.94, 293.66]]];
-const MELODY = [784, 0, 659, 0, 784, 0, 880, 784, 0, 0, 659, 0, 587, 0, 523, 0];
 function scheduleStep(s, t) {
   const bar = Math.floor(s / 16) % 4, b = s % 16, [bass, ch] = PROG[bar];
   if (b === 0 || b === 8) tone('triangle', bass, 0, t, .22, .3, musicGain);
   if (b === 4 || b === 12) for (const f of ch) tone('square', f, 0, t, .08, .03, musicGain);
   if (b % 2 === 0) noiseHit(t, .03, b % 4 === 2 ? .05 : .025, 'highpass', 7000, 1, 0, musicGain);
-  if (bar % 2 === 1 && MELODY[b]) tone('triangle', MELODY[b] * (bar === 3 ? .89 : 1), 0, t, .12, .05, musicGain);
 }
 function startMusic() {
   if (musicTimer || !opts.music) return;
   musicGain = actx.createGain(); musicGain.gain.setValueAtTime(.0001, actx.currentTime);
-  musicGain.gain.exponentialRampToValueAtTime(.55, actx.currentTime + .6); musicGain.connect(fxBus);
-  nextNoteT = actx.currentTime + .08; step = 0; S.duck = false;
+  musicGain.gain.exponentialRampToValueAtTime(.4, actx.currentTime + .6); musicGain.connect(fxBus);
+  nextNoteT = actx.currentTime + .08; step = 0;
   musicTimer = setInterval(() => { while (nextNoteT < actx.currentTime + .15) { scheduleStep(step, nextNoteT); nextNoteT += STEP; step = (step + 1) % 64; } }, 25);
 }
 function stopMusic() {
@@ -724,104 +936,127 @@ function stopMusic() {
   g.gain.exponentialRampToValueAtTime(.0001, n + .5); setTimeout(() => g.disconnect(), 800);
 }
 
-/* ================= ANIMAȚIE + REDARE ================= */
-const PAUSE = 0.35, LEAD = 0.5;
-const autoDur = text => clamp(text.length / 14, 1.1, 6) + PAUSE;
+/* ================= REDARE ================= */
+const PAUSE = .12, LEAD = .35;
+const autoDur = text => clamp(text.length / 13, .7, 3) + PAUSE;
 function charOpen(ch) {
   if (!ch) return 0; const c = ch.toLowerCase();
-  if ('aăâeouy'.includes(c)) return .95;
-  if ('iî'.includes(c)) return .55;
-  if (/[a-zșțşţ]/.test(c)) return .3;
-  return .02;
+  if ('aăâeouy'.includes(c)) return .95; if ('iî'.includes(c)) return .55;
+  if (/[a-zșțşţ]/.test(c)) return .3; return .02;
 }
-let audioBuf = null, srcNode = null, micStream = null, micSrc = null, rec = null, recChunks = [], PB = null, cancelCd = false, lastT = 0, lastProg = '';
+let audioBuf = null, srcNode = null, micStream = null, micSrc = null, rec = null, recChunks = [], PB = null, cancelCd = false, lastT = 0, lastProg = '', lastPrompt = -2;
 const lvlBuf = new Float32Array(1024);
 function level(an) {
   if (!an) return 0; an.getFloatTimeDomainData(lvlBuf);
   let s = 0; for (let i = 0; i < lvlBuf.length; i++) s += lvlBuf[i] * lvlBuf[i];
   return clamp((Math.sqrt(s / lvlBuf.length) - .012) * 10, 0, 1);
 }
+function timelineAuto(items) {
+  let acc = LEAD; const starts = [], ends = [];
+  for (const it of items) { starts.push(acc); acc += autoDur(it.text); ends.push(acc); }
+  return { starts, ends, total: acc };
+}
+function timelineAudio(items, buf) {
+  const ch = buf.getChannelData(0), hop = Math.floor(buf.sampleRate * .01), n = Math.floor(ch.length / hop), e = new Float32Array(n);
+  for (let i = 0; i < n; i++) { let s = 0; for (let j = i * hop; j < (i + 1) * hop; j++) s += ch[j] * ch[j]; e[i] = Math.sqrt(s / hop); }
+  const sorted = Array.from(e).sort((a, b) => a - b), lo = sorted[Math.floor(n * .2)] || 0, hi = sorted[Math.floor(n * .95)] || 1, th = lo + (hi - lo) * .15;
+  const v = new Uint8Array(n); for (let i = 0; i < n; i++) v[i] = e[i] > th ? 1 : 0;
+  for (let i = 0, last = -1; i < n; i++) if (v[i]) { if (last >= 0 && i - last < 10) for (let k = last; k < i; k++) v[k] = 1; last = i; }
+  const cum = new Float32Array(n); let c = 0; for (let i = 0; i < n; i++) { c += v[i]; cum[i] = c; }
+  const totalV = c || 1, lens = items.map(it => it.text.length + 2), totalC = lens.reduce((a, b) => a + b, 0);
+  const starts = []; let acc = 0;
+  for (const L of lens) {
+    const target = acc / totalC * totalV; let lo2 = 0, hi2 = n - 1;
+    while (lo2 < hi2) { const mid = (lo2 + hi2) >> 1; if (cum[mid] > target) hi2 = mid; else lo2 = mid + 1; }
+    starts.push(lo2 * .01); acc += L;
+  }
+  const ends = starts.map((s, i) => i + 1 < starts.length ? starts[i + 1] : buf.duration);
+  return { starts, ends, total: buf.duration };
+}
 function setExpr(k) { S.target = EXPR[k] || EXPR.normal; }
-function setCard(c) {
-  if (c === S.card) return;
-  S.card = c; S.cardAnim = 0;
-  if (PB && c && actx) {
-    if (c.type === 'hook') { SFX.boom(actx.currentTime + .01); S.shake = Math.max(S.shake, .7); S.flash = Math.max(S.flash, .3); }
-    else if (opts.sfxAuto) SFX.whoosh(actx.currentTime + .01);
+function setProp(p, t) {
+  if (p === S.prop) return;
+  const old = S.prop; S.prop = p; S.propT0 = t; S.msgDing = false; S.typed = 0; S.lastTyped = 0;
+  if (p && p.type === 'ceas') S.clockFrom = old && old.type === 'ceas' ? old.min : p.min - 75;
+  if (PB && p && actx) {
+    if (p.type === 'text') fire('boom');
+    else if (opts.sfxAuto) (p.type === 'ceas' || p.type === 'cronometru' ? SFX.tic : SFX.whoosh)(actx.currentTime + .01);
   }
 }
-function onItemStart(item) {
-  if (!item) return;
-  if (opts.sfxAuto && actx && !item.fx.length) SFX.pop(actx.currentTime + .01);
-  for (const f of item.fx) fire(f);
-}
-function buildTimeline(items, total) {
-  const base = items.map(i => autoDur(i.text)), sum = base.reduce((a, b) => a + b, 0);
-  const scale = total ? total / sum : 1; let acc = total ? 0 : LEAD;
-  const starts = [], ends = [], durs = [];
-  for (const b of base) { const d = b * scale; starts.push(acc); durs.push(d); acc += d; ends.push(acc); }
-  return { starts, ends, durs, total: acc };
+function advance() {
+  if (!PB || PB.mode !== 'mic' || PB.endAt) return;
+  PB.idx++; PB.voiced = 0;
+  if (PB.idx >= PB.items.length) PB.endAt = performance.now() / 1000 + 1.4;
 }
 function update(t, dt) {
-  let item = null, mouthT = 0, talking = false, prog = -1;
+  let item = null, mouthT = 0, talking = false;
+  const items = PB ? PB.items : (S.preview ? S.preview.items : []);
   if (PB) {
     if (PB.mode === 'mic') {
-      item = PB.items[PB.idx] || null; mouthT = level(anaMic); talking = mouthT > .05;
-      S.progress = PB.idx / PB.items.length;
+      item = PB.items[PB.idx] || null; mouthT = level(anaMic); talking = mouthT > .08;
+      if (item && talking) { PB.voiced += dt; if (PB.voiced >= Math.max(.35, item.text.length / 14)) advance(); }
       if (PB.endAt && t >= PB.endAt) finish();
     } else {
       const time = PB.mode === 'audio' ? actx.currentTime - PB.t0 : t - PB.t0;
       while (PB.idx < PB.items.length && time >= PB.ends[PB.idx]) PB.idx++;
       if (PB.idx < PB.items.length && time >= PB.starts[PB.idx]) item = PB.items[PB.idx];
-      if (item) {
-        const lt = time - PB.starts[PB.idx];
-        const sp = PB.mode === 'audio' ? PB.durs[PB.idx] * .92 : PB.durs[PB.idx] - PAUSE;
-        prog = clamp(lt / sp, 0, 1);
-        if (PB.mode === 'auto' && lt < sp) { mouthT = charOpen(item.text[Math.floor(lt / sp * item.text.length)]) * (.78 + .22 * Math.sin(t * 29)); talking = true; }
-      }
       if (PB.mode === 'audio') { mouthT = level(anaPlay); talking = mouthT > .05; }
-      S.progress = clamp(time / PB.total, 0, 1);
-      if (time > PB.total + 1.2) finish();
+      else if (item) {
+        const lt = time - PB.starts[PB.idx], sp = PB.ends[PB.idx] - PB.starts[PB.idx] - PAUSE;
+        if (lt < sp) { mouthT = charOpen(item.text[Math.floor(lt / sp * item.text.length)]) * (.78 + .22 * Math.sin(t * 29)); talking = true; }
+      }
+      if (time > PB.total + 1.4) finish();
     }
   }
+  const idx = PB ? Math.min(PB.idx, PB.items.length - 1) : 0;
+  const cap = PB ? (item || S.cap || null) : (items[0] || null);
+  S.curIdx = PB ? idx : 0;
+  setProp(items[idx] ? items[idx].prop : null, t);
+  if (cap !== S.cap) { S.cap = cap; S.capT0 = t; if (PB && cap) for (const f of cap.fx) fire(f); }
+  const st = cap ? cap.sticker : null;
+  if (st !== S.sticker) { S.sticker = st; S.stickerT0 = t; if (PB && st && opts.sfxAuto && actx) SFX.pop(actx.currentTime + .01); }
+  if (S.prop) for (const s of S.prop.stamps) if (!S.stampT.has(s) && S.curIdx >= s.at && (PB ? item || PB.idx >= PB.items.length : s.at <= 0)) { S.stampT.set(s, t); if (PB && actx) SFX.stamp(actx.currentTime + .01); }
+  if (S.prop && !S.msgDing && S.prop.type === 'mesaj' && t - S.propT0 > .8) { S.msgDing = true; if (PB && actx) SFX.ding(actx.currentTime + .01); }
+  if (S.prop && S.prop.type === 'carnet' && PB && actx && opts.sfxAuto && S.typed > S.lastTyped) { S.lastTyped = S.typed; if (S.typed % 2) SFX.click(actx.currentTime + .005); }
+  setExpr(cap ? cap.expr : (PB && PB.idx >= PB.items.length ? 'vesela' : 'normal'));
   if (PB) {
-    if (item !== S.curItem) { S.curItem = item; onItemStart(item); }
-    const ci = PB.items[Math.min(PB.idx, PB.items.length - 1)];
-    setCard(ci ? ci.card : null);
-    S.subNext = item ? item.text : ''; S.subProg = prog; S.subExpr = item ? item.expr : 'normal';
-    setExpr(item ? item.expr : (PB.idx >= PB.items.length ? 'vesela' : 'normal'));
-    const p = `Replica ${Math.min(PB.idx + 1, PB.items.length)} din ${PB.items.length}` + (PB.record ? ' · se înregistrează' : '');
+    const p = `Bucata ${Math.min(PB.idx + 1, PB.items.length)} din ${PB.items.length}` + (PB.record ? ' · se înregistrează' : '');
     if (p !== lastProg) { lastProg = p; status(p); }
-    if (musicGain && talking !== S.duck) { S.duck = talking; musicGain.gain.setTargetAtTime(talking ? .3 : .55, actx.currentTime, .15); }
-  } else {
-    S.curItem = null; setCard(S.preview ? S.preview.firstCard : null); S.subNext = ''; setExpr('normal');
+    if (PB.idx !== lastPrompt) { lastPrompt = PB.idx; updatePrompter(); }
   }
-  if (S.subNext !== S.sub) { S.sub = S.subNext; S.subAnim = 0; }
-  S.subAnim += dt * 6; S.cardAnim += dt * (S.card && S.card.type === 'hook' ? 2.2 : 3);
-  S.mouth += (mouthT - S.mouth) * Math.min(1, dt * (mouthT > S.mouth ? 22 : 14));
-  if (S.mouth < .01) S.mouth = 0;
+  S.mouth += (mouthT - S.mouth) * Math.min(1, dt * (mouthT > S.mouth ? 22 : 14)); if (S.mouth < .01) S.mouth = 0;
   for (const k in BASE) S.p[k] += (S.target[k] - S.p[k]) * Math.min(1, dt * 7);
-  const ht = handTargets(S.target.pose);
-  for (const k in ht) S.hands[k] += (ht[k] - S.hands[k]) * Math.min(1, dt * 9);
-  const zT = Math.max(S.p.zoom, item && item.zoom ? 1.32 : 1);
-  S.camZoom += (zT - S.camZoom) * Math.min(1, dt * 8);
+  const tp = POSES[S.target.pose] || POSES.rest, kk = Math.min(1, dt * 10);
+  for (const key of ['le', 'lh', 're', 'rh']) for (const j of [0, 1]) S.pose[key][j] += (tp[key][j] - S.pose[key][j]) * kk;
+  for (const key of ['finger', 'cup', 'palms']) S.pose[key] += (tp[key] - S.pose[key]) * kk;
+  let ct = { z: 1, x: 540, y: 960 };
+  if (cap && cap.zoom) ct = { z: 1.16, x: PX, y: PY + 40 };
+  else if (S.p.zoom > 1.01) ct = { z: S.p.zoom, x: CHX + 20, y: CHY - 820 * CHS };
+  for (const k of ['z', 'x', 'y']) S.cam[k] += (ct[k] - S.cam[k]) * Math.min(1, dt * 8);
   S.shake *= Math.exp(-dt * 5); if (S.shake < .01) S.shake = 0;
   S.flash = Math.max(0, S.flash - dt * 3);
-  for (const p of S.parts) {
-    p.x += (p.vx + (p.e ? 0 : Math.sin(t * 4 + p.ph) * 60)) * dt; p.y += p.vy * dt; p.rot += p.vr * dt;
-  }
+  for (const p of S.parts) { p.x += (p.vx + (p.e ? 0 : Math.sin(t * 4 + p.ph) * 60)) * dt; p.y += p.vy * dt; p.rot += p.vr * dt; }
   S.parts = S.parts.filter(p => p.y < H + 150);
   S.nextBlink -= dt;
   if (S.nextBlink <= 0 && S.blinkPhase < 0) { S.blinkPhase = 0; S.nextBlink = 2 + Math.random() * 3; }
   if (S.blinkPhase >= 0) { S.blinkPhase += dt / .16; if (S.blinkPhase >= 1) { S.blinkPhase = -1; S.blinkAmt = 1; } else S.blinkAmt = 1 - Math.sin(S.blinkPhase * Math.PI) * .95; }
   S.nextLook -= dt;
-  if (talking || item) S.lookT = { x: 0, y: 0 };
+  if (talking || cap) S.lookT = { x: 0, y: 0 };
   else if (S.nextLook <= 0) { S.nextLook = 1.5 + Math.random() * 2; S.lookT = { x: (Math.random() - .5) * 14, y: (Math.random() - .5) * 6 }; }
   S.look.x += (S.lookT.x - S.look.x) * Math.min(1, dt * 6); S.look.y += (S.lookT.y - S.look.y) * Math.min(1, dt * 6);
 }
 function frame(now) {
   const t = now / 1000, dt = lastT ? Math.min(.05, t - lastT) : .016; lastT = t;
   update(t, dt); render(t); requestAnimationFrame(frame);
+}
+function esc(s) { return s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])); }
+function updatePrompter() {
+  const box = $('prompter'); if (!PB) { box.classList.add('hidden'); return; }
+  box.classList.remove('hidden');
+  const it = PB.items[Math.min(PB.idx, PB.items.length - 1)]; if (!it) return;
+  const same = PB.items.filter(x => x.line === it.line);
+  $('pNow').innerHTML = same.map(x => x === it && PB.idx < PB.items.length ? `<b>${esc(x.text)}</b>` : esc(x.text)).join(' ');
+  $('pNext').textContent = PB.ep.lines[it.line + 1] ? 'Urmează: ' + PB.ep.lines[it.line + 1] : 'Ultima replică.';
 }
 
 /* ================= MICROFON, ÎNREGISTRARE ================= */
@@ -869,10 +1104,7 @@ function countdown(n) {
   cancelCd = false;
   return new Promise(res => {
     let k = n; S.countdown = k;
-    const iv = setInterval(() => {
-      k--;
-      if (k <= 0 || cancelCd) { clearInterval(iv); S.countdown = 0; res(!cancelCd); } else S.countdown = k;
-    }, 1000);
+    const iv = setInterval(() => { k--; if (k <= 0 || cancelCd) { clearInterval(iv); S.countdown = 0; res(!cancelCd); } else S.countdown = k; }, 1000);
   });
 }
 const getMode = () => document.querySelector('input[name=mode]:checked').value;
@@ -880,9 +1112,7 @@ function setButtons(playing, mode) {
   $('btnPlay').disabled = playing; $('btnRec').disabled = playing; $('btnStop').disabled = !playing;
   $('btnNext').disabled = !(playing && mode === 'mic');
   document.querySelectorAll('input[name=mode]').forEach(r => r.disabled = playing);
-  $('hint').textContent = playing && mode === 'mic'
-    ? 'Citește replica, apoi apasă Space sau atinge imaginea pentru următoarea.'
-    : 'Previzualizare 1080×1920, gata de TikTok și YouTube Shorts.';
+  $('hint').textContent = playing && mode === 'mic' ? 'Citește din prompter. Space sau atingerea imaginii sar la următoarea bucată.' : 'Previzualizare 1080×1920, gata de TikTok și YouTube Shorts.';
 }
 async function start(record) {
   if (PB || S.countdown) return;
@@ -891,181 +1121,202 @@ async function start(record) {
   if (!ep.items.length) { status('Scriptul e gol. Scrie măcar o replică.'); return; }
   if (record && !canRecord()) { status('Browserul ăsta nu poate înregistra. Încearcă Chrome sau fă o înregistrare de ecran.'); return; }
   try {
-    if (mode === 'audio' && !audioBuf) { status('Alege întâi fișierul audio cu vocea ta.'); return; }
+    if (mode === 'audio' && !audioBuf) { status('Alege întâi fișierul audio cu vocea ta (sau treci pe „Automat”).'); return; }
     if (mode === 'mic') await setupMic();
   } catch (e) { status('Nu am primit acces la microfon. Verifică permisiunile browserului.'); return; }
   S.ep = ep; setButtons(true, mode);
   if (record) {
     if (!(await countdown(3))) { S.ep = null; setButtons(false); status('Oprit.'); if (mode === 'mic') releaseMic(); return; }
-    $('out').innerHTML = '';
-    startRecorder(ep.title);
+    $('out').innerHTML = ''; startRecorder(ep.title);
   }
-  const tl = buildTimeline(ep.items, mode === 'audio' ? audioBuf.duration : 0);
-  S.card = undefined; S.curItem = null; S.parts = [];
-  PB = { mode, items: ep.items, idx: 0, record, endAt: 0, ...tl };
+  const tl = mode === 'audio' ? timelineAudio(ep.items, audioBuf) : timelineAuto(ep.items);
+  S.prop = undefined; S.cap = undefined; S.sticker = undefined; S.stampT = new Map(); S.parts = []; lastPrompt = -2;
+  PB = { mode, ep, items: ep.items, idx: 0, record, endAt: 0, voiced: 0, ...tl };
   startMusic();
   if (mode === 'audio') {
-    srcNode = actx.createBufferSource(); srcNode.buffer = audioBuf;
-    srcNode.connect(anaPlay); srcNode.connect(recDest);
+    srcNode = actx.createBufferSource(); srcNode.buffer = audioBuf; srcNode.connect(anaPlay); srcNode.connect(recDest);
     PB.t0 = actx.currentTime + .05; srcNode.start(PB.t0);
   } else PB.t0 = performance.now() / 1000;
 }
 function finish() {
   if (!PB) return;
-  const { record, mode } = PB; PB = null; S.ep = null; lastProg = '';
+  const { record, mode } = PB; PB = null; S.ep = null; lastProg = ''; S.stampT = new Map();
   stopMusic();
   if (srcNode) { try { srcNode.stop(); } catch (e) {} srcNode.disconnect(); srcNode = null; }
   if (rec && rec.state !== 'inactive') setTimeout(() => rec.state !== 'inactive' && rec.stop(), 300);
   if (mode === 'mic') releaseMic();
-  setButtons(false);
+  setButtons(false); updatePrompter();
   if (!record) status('Gata.');
-}
-function nextLine() {
-  if (!PB || PB.mode !== 'mic') return;
-  if (PB.idx < PB.items.length) PB.idx++;
-  if (PB.idx >= PB.items.length && !PB.endAt) PB.endAt = performance.now() / 1000 + 1.5;
 }
 function status(msg) { $('status').textContent = msg; }
 
-/* ================= EPISOADE GATA SCRISE ================= */
+/* ================= EPISOADE ================= */
 const PRESETS = {
-  'Ep. 1: Crocodil sau aligator?': `# Crocodil sau aligator?
-!serie BÂRFA ȘTIINȚIFICĂ · EP. 1
-!hook 🐊 | CROCODIL SAU ALIGATOR?
-[șocată] Dacă te mușcă ăsta, măcar să știi cine te-a mușcat!
-[șoptește] Psst. Vino la geam. Costel de la patru zice că-s totuna.
-[râde badumts] Costel zice și că pământul e plat.
-!vs 📐 | Crocodil | Bot ascuțit, ca un V || 🥄 | Aligator | Bot lat, ca un U
-[explică] Unu: botul. Crocodilul are botul ascuțit, ca un V.
-[explică] Aligatorul are botul lat, ca o lopată. Ca un U, maică.
-!vs 😬 | Crocodil | Gura închisă, dinții de jos la vedere || 😌 | Aligator | Gura închisă, dinții de jos ascunși
-[mirată zoom] Doi: dinții! Crocodilul, și cu gura închisă, tot rânjește la tine.
-[normal] Aligatorul închide gura și gata, nu-i mai vezi dinții de jos. Om educat.
-!vs 🌍 | Crocodil | Africa, Asia, Australia, America || 🇺🇸 | Aligator | Doar sud-estul SUA și estul Chinei
-[explică] Trei: unde stau. Aligatorii trăiesc doar în două locuri: în sud-estul Americii și în China.
-[bănuitoare] Crocodilii? Peste tot. Ca bârfa.
-!vs 🌊 | Crocodil | Suportă și apa sărată || 🏞️ | Aligator | Preferă apa dulce
-[șocată tobe] Și bomba: crocodilul are pe limbă niște glande cu care scapă de sare. Poate sta și în mare!
-[normal] Aligatorul stă la apă dulce. Lacuri, mlaștini, râuri.
-!card 👵 | Pe scurt | Bot în V și dinți la vedere: crocodil. Bot în U și zâmbet cuminte: aligator.
-[veselă ding] Deci: bot ascuțit și dinți la vedere, crocodil. Bot lat și zâmbet cuminte, aligator.
-!card 💬 | Întrebarea zilei | Tu de care ai fugi mai repede?
-[bănuitoare] Scrieți-mi în comentarii de care ați fugi mai repede. Și nu-i spuneți lui Costel.
-[veselă tada] Asta a fost bârfa științifică de azi. Tanti Geta închide geamul. Pa!`,
+  '#1 Cuza, ales de două ori': `# Cuza, ales de două ori
+!serie BÂRFA ȘTIINȚIFICĂ | #1
+@harta MOLDOVA | 1859
+[explică] În *1859*, | Moldova își alege domn.
++stamp galben ALES!
+[veselă] Pe *Alexandru Ioan Cuza*.
+@harta ȚARA ROMÂNEASCĂ | 1859
+[bănuitoare] Țara Românească | se uită și zice:
+[șoptește] „Stai așa…”
+@pergament CONVENȚIA DE LA PARIS | Fiecare țară | își alege | domnul ei. | Semnat: Marile Puteri
+[explică] Marile Puteri ziceseră: | *fiecare cu domnul lui*.
+[bănuitoare] Dar uitaseră | un *detaliu*.
++stamp stampila NU SCRIE NICĂIERI
+[șocată scratch] Nicăieri nu scria | că nu poate fi | *același om*.
+@buletin DOMN NOU | NUME: CUZA | MOLDOVA: DA | ȚARA ROM.: ȘI AICI DA
+[mirată boom] Așa că pe *24 ianuarie*, | îl aleg și ei | tot pe *Cuza*.
+@unire MOLDOVA | ȚARA ROMÂNEASCĂ | UN SINGUR DOMN
+[râde badumts] Un domn. | Două țări. | *Zero întrebări*.
+@mesaj MARILE PUTERI | Stați. Ce-ați făcut acolo?
+[umeri] Marile Puteri: | „Stați, ce-ați făcut?”
+[explică] Până la urmă, | au *acceptat*.
+@an 1862 | un singur guvern
+[explică] Iar din *1862*, | țara are *un singur guvern*.
+@carnet CARNETUL CU BÂRFE | „Cuza a citit contractul mai atent decât ei.” | – Geta
+[veselă] Morala: | *citește contractul*.
+@buletin BULETIN DE BLOC | NUME: TANTI GETA | FUNCȚIA: VECINĂ, ETAJ 3 | SURSA: GEAMUL
+[explică] Eu sunt *Tanti Geta*.
++eticheta galben BÂRFĂ | VERIFICATĂ
+[veselă ding] Și asta a fost | bârfă *verificată*.
+@urmeaza 🐦 EMU | 🪖 ARMATA
++eticheta galben FOLLOW
+[bănuitoare] Data viitoare: | cum a pierdut o armată | cu niște *păsări*.`,
 
-  'Ep. 2: Albina sau viespea?': `# Albina sau viespea?
-!serie BÂRFA ȘTIINȚIFICĂ · EP. 2
-!hook 🐝 | NU-I TOTUNA!
-[supărată] Albina, dacă te înțeapă, moare. Viespea? Viespea mai vine o dată!
-[șoptește] Psst. Vino la geam, să-ți zic cum le deosebești.
-!vs 🧸 | Albina | Pufoasă, cu perișori || ⏳ | Viespea | Netedă, lucioasă, talie subțire
-[explică] Albina e pufoasă, are perișori. Pe ei se lipește polenul.
-[râde] Viespea e lucioasă și cu talia subțire. De-aia zice lumea „talie de viespe”!
-!vs 🌼 | Albina | Nectar și polen || 🍉 | Viespea | Vânează insecte, dar vine și la dulce
-[veselă] Albina stă pe flori. Fată harnică, cuminte.
-[supărată shake] Viespea vânează alte insecte, dar vine și la pepenele tău, la suc, la cozonac. Neobrăzata!
-!vs 💔 | Albina | Când te înțeapă, își lasă acul în piele și moare || 🔁 | Viespea | Te poate înțepa de mai multe ori
-[mirată trist] Partea tristă: albina care te înțeapă își lasă acul în pielea ta și moare, săraca.
-[bănuitoare zoom] Viespea are acul neted. Te înțeapă de câte ori are chef. Și nu-i pare rău deloc.
-!vs 🍯 | Albina | Face miere || 🚫 | Viespea | Viespile de pe la noi nu fac miere
-[veselă badumts] Și cea mai importantă: albina face miere. Viespea face doar nervi.
-!card 👵 | Pe scurt | Pufoasă și pe flori: albină. Lucioasă, cu talie subțire și la pepenele tău: viespe.
-[explică ding] Pufoasă și pe flori, albină. Lucioasă și la pepenele tău, viespe.
-!card 💬 | Întrebarea zilei | Pe tine ce te-a înțepat ultima dată?
-[veselă tada] Lăsați albinuțele în pace, că ele ne polenizează fructele. Tanti Geta închide geamul. Pa!`,
+  '#2 Războiul cu emu': `# Războiul cu emu
+!serie BÂRFA ȘTIINȚIFICĂ | #2
+@text RĂZBOI!
+[șocată] Australia | a pierdut un *război*.
+@emoji 🐦
+[bănuitoare] Cu niște *păsări*.
+@harta AUSTRALIA | 1932
+[explică] *1932*, | Australia de Vest.
+@grafic Emu=20.000 | Răbdarea fermierilor=0
+[explică] Vreo *20.000 de emu* | mănâncă grâul fermierilor.
+[supărată] Fermierii cer ajutor | de la *armată*.
+@factura ECHIPAMENT | Un maior | Două mitraliere | ~10.000 de gloanțe | TOTAL: SERIOS
+[explică] Armata trimite | un *maior*, | *două mitraliere* | și cam *10.000 de gloanțe*.
+@emoji 🐦 💨
+[mirată] Emu: | se *împrăștie*.
+[supărată shake] Fug în toate direcțiile. | Nu stau la *coadă*.
+@ziar GAZETA AUSTRALIEI | ARMATA SE RETRAGE | Emu: neimpresionați | 🐦
+[șocată tobe] După câteva zile, | armata *se retrage*.
+[umeri] Revine. | Se retrage *din nou*.
+@carnet RAPORTUL MAIORULUI | „Dacă am avea o divizie care să încaseze gloanțe ca păsările astea…” | – maiorul Meredith
+[mirată] Maiorul zice | că o divizie | care încasează gloanțe | ca *păsările astea* | ar face față | *oricărei armate*.
+@trofeu 1-0 | SCOR | EMU vs ARMATA
++stamp galben RECORD
+[râde badumts] Scor final: | *emu 1*, | armata *0*.
+@buletin BULETIN DE BLOC | NUME: TANTI GETA | FUNCȚIA: VECINĂ, ETAJ 3 | SURSA: GEAMUL
+[explică] Eu sunt *Tanti Geta*.
+@urmeaza 🐊 CROCODIL | 🐊 ALIGATOR
++eticheta galben FOLLOW
+[bănuitoare] Data viitoare: | *crocodil* sau *aligator?*`,
 
-  'Ep. 3: Dracula n-a fost vampir': `# Dracula n-a fost vampir
-!serie BÂRFA ȘTIINȚIFICĂ · EP. 3
-!hook 🧛 | DRACULA N-A FOST VAMPIR
-[șocată] Omul care l-a inventat pe Dracula n-a pus niciodată piciorul în România!
-[șoptește] Psst. Vino la geam, că asta-i bârfă de peste 500 de ani.
-!card 📚 | Bram Stoker, 1897 | Romanul „Dracula” l-a scris un irlandez care n-a fost niciodată în România
-[explică] Romanul „Dracula” l-a scris un irlandez, Bram Stoker, în 1897.
-[bănuitoare] Și a scris despre Transilvania fără să fi fost vreodată aici. Din cărți și din auzite. Ca Costel.
-!card 🗡️ | Vlad Țepeș | Domn al Țării Românești în secolul al XV-lea. Om real, nu vampir.
-[explică zoom] Vlad Țepeș a fost om în carne și oase, domn al Țării Românești în anii 1400.
-[supărată shake] Era aspru rău, de-aia i-a rămas numele de Țepeș. Dar sânge nu bea, maică!
-!card 🐉 | De unde „Dracula”? | Tatăl lui era Vlad Dracul, din Ordinul Dragonului. Drăculea = fiul lui Dracul.
-[mirată ding] Iar „Dracula” vine de la tatăl lui, Vlad Dracul, care era în Ordinul Dragonului.
-[explică] Drăculea înseamnă fiul lui Dracul. Atât. Fără colți, fără lilieci.
-!card 🏰 | Castelul Bran | Faimos drept „castelul lui Dracula”, dar legătura cu Vlad Țepeș e foarte slabă
-[râde badumts] Și castelul Bran, „castelul lui Dracula”? Legătura cu Țepeș e cam ca a mea cu Hollywood-ul.
-!card 💬 | Întrebarea zilei | Ce altă legendă românească să mai bârfim?
-[veselă tada] Scrieți-mi în comentarii ce legendă să mai bârfim. Tanti Geta închide geamul. Pa!`,
+  '#3 Crocodil sau aligator?': `# Crocodil sau aligator?
+!serie BÂRFA ȘTIINȚIFICĂ | #3
+@vs 🐊 CROCODIL | 🐊 ALIGATOR
+[bănuitoare] Crocodil | sau *aligator?*
+@mesaj COSTEL DE LA 4 | Geto, e totuna. Am văzut pe net.
+[șoptește] Costel de la patru | zice că-s *totuna*.
++eticheta rosu FALS.
+[supărată] Costel greșește.
+@vs 📐 BOT ÎN V | 🥄 BOT ÎN U
+[explică] Unu: *botul*. | Crocodilul: ascuțit, | ca un *V*.
+[explică] Aligatorul: lat, | ca un *U*.
+@vs 😬 DINȚI LA VEDERE | 😌 DINȚI ASCUNȘI
+[mirată] Doi: *dinții*. | Crocodilul rânjește | și cu *gura închisă*.
+[normal] Aligatorul | își ascunde dinții de jos.
++eticheta galben EDUCAT.
+[veselă] Om *educat*.
+@harta SUA + CHINA | ALIGATOR
+[explică] Trei: aligatorii trăiesc | doar în *SUA* | și în *China*.
+@emoji 🌍
+[umeri] Crocodilii? | *Peste tot*.
+@vs 🌊 APĂ SĂRATĂ: OK | 🏞️ APĂ DULCE
+[șocată tobe] Și bomba: | crocodilul scapă de sare | prin *glande pe limbă*.
+[explică] Poate sta | și în *apa mării*.
+@carnet CARNETUL CU BÂRFE | „V și dinți = crocodil. U și zâmbet cuminte = aligator.” | – Geta
+[veselă ding] Pe scurt: | *V*, crocodil. | *U*, aligator.
+@buletin BULETIN DE BLOC | NUME: TANTI GETA | FUNCȚIA: VECINĂ, ETAJ 3 | SURSA: GEAMUL
+[explică] Eu sunt *Tanti Geta*.
+@urmeaza 🧛 DRACULA | 🗡️ VLAD ȚEPEȘ
++eticheta galben FOLLOW
+[bănuitoare] Data viitoare: | *Dracula* n-a fost vampir.`,
 
-  'Ep. 4: Broasca râioasă și minciuna cu negii': `# Broasca sau broasca râioasă?
-!serie BÂRFA ȘTIINȚIFICĂ · EP. 4
-!hook 🐸 | M-AU MINȚIT TOATĂ COPILĂRIA!
-[supărată] Toată copilăria m-au mințit cu broasca asta! Și pe voi la fel!
-[șoptește] Psst. Vino la geam. Aseară, lângă tomberoane, toată scara zbiera: „E râioasă!”
-!vs 💧 | Broasca | Piele netedă și umedă || 🪨 | Broasca râioasă | Piele uscată, cu umflături
-[explică] Broasca obișnuită are pielea netedă și umedă, parcă-i dată cu cremă.
-[explică] Râioasa are pielea uscată și plină de umflături. De-aia îi zice râioasă.
-!vs 🦘 | Broasca | Picioare lungi, sare departe || 🚶‍♀️ | Broasca râioasă | Picioare scurte, mai mult merge
-[râde boing] Broasca sare ca la olimpiadă. Râioasa merge mai mult pe jos, ca mine la piață.
-!card ❌ | MIT | „Dacă o atingi, faci negi.” FALS! Negii îi face un virus.
-[șocată scratch] Și acum minciuna: că dacă o atingi, faci negi. FALS! Negii îi face un virus, nu broasca.
-!card 🧼 | Totuși... | Are glande cu o substanță iritantă. Nu o pupați și spălați-vă pe mâini!
-[bănuitoare zoom] Dar are niște glande cu o substanță care irită. Deci nu o pupați. Nu-i prinț.
-!card 💬 | Întrebarea zilei | Ce minciună ți-au spus ție când erai mic?
-[veselă tada] Scrieți-mi ce minciuni v-au spus vouă când erați mici. Tanti Geta închide geamul. Pa!`,
+  '#4 Dracula n-a fost vampir': `# Dracula n-a fost vampir
+!serie BÂRFA ȘTIINȚIFICĂ | #4
+@emoji 🧛
+[șocată] *Dracula* | n-a fost vampir.
+@an 1897 | romanul „Dracula”
+[explică] Romanul a apărut | în *1897*.
+@buletin PAȘAPORT | NUME: BRAM STOKER | ȚARA: IRLANDA | VIZITE ÎN ROMÂNIA: 0
+[bănuitoare] L-a scris un irlandez, | *Bram Stoker*.
++stamp rosu 0 VIZITE
+[mirată scratch] Care n-a fost | *niciodată* în România.
+[umeri] A scris din cărți | și din auzite. | Ca *Costel*.
+@harta ȚARA ROMÂNEASCĂ | SEC. XV
+[explică] *Vlad Țepeș* | a fost om adevărat, | domn al *Țării Românești*.
++stamp negru OM REAL
+[supărată shake] Aspru rău, | de-aia *Țepeș*.
+[râde] Dar *sânge* | nu bea, maică.
+@pergament ARBORE GENEALOGIC | Tata: Vlad Dracul | Fiul: Vlad Drăculea | Colți: 0
+[explică] Tatăl lui: | *Vlad Dracul*, | din *Ordinul Dragonului*.
+[mirată ding] *Drăculea* înseamnă | „fiul lui *Dracul*”. | Atât.
+@emoji 🏰
+[bănuitoare] Și castelul *Bran*?
++stamp stampila LEGĂTURĂ SLABĂ
+[râde badumts] Legătura cu Țepeș | e cam ca a mea | cu *Hollywood-ul*.
+@buletin BULETIN DE BLOC | NUME: TANTI GETA | FUNCȚIA: VECINĂ, ETAJ 3 | SURSA: GEAMUL
+[explică] Eu sunt *Tanti Geta*.
+@urmeaza 🖋️ STILOUL | 🇷🇴 UN ROMÂN
++eticheta galben FOLLOW
+[bănuitoare] Data viitoare: | ce are un *român* | cu *stiloul*.`,
 
-  'Ep. 5: Iepure de câmp sau de casă?': `# Iepure de câmp sau iepure de casă?
-!serie BÂRFA ȘTIINȚIFICĂ · EP. 5
-!hook 🐇 | NU E ACELAȘI IEPURE!
-[șocată] Puiul de iepure de câmp se naște cu blană și cu ochii deschiși. Ăla de casă? Golaș și cu ochii închiși!
-[șoptește] Psst. Vino la geam. Costel crede că iepurele lui din cușcă e de câmp. Las' că-i zic eu.
-!vs 🐣 | Iepure de câmp | Puii se nasc cu blană și cu ochii deschiși || 🍼 | Iepure de casă | Puii se nasc golași, cu ochii închiși
-[explică] Puii de iepure de câmp țopăie la scurt timp după ce se nasc. Ăia de casă stau în cuib, golași, ca niște cârnăciori.
-!vs 🦵 | Iepure de câmp | Mai mare, cu urechi și picioare lungi || 🐰 | Iepure de casă | Mai mic și mai rotofei
-[râde badumts] Iepurele de câmp e mare, cu urechi și picioare lungi. Ăla de casă e mai mic și mai rotofei. Ca Costel.
-!vs 🌾 | Iepure de câmp | Doarme în iarbă, la suprafață || 🕳️ | Iepure de casă | Strămoșii lui sălbatici sapă vizuini
-[explică zoom] Iepurele de câmp nu sapă vizuini, doarme în iarbă, la vedere. Iepurii sălbatici din care se trage ăla de casă sapă galerii sub pământ.
-!card 👵 | Pe scurt | Mare, picioare lungi, pui cu blană: de câmp. Mic, rotofei, pui golași: de casă.
-[mirată ding] Deci: pui cu blană și picioare lungi, de câmp. Pui golași și rotofei, de casă.
-!card 💬 | Întrebarea zilei | Ai avut iepure când erai mic? Cum îl chema?
-[veselă tada] Scrieți-mi cum îl chema pe iepurele vostru. Tanti Geta închide geamul. Pa!`,
-
-  'Ep. 6: Stiloul și Petrache Poenaru': `# Stiloul are rădăcini românești?
-!serie BÂRFA ȘTIINȚIFICĂ · EP. 6
-!hook 🖋️ | UN ROMÂN, LA PARIS, ÎN 1827
-[mirată] Un român a primit la Paris brevet pentru unul dintre primele stilouri din lume! Și voi nu știți cum îl chema.
-[șoptește] Psst. Vino la geam. Îl chema Petrache Poenaru.
-!card 📜 | Paris, 1827 | Brevet pentru un „condei portăreț” care se alimenta singur cu cerneală
-[explică] În 1827, Poenaru a primit brevet în Franța pentru un condei care se alimenta singur cu cerneală.
-[râde] Adică nu mai înmuiai pana în călimară la fiecare două cuvinte. Revoluție, dragă!
-!card 🦢 | Din pană de lebădă | Rezervorul de cerneală era făcut dintr-o pană de lebădă
-[șocată tobe] Și știți din ce era făcut rezervorul? Din pană de lebădă!
-!card 🏫 | Nu doar inventator | A fost profesor și a muncit mult pentru școlile din Țara Românească
-[explică] Și nu doar atât. A fost profesor și a muncit mult pentru școlile din Țara Românească.
-[bănuitoare zoom] Deci data viitoare când scrieți cu stiloul, gândiți-vă la Petrache. Nu la Costel.
-!card 💬 | Întrebarea zilei | Ce alt român deștept să mai bârfim?
-[veselă tada] Scrieți-mi ce alt român deștept să mai bârfim. Tanti Geta închide geamul. Pa!`,
+  '#5 Petrache Poenaru și stiloul': `# Petrache Poenaru și stiloul
+!serie BÂRFA ȘTIINȚIFICĂ | #5
+@emoji 🖋️
+[mirată] Unul dintre primele *stilouri* | are brevet | pe *nume românesc*.
+@an 1827 | Paris
+[explică] Paris, *1827*.
+@buletin INVENTATOR | NUME: PETRACHE POENARU | ȚARA: ȚARA ROMÂNEASCĂ | MESERIE: DEȘTEPT
+[explică] *Petrache Poenaru* | primește un *brevet*.
+@pergament BREVET | Condei portăreț | fără sfârșit, | care se alimentează | singur cu cerneală.
+[veselă] Pentru un condei | care se alimentează | *singur cu cerneală*.
+@grafic Înmuieri în călimară, înainte=100 | După=0
+[râde badumts] Gata cu înmuiatul | penei în călimară | la fiecare *două cuvinte*.
+@emoji 🦢
+[șocată tobe] Și rezervorul? | Făcut dintr-o *pană de lebădă*.
+@emoji 🏫
+[explică] A fost și *profesor* | și a muncit mult | pentru *școlile* | din Țara Românească.
+@carnet CARNETUL CU BÂRFE | „Data viitoare când scrii cu stiloul, zi mersi lui Petrache.” | – Geta
+[veselă ding] Data viitoare | când scrii cu stiloul, | zi *mersi lui Petrache*.
+@buletin BULETIN DE BLOC | NUME: TANTI GETA | FUNCȚIA: VECINĂ, ETAJ 3 | SURSA: GEAMUL
+[explică] Eu sunt *Tanti Geta*.
+@urmeaza 🐸 BROASCA | 🐸 RÂIOASA
++eticheta galben FOLLOW
+[bănuitoare] Data viitoare: | *minciuna* cu broasca râioasă.`,
 };
 
-/* ================= LEGĂTURI UI ================= */
-const LS_KEY = 'tantiGeta.script.v2';
+/* ================= UI ================= */
+const LS_KEY = 'tantiGeta.shorts.v1';
 function lsGet() { try { return localStorage.getItem(LS_KEY); } catch (e) { return null; } }
 function lsSet(v) { try { localStorage.setItem(LS_KEY, v); } catch (e) {} }
 function refreshPreview() { S.preview = parseScript($('script').value); }
-
 const sel = $('preset');
 for (const name of Object.keys(PRESETS)) { const o = document.createElement('option'); o.value = o.textContent = name; sel.append(o); }
 $('script').value = lsGet() || PRESETS[sel.value];
 refreshPreview();
-
+for (const [k, [ex, info]] of Object.entries(PROP_INFO)) { const li = document.createElement('li'); li.innerHTML = `<code>${esc(ex)}</code> ${esc(info)}`; $('propHelp').append(li); }
 for (const [name, info] of Object.entries(FX_INFO)) {
   const b = document.createElement('button'); b.type = 'button'; b.textContent = name; b.title = info;
-  b.addEventListener('click', () => { ensureAudio(); fire(name); });
-  $('fxlist').append(b);
+  b.addEventListener('click', () => { ensureAudio(); fire(name); }); $('fxlist').append(b);
 }
-
 sel.addEventListener('change', () => { $('script').value = PRESETS[sel.value]; lsSet($('script').value); refreshPreview(); });
 let tmr; $('script').addEventListener('input', () => { clearTimeout(tmr); tmr = setTimeout(() => { lsSet($('script').value); refreshPreview(); }, 250); });
-
-document.querySelectorAll('input[name=mode]').forEach(r => r.addEventListener('change', () => {
-  $('audioRow').classList.toggle('hidden', getMode() !== 'audio');
-}));
+document.querySelectorAll('input[name=mode]').forEach(r => r.addEventListener('change', () => $('audioRow').classList.toggle('hidden', getMode() !== 'audio')));
 $('audioFile').addEventListener('change', async e => {
   const f = e.target.files[0]; if (!f) return;
   ensureAudio(); $('audioInfo').textContent = 'Se încarcă…';
@@ -1075,21 +1326,17 @@ $('audioFile').addEventListener('change', async e => {
     $('audioInfo').textContent = `${f.name}, ${m}:${String(s).padStart(2, '0')}`;
   } catch (err) { audioBuf = null; $('audioInfo').textContent = 'Nu pot citi fișierul. Încearcă .mp3, .m4a sau .wav.'; }
 });
-$('bg').addEventListener('change', e => opts.bg = e.target.value);
-for (const id of ['subs', 'cards', 'sfxAuto', 'music']) $(id).addEventListener('change', e => opts[id] = e.target.checked);
-
+for (const id of ['sfxAuto', 'music', 'green']) $(id).addEventListener('change', e => opts[id] = e.target.checked);
 $('btnPlay').addEventListener('click', () => start(false));
 $('btnRec').addEventListener('click', () => start(true));
 $('btnStop').addEventListener('click', () => { if (S.countdown) cancelCd = true; else finish(); });
-$('btnNext').addEventListener('click', nextLine);
-cv.addEventListener('click', nextLine);
+$('btnNext').addEventListener('click', advance);
+cv.addEventListener('click', advance);
 document.addEventListener('keydown', e => {
-  if (!PB || PB.mode !== 'mic') return;
-  if (/^(TEXTAREA|INPUT|SELECT|BUTTON)$/.test(e.target.tagName)) return;
-  if (e.code === 'Space' || e.code === 'ArrowRight') { e.preventDefault(); nextLine(); }
+  if (!PB || PB.mode !== 'mic' || /^(TEXTAREA|INPUT|SELECT|BUTTON)$/.test(e.target.tagName)) return;
+  if (e.code === 'Space' || e.code === 'ArrowRight') { e.preventDefault(); advance(); }
 });
 document.addEventListener('visibilitychange', () => { if (document.hidden && rec && rec.state === 'recording') status('Ține tabul deschis cât înregistrezi, altfel animația se oprește.'); });
-
 requestAnimationFrame(frame);
 </script>
 </body>

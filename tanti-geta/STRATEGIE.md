@@ -37,19 +37,21 @@
 - **Costel de la patru** greșește mereu. Oamenii o să aștepte „momentul Costel”. Pe viitor poate primi și un episod al lui.
 - **„Tanti Geta închide geamul”** e semnătura de final. Mai târziu o poți strica intenționat („…nu, stați, încă una!”) ca surpriză.
 
-## 3. Structura unui clip (30–60 de secunde)
+## 3. Structura unui clip (30–50 de secunde, stilul Gus)
 
-| Secunda | Ce se întâmplă | În studio |
+**Ritmul e totul:** o subtitrare nouă la fiecare ~1 secundă (2–4 cuvinte) și un obiect nou la fiecare 2–4 subtitrări.
+
+| Moment | Ce se întâmplă | În studio |
 |---|---|---|
-| **0–2** | **HOOK.** O afirmație șocantă sau o întrebare cu miză | `!hook` + `[șocată]`/`[supărată]` |
-| 2–4 | Semnătura „Psst, vino la geam” + de ce să rămâi | `[șoptește]` |
-| 4–40 | 3 fapte, de la cel mai slab la cel mai tare | `!vs` / `!card`, câte o poantă la 2–3 replici |
-| înainte de final | Faptul-bombă | `[șocată tobe]` sau `[mirată zoom]` |
-| ultimele 5–8 | Rezumat + întrebare pentru comentarii + semnătura | `!card 💬`, `[veselă tada]` |
+| **0–2 s** | **HOOK.** Afirmația șocantă, cu un obiect mare | `@text RĂZBOI!` / `@emoji 🧛` + `[șocată]` |
+| 2–5 s | Contextul: unde, când | `@harta LOC \| AN`, `@an 1897` |
+| 5–30 s | Povestea, pas cu pas, cu un obiect pe fiecare pas | `@pergament`, `@factura`, `@grafic`, `@mesaj`, `@buletin` |
+| poantele | După fiecare fapt ciudat, o glumă seacă | `[râde badumts]`, `+stamp`, `+eticheta rosu FALS.` |
+| final | Morala în carnet, „Eu sunt Tanti Geta”, „Data viitoare:” | `@carnet`, `@buletin`, `@urmeaza` + `+eticheta galben FOLLOW` |
 
-**Regula celor 3 secunde:** la fiecare 3–5 secunde trebuie să se schimbe ceva: un card, o expresie, un zoom sau un sunet. Studioul face asta automat la fiecare card nou, iar tu adaugi efecte pe replicile cheie.
+**Ștampilele și etichetele sunt poantele vizuale.** O ștampilă „NU SCRIE NICĂIERI” pe pergament sau o etichetă „FALS.” lângă Costel fac gluma fără niciun cuvânt în plus.
 
-**Nu exagera cu efectele.** Un `boom` pe hook, unul-două `badumts` pe poante și un `tada` la final ajung. Prea multe obosesc.
+**Finalul „Data viitoare:”** îi face pe oameni să dea follow ca să vadă episodul următor. Folosește-l mereu.
 
 ## 4. Formule de hook (primele 2 secunde)
 
