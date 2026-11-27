@@ -25,7 +25,7 @@ Totul e făcut în cod (HTML, Canvas și Web Audio): personajul, obiectele anima
 ## Clip complet din cod (cu voce, fără să înregistrezi nimic)
 
 `render/render.js` face tot clipul singur:
-- **vocea lui Tanti Geta**, generată local cu o voce neuronală românească (Piper `ro_RO-mihai-medium`, set de date CC0). Tonul e ridicat de 1,6 ori și timbrul de 1,16 ori, ca să devină o voce feminină de „tanti”, cu nuanțe pe fiecare expresie (șocată mai sus, șoptită mai încet). Vocea mai trece prin egalizare, de-esser, compresor și un reverb mic de cameră.
+- **vocea lui Tanti Geta.** Implicit e **Microsoft „Alina”** (`ro-RO-AlinaNeural`, prin `edge-tts`): o voce feminină naturală, cu ritm și ton ajustate pe fiecare expresie. Subtitrările se aliniază pe momentul exact în care e rostit fiecare cuvânt. Textul scriptului e trimis serviciului de voce Microsoft (`speech.platform.bing.com`). Alternative: `--voice=piper` (voce neuronală locală, `ro_RO-mihai-medium`, prelucrată spre o voce feminină) și `--voice=mbrola` (complet local, robotică).
 - **animațiile**, randate cadru cu cadru la 30 fps: tranziții între obiecte, subtitrări care apar cuvânt cu cuvânt, explozii de raze pe momentele tari, praf la ștampile, mișcare de cameră, lumină, vignetă și granulație de film
 - **efectele sonore** (cu reverb și panoramare stânga-dreapta) și **muzica**, care se dă singură mai încet când vorbește ea
 - **montajul** în MP4, cu volumul normalizat pentru TikTok și Shorts
@@ -34,7 +34,8 @@ Totul e făcut în cod (HTML, Canvas și Web Audio): personajul, obiectele anima
 # o singură dată
 sudo apt install ffmpeg espeak-ng mbrola mbrola-ro1
 npm i -g playwright && npx playwright install chromium
-pip install "sherpa-onnx<2"            # versiunea 2.x nu mai citește vocile Piper singură
+pip install edge-tts                   # vocea Alina (implicită)
+pip install "sherpa-onnx<2"            # doar pentru --voice=piper (versiunea 2.x nu mai citește vocile Piper singură)
 cd tanti-geta/render && mkdir -p models && cd models
 curl -LO https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-ro_RO-mihai-medium.tar.bz2
 tar xjf vits-piper-ro_RO-mihai-medium.tar.bz2 && cd ..
@@ -43,7 +44,7 @@ node render.js "#6 Războiul porcului ⭐" porc.mp4
 node render.js episodul-meu.txt clip.mp4        # sau propriul tău script
 ```
 
-Opțiuni: `--no-music` scoate muzica, `--green` pune fundal verde, iar `--mbrola` folosește vocea veche, robotică (fără model). Modelul de voce (~60 MB) nu e în repo. Se descarcă cu comanda de mai sus.
+Opțiuni: `--voice=alina|piper|mbrola`, `--no-music` scoate muzica, `--green` pune fundal verde. Modelul Piper (~60 MB) nu e în repo și trebuie descărcat doar pentru `--voice=piper`. Dacă rulezi în spatele unui proxy, `tts_alina.py` folosește `HTTPS_PROXY` și certificatul din `SSL_CERT_FILE`.
 
 ## Cum se scrie scriptul
 

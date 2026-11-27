@@ -2,15 +2,17 @@
 /*
  * Randează un episod complet din cod: voce sintetizată, animații, efecte, muzică.
  *
- *   node render.js "#6 Războiul porcului ⭐" porc.mp4 [--no-music] [--green] [--mbrola]
+ *   node render.js "#6 Războiul porcului ⭐" porc.mp4 [--voice=alina|piper|mbrola] [--no-music] [--green]
  *   node render.js episodul-meu.txt clip.mp4
  *
- * Vocea: implicit Piper (neuronală, ro_RO-mihai-medium, prelucrată spre o voce de „tanti”),
- * căutată în render/models/vits-piper-ro_RO-mihai-medium sau în $PIPER_MODEL.
- * Fără model, sau cu --mbrola, folosește espeak-ng + MBROLA ro1.
+ * Vocea:
+ *   alina  (implicit) Microsoft ro-RO-AlinaNeural prin edge-tts: naturală, feminină; textul merge la Microsoft.
+ *          Subtitrările se aliniază pe momentul exact al fiecărui cuvânt.
+ *   piper  neuronală locală (ro_RO-mihai-medium), prelucrată spre o voce de „tanti”; model în render/models.
+ *   mbrola espeak-ng + MBROLA ro1, complet local, robotică.
  *
- * Are nevoie de: Node + Playwright (cu Chromium), ffmpeg (cu rubberband),
- * pentru Piper: python3 + `pip install "sherpa-onnx<2"` și modelul (vezi README),
+ * Are nevoie de: Node + Playwright (cu Chromium), ffmpeg (cu rubberband), python3,
+ * pentru Alina: `pip install edge-tts`; pentru Piper: `pip install "sherpa-onnx<2"` + model;
  * pentru MBROLA: apt install espeak-ng mbrola mbrola-ro1.
  */
 const { chromium } = require('playwright');
@@ -40,6 +42,21 @@ const TRIM = 'silenceremove=start_periods=1:start_threshold=-42dB';
 function toF32(file, af) {
   const raw = sh('ffmpeg', ['-v', 'error', '-i', file, '-af', `${TRIM},areverse,${TRIM},areverse,${af},aresample=${SR}`, '-ac', '1', '-f', 'f32le', '-']);
   return new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.length));
+}
+const ALINA_FX = 'highpass=f=80,equalizer=f=200:t=q:w=1:g=1.5,equalizer=f=3500:t=q:w=1.2:g=2,deesser=i=.3,acompressor=threshold=-20dB:ratio=3:attack=5:release=100:makeup=1.5';
+function speakAlina(lines, tmp) {
+  const jobs = lines.map((l, i) => ({ text: l.text, expr: l.expr, out: path.join(tmp, `a${i}.mp3`) }));
+  execFileSync('python3', [path.join(__dirname, 'tts_alina.py')], { input: JSON.stringify(jobs), stdio: ['pipe', 'ignore', 'inherit'] });
+  return jobs.map((j, i) => {
+    process.stdout.write(`\rVoce: replica ${i + 1}/${jobs.length}   `);
+    const words = JSON.parse(fs.readFileSync(j.out + '.json', 'utf8'));
+    // tăiem doar liniștea de la început (și mutăm momentele cuvintelor) și de la final
+    const lead = words.length ? Math.max(0, words[0].o - .04) : 0;
+    const raw = sh('ffmpeg', ['-v', 'error', '-ss', lead.toFixed(3), '-i', j.out, '-af', `areverse,${TRIM},areverse,${ALINA_FX},aresample=${SR}`, '-ac', '1', '-f', 'f32le', '-']);
+    const clip = new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.length));
+    clip.words = words.map(w => ({ ...w, o: w.o - lead }));
+    return clip;
+  });
 }
 function speakPiper(lines, tmp) {
   const jobs = lines.map((l, i) => ({ text: l.text, expr: l.expr, out: path.join(tmp, `p${i}.wav`) }));
@@ -88,9 +105,10 @@ function speak(text, expr, tmp, i) {
 
   // 1. Vocea, replică cu replică
   const lines = ep.lines.map((l, i) => ({ text: clean(l), expr: ep.items.find(it => it.line === i).expr }));
-  const usePiper = !flags.has('--mbrola') && fs.existsSync(MODEL);
-  console.log(usePiper ? `Voce: Piper (${MODEL})` : 'Voce: MBROLA ro1');
-  const clips = usePiper ? speakPiper(lines, tmp) : lines.map((l, i) => {
+  const vArg = (args.find(a => a.startsWith('--voice=')) || '').slice(8) || (flags.has('--mbrola') ? 'mbrola' : 'alina');
+  const engine = vArg === 'piper' && !fs.existsSync(MODEL) ? 'mbrola' : vArg;
+  console.log('Voce:', engine === 'alina' ? 'Microsoft Alina (ro-RO-AlinaNeural)' : engine === 'piper' ? `Piper (${MODEL})` : 'MBROLA ro1');
+  const clips = engine === 'alina' ? speakAlina(lines, tmp) : engine === 'piper' ? speakPiper(lines, tmp) : lines.map((l, i) => {
     process.stdout.write(`\rVoce: replica ${i + 1}/${lines.length}   `);
     return speak(l.text, l.expr, tmp, i);
   });
@@ -105,7 +123,16 @@ function speak(text, expr, tmp, i) {
   ep.lines.forEach((_, li) => {
     const its = ep.items.map((it, k) => ({ it, k })).filter(o => o.it.line === li);
     const tot = its.reduce((a, o) => a + o.it.text.length + 1, 0); let acc = 0;
-    for (const o of its) { starts[o.k] = lineStart[li] + acc / tot * (lineEnd[li] - lineStart[li]); acc += o.it.text.length + 1; }
+    const W = clips[li].words;   // momentele reale ale cuvintelor (doar la Alina)
+    const wc = W ? W.map(w => w.t.length) : null, wtot = wc ? wc.reduce((a, b) => a + b, 0) : 0;
+    for (const o of its) {
+      const frac = acc / tot;
+      if (W && W.length && wtot) {
+        let c = 0, k = 0; while (k < W.length - 1 && (c + wc[k] / 2) / wtot < frac) { c += wc[k]; k++; }
+        starts[o.k] = lineStart[li] + (frac === 0 ? 0 : W[k].o);
+      } else starts[o.k] = lineStart[li] + frac * (lineEnd[li] - lineStart[li]);
+      acc += o.it.text.length + 1;
+    }
   });
   for (let k = 0; k < starts.length; k++) ends[k] = k + 1 < starts.length ? starts[k + 1] : total;
 
@@ -142,7 +169,7 @@ function speak(text, expr, tmp, i) {
   // 6. Montaj final
   process.stdout.write('\rMontaj…                    ');
   sh('ffmpeg', ['-v', 'error', '-y', '-i', vid, '-f', 'f32le', '-ar', String(SR), '-ac', '1', '-i', vraw, '-i', sfx,
-    '-filter_complex', '[1:a]aecho=0.85:0.5:28|47:0.10|0.06,aformat=channel_layouts=stereo,volume=1.0[v];[2:a]volume=0.5[s];[v][s]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.95,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]',
+    '-filter_complex', '[1:a]aecho=0.85:0.5:28|47:0.10|0.06,aformat=channel_layouts=stereo,volume=1.0[v];[2:a]volume=0.5[s];[v][s]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.95,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,alimiter=limit=0.84:level=false[a]',
     '-map', '0:v', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', out]);
   fs.rmSync(tmp, { recursive: true, force: true });
   console.log(`\rGata: ${out} (${total.toFixed(1)} s, ${nF} cadre)`);
