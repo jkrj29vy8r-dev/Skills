@@ -25,22 +25,25 @@ Totul e făcut în cod (HTML, Canvas și Web Audio): personajul, obiectele anima
 ## Clip complet din cod (cu voce, fără să înregistrezi nimic)
 
 `render/render.js` face tot clipul singur:
-- vocea lui Tanti Geta, sintetizată local (espeak-ng + vocea românească MBROLA ro1), cu ton și viteză diferite pe fiecare expresie
-- animațiile, randate cadru cu cadru la 30 fps
-- efectele sonore și muzica, generate cu Web Audio
-- montajul în MP4, cu volumul normalizat pentru TikTok și Shorts
+- **vocea lui Tanti Geta**, generată local cu o voce neuronală românească (Piper `ro_RO-mihai-medium`, set de date CC0). Tonul e ridicat de 1,6 ori și timbrul de 1,16 ori, ca să devină o voce feminină de „tanti”, cu nuanțe pe fiecare expresie (șocată mai sus, șoptită mai încet). Vocea mai trece prin egalizare, de-esser, compresor și un reverb mic de cameră.
+- **animațiile**, randate cadru cu cadru la 30 fps: tranziții între obiecte, subtitrări care apar cuvânt cu cuvânt, explozii de raze pe momentele tari, praf la ștampile, mișcare de cameră, lumină, vignetă și granulație de film
+- **efectele sonore** (cu reverb și panoramare stânga-dreapta) și **muzica**, care se dă singură mai încet când vorbește ea
+- **montajul** în MP4, cu volumul normalizat pentru TikTok și Shorts
 
 ```bash
-# o singură dată (Ubuntu/Debian): voce + ffmpeg + Playwright
-sudo apt install espeak-ng mbrola mbrola-ro1 ffmpeg
+# o singură dată
+sudo apt install ffmpeg espeak-ng mbrola mbrola-ro1
 npm i -g playwright && npx playwright install chromium
+pip install "sherpa-onnx<2"            # versiunea 2.x nu mai citește vocile Piper singură
+cd tanti-geta/render && mkdir -p models && cd models
+curl -LO https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-ro_RO-mihai-medium.tar.bz2
+tar xjf vits-piper-ro_RO-mihai-medium.tar.bz2 && cd ..
 
-cd tanti-geta/render
-node render.js "#6 Războiul porcului ⭐" porc.mp4 --music
+node render.js "#6 Războiul porcului ⭐" porc.mp4
 node render.js episodul-meu.txt clip.mp4        # sau propriul tău script
 ```
 
-`--music` adaugă muzica de fundal, iar `--green` pune fundal verde. Vocea sintetică e bună pentru probe și pentru clipuri rapide. Pentru clipurile importante, vocea ta (modul „Fișierul meu audio”) sună mult mai natural.
+Opțiuni: `--no-music` scoate muzica, `--green` pune fundal verde, iar `--mbrola` folosește vocea veche, robotică (fără model). Modelul de voce (~60 MB) nu e în repo. Se descarcă cu comanda de mai sus.
 
 ## Cum se scrie scriptul
 

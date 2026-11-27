@@ -2,11 +2,16 @@
 /*
  * Randează un episod complet din cod: voce sintetizată, animații, efecte, muzică.
  *
- *   node render.js "#6 Războiul porcului ⭐" porc.mp4 [--music] [--green]
+ *   node render.js "#6 Războiul porcului ⭐" porc.mp4 [--no-music] [--green] [--mbrola]
  *   node render.js episodul-meu.txt clip.mp4
  *
+ * Vocea: implicit Piper (neuronală, ro_RO-mihai-medium, prelucrată spre o voce de „tanti”),
+ * căutată în render/models/vits-piper-ro_RO-mihai-medium sau în $PIPER_MODEL.
+ * Fără model, sau cu --mbrola, folosește espeak-ng + MBROLA ro1.
+ *
  * Are nevoie de: Node + Playwright (cu Chromium), ffmpeg (cu rubberband),
- * espeak-ng și vocea MBROLA românească (apt install espeak-ng mbrola mbrola-ro1).
+ * pentru Piper: python3 + `pip install "sherpa-onnx<2"` și modelul (vezi README),
+ * pentru MBROLA: apt install espeak-ng mbrola mbrola-ro1.
  */
 const { chromium } = require('playwright');
 const { execFileSync, spawn } = require('child_process');
@@ -22,15 +27,37 @@ const VOICE = {
   vesela: [174, 78, 100], suparata: [180, 58, 125], socata: [176, 96, 115], rade: [174, 84, 100],
   sopteste: [146, 46, 60], umeri: [158, 70, 100],
 };
-const PITCH = 1.2, TEMPO = 1.07;   // ridică vocea spre „tanti” de desen animat
+const PITCH = 1.2, TEMPO = 1.07;   // MBROLA: ridică vocea spre „tanti” de desen animat
+// Piper: tonul crește de 1,6x, formanții de 1,16x (cât diferă o voce feminină de una masculină),
+// plus o mică variație pe expresie.
+const EXPR_PITCH = { socata: 1.08, mirata: 1.05, vesela: 1.04, rade: 1.05, suparata: .97, banuitoare: .96, sopteste: .95, umeri: 1.02 };
+const EXPR_VOL = { sopteste: .7, suparata: 1.1, socata: 1.08 };
+const VOICE_FX = 'highpass=f=95,equalizer=f=260:t=q:w=1:g=-2.5,equalizer=f=3200:t=q:w=1.2:g=3,equalizer=f=9000:t=q:w=1:g=1.5,' +
+  'deesser=i=.4,acompressor=threshold=-21dB:ratio=3.5:attack=4:release=90:makeup=2';
+const MODEL = process.env.PIPER_MODEL || path.join(__dirname, 'models', 'vits-piper-ro_RO-mihai-medium');
+const TRIM = 'silenceremove=start_periods=1:start_threshold=-42dB';
+
+function toF32(file, af) {
+  const raw = sh('ffmpeg', ['-v', 'error', '-i', file, '-af', `${TRIM},areverse,${TRIM},areverse,${af},aresample=${SR}`, '-ac', '1', '-f', 'f32le', '-']);
+  return new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.length));
+}
+function speakPiper(lines, tmp) {
+  const jobs = lines.map((l, i) => ({ text: l.text, expr: l.expr, out: path.join(tmp, `p${i}.wav`) }));
+  execFileSync('python3', [path.join(__dirname, 'tts_piper.py'), MODEL], { input: JSON.stringify(jobs), stdio: ['pipe', 'ignore', 'inherit'] });
+  return jobs.map((j, i) => {
+    process.stdout.write(`\rVoce: replica ${i + 1}/${jobs.length}   `);
+    const pf = (EXPR_PITCH[j.expr] || 1) * 1.38, vol = EXPR_VOL[j.expr] || 1;
+    return toF32(j.out, `rubberband=pitch=1.16:formant=shifted,rubberband=pitch=${pf.toFixed(3)}:formant=preserved,${VOICE_FX},volume=${vol}`);
+  });
+}
 
 const sh = (cmd, args) => execFileSync(cmd, args, { stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 1 << 30 });
-const clean = s => s.replace(/[„”"«»*]/g, '').replace(/…/g, ',').replace(/[–—]/g, ',').toLocaleLowerCase('ro');
+const clean = s => s.replace(/[„”"«»*]/g, '').replace(/…/g, ',').replace(/[–—]/g, ',');
 
 function speak(text, expr, tmp, i) {
   const [speed, pitch, amp] = VOICE[expr] || VOICE.normal;
   const wav = path.join(tmp, `l${i}.wav`);
-  sh('espeak-ng', ['-v', 'mb-ro1', '-s', String(speed), '-p', String(pitch), '-a', String(amp), '-w', wav, text]);
+  sh('espeak-ng', ['-v', 'mb-ro1', '-s', String(speed), '-p', String(pitch), '-a', String(amp), '-w', wav, text.toLocaleLowerCase('ro')]);
   const trim = 'silenceremove=start_periods=1:start_threshold=-42dB';
   const raw = sh('ffmpeg', ['-v', 'error', '-i', wav, '-af',
     `${trim},areverse,${trim},areverse,rubberband=pitch=${PITCH}:tempo=${TEMPO},highpass=f=120,` +
@@ -60,9 +87,12 @@ function speak(text, expr, tmp, i) {
   const out = path.resolve(pos[1] || `tanti-geta-${ep.title.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'episod'}.mp4`);
 
   // 1. Vocea, replică cu replică
-  const clips = ep.lines.map((l, i) => {
-    process.stdout.write(`\rVoce: replica ${i + 1}/${ep.lines.length}   `);
-    return speak(clean(l), ep.items.find(it => it.line === i).expr, tmp, i);
+  const lines = ep.lines.map((l, i) => ({ text: clean(l), expr: ep.items.find(it => it.line === i).expr }));
+  const usePiper = !flags.has('--mbrola') && fs.existsSync(MODEL);
+  console.log(usePiper ? `Voce: Piper (${MODEL})` : 'Voce: MBROLA ro1');
+  const clips = usePiper ? speakPiper(lines, tmp) : lines.map((l, i) => {
+    process.stdout.write(`\rVoce: replica ${i + 1}/${lines.length}   `);
+    return speak(l.text, l.expr, tmp, i);
   });
   let cur = LEAD; const lineStart = [], lineEnd = [];
   for (const c of clips) { lineStart.push(cur); cur += c.length / SR; lineEnd.push(cur); cur += GAP; }
@@ -90,7 +120,7 @@ function speak(text, expr, tmp, i) {
   for (let f = 0; f < nF; f++) env[f] = Math.max(0, Math.min(1, (env[f] / ref - .12) * 1.25));
 
   // 4. Cadrele
-  await page.evaluate(cfg => offlineStart(cfg), { script, starts, ends, total, env, fps: FPS, music: flags.has('--music'), green: flags.has('--green') });
+  await page.evaluate(cfg => offlineStart(cfg), { script, starts, ends, total, env, fps: FPS, music: !flags.has('--no-music'), green: flags.has('--green') });
   const vid = path.join(tmp, 'video.mp4');
   const ff = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
     '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-r', String(FPS), vid], { stdio: ['pipe', 'inherit', 'inherit'] });
@@ -112,7 +142,7 @@ function speak(text, expr, tmp, i) {
   // 6. Montaj final
   process.stdout.write('\rMontaj…                    ');
   sh('ffmpeg', ['-v', 'error', '-y', '-i', vid, '-f', 'f32le', '-ar', String(SR), '-ac', '1', '-i', vraw, '-i', sfx,
-    '-filter_complex', '[1:a]aformat=channel_layouts=stereo,volume=1.0[v];[2:a]volume=0.5[s];[v][s]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.95,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]',
+    '-filter_complex', '[1:a]aecho=0.85:0.5:28|47:0.10|0.06,aformat=channel_layouts=stereo,volume=1.0[v];[2:a]volume=0.5[s];[v][s]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.95,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]',
     '-map', '0:v', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', out]);
   fs.rmSync(tmp, { recursive: true, force: true });
   console.log(`\rGata: ${out} (${total.toFixed(1)} s, ${nF} cadre)`);
