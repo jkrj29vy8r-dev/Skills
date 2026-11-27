@@ -2,11 +2,12 @@
 /*
  * Randează un episod complet din cod: voce sintetizată, animații, efecte, muzică.
  *
- *   node render.js "#6 Războiul porcului ⭐" porc.mp4 [--voice=alina|piper|mbrola] [--music] [--green]
+ *   node render.js "#6 Războiul porcului ⭐" porc.mp4 [--voice=files|alina|piper|mbrola] [--music] [--green]
  *   node render.js episodul-meu.txt clip.mp4
  *   node render.js ../episodes/razboiul-porcului.js porc.mp4      (episod-scenă)
  *
  * Vocea:
+ *   files  (implicit dacă există ../voice/<episod>/lines.json) fișiere generate o dată, de ex. cu Higgsfield/ElevenLabs.
  *   alina  (implicit) Microsoft ro-RO-AlinaNeural prin edge-tts: naturală, feminină; textul merge la Microsoft.
  *          Subtitrările se aliniază pe momentul exact al fiecărui cuvânt.
  *   piper  neuronală locală (ro_RO-mihai-medium), prelucrată spre o voce de „tanti”; model în render/models.
@@ -45,6 +46,18 @@ function toF32(file, af) {
   return new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.length));
 }
 const ALINA_FX = 'highpass=f=80,equalizer=f=200:t=q:w=1:g=1.5,equalizer=f=3500:t=q:w=1.2:g=2,deesser=i=.3,acompressor=threshold=-20dB:ratio=3:attack=5:release=100:makeup=1.5';
+// Voce din fișiere deja generate (de ex. Higgsfield / ElevenLabs): ../voice/<episod>/line-XX.mp3 + lines.json
+const slugify = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const FILES_FX = 'highpass=f=70,deesser=i=.25,acompressor=threshold=-20dB:ratio=2.5:attack=5:release=100:makeup=1.3';
+function speakFiles(epLines, dir) {
+  const meta = JSON.parse(fs.readFileSync(path.join(dir, 'lines.json'), 'utf8')), L = meta.lines || meta;
+  if (L.length !== epLines.length) throw new Error(`Vocea salvată are ${L.length} replici, episodul are ${epLines.length}. Rulează prepare-voice.js și regenerează vocea.`);
+  return L.map((l, i) => {
+    process.stdout.write(`\rVoce: replica ${i + 1}/${L.length}   `);
+    if (l.text !== epLines[i]) console.warn(`\n⚠ Replica ${i} s-a schimbat față de vocea salvată:\n  voce: ${l.text}\n  acum: ${epLines[i]}`);
+    return toF32(path.join(dir, l.file), FILES_FX);
+  });
+}
 function speakAlina(lines, tmp) {
   const jobs = lines.map((l, i) => ({ text: l.text, expr: l.expr, out: path.join(tmp, `a${i}.mp3`) }));
   execFileSync('python3', [path.join(__dirname, 'tts_alina.py')], { input: JSON.stringify(jobs), stdio: ['pipe', 'ignore', 'inherit'] });
@@ -108,10 +121,11 @@ function speak(text, expr, tmp, i) {
 
   // 1. Vocea, replică cu replică
   const lines = ep.lines.map((l, i) => ({ text: clean(l), expr: ep.items.find(it => it.line === i).expr }));
-  const vArg = (args.find(a => a.startsWith('--voice=')) || '').slice(8) || (flags.has('--mbrola') ? 'mbrola' : 'alina');
+  const voiceDir = path.join(__dirname, '..', 'voice', slugify(ep.title));
+  const vArg = (args.find(a => a.startsWith('--voice=')) || '').slice(8) || (flags.has('--mbrola') ? 'mbrola' : fs.existsSync(path.join(voiceDir, 'lines.json')) ? 'files' : 'alina');
   const engine = vArg === 'piper' && !fs.existsSync(MODEL) ? 'mbrola' : vArg;
-  console.log('Voce:', engine === 'alina' ? 'Microsoft Alina (ro-RO-AlinaNeural)' : engine === 'piper' ? `Piper (${MODEL})` : 'MBROLA ro1');
-  const clips = engine === 'alina' ? speakAlina(lines, tmp) : engine === 'piper' ? speakPiper(lines, tmp) : lines.map((l, i) => {
+  console.log('Voce:', engine === 'files' ? `fișiere salvate (${voiceDir})` : engine === 'alina' ? 'Microsoft Alina (ro-RO-AlinaNeural)' : engine === 'piper' ? `Piper (${MODEL})` : 'MBROLA ro1');
+  const clips = engine === 'files' ? speakFiles(ep.lines, voiceDir) : engine === 'alina' ? speakAlina(lines, tmp) : engine === 'piper' ? speakPiper(lines, tmp) : lines.map((l, i) => {
     process.stdout.write(`\rVoce: replica ${i + 1}/${lines.length}   `);
     return speak(l.text, l.expr, tmp, i);
   });

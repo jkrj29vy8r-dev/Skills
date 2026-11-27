@@ -72,6 +72,17 @@ cd render && node render.js ../episodes/razboiul-porcului.js porc.mp4
 
 Ca la Gus, mixul pune vocea în față: fără muzică (o adaugi cu `--music`) și doar efecte scurte.
 
+## Vocea generată o dată (Higgsfield / ElevenLabs), refolosită fără credite
+
+Pentru „Războiul porcului”, vocea lui Tanti Geta e **Elena** (Higgsfield, motor ElevenLabs), generată replică cu replică și salvată în `voice/razboiul-porcului/` (`line-00.mp3` … `line-34.mp3` + `lines.json`). Când există folderul ăsta, `render.js` folosește singur fișierele salvate, fără credite și fără internet.
+
+Pentru un episod nou:
+1. `node render/prepare-voice.js episodes/<episod>.js` scrie `voice/<episod>/lines.json` cu replicile (numerele sunt scrise în litere, ca vocea să le citească corect).
+2. Se generează câte un fișier pe replică, cu aceeași voce, și se salvează ca `line-XX.mp3` în același folder.
+3. `node render/render.js episodes/<episod>.js clip.mp4` randează clipul.
+
+Dacă schimbi o replică în script, randarea te avertizează. Trebuie regenerată doar replica aceea.
+
 ## Cum se scrie scriptul
 
 ```

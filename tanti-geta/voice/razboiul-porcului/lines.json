@@ -1,0 +1,288 @@
+{
+ "voice": "Elena",
+ "engine": "Higgsfield text2speech_v2 / ElevenLabs",
+ "voice_id": "ca83ca7f-c186-493d-bd69-0d765fa861b2",
+ "generated": "2026-11-27",
+ "lines": [
+  {
+   "i": 0,
+   "text": "Războiul ăsta a avut o singură victimă.",
+   "say": "Războiul ăsta a avut o singură victimă.",
+   "expr": "socata",
+   "file": "line-00.mp3",
+   "job_id": "d0488158-cb28-4a58-afb4-1066a00cd74d"
+  },
+  {
+   "i": 1,
+   "text": "Un porc.",
+   "say": "Un porc.",
+   "expr": "banuitoare",
+   "file": "line-01.mp3",
+   "job_id": "14b8083d-78c2-43ee-a215-2182091055a8"
+  },
+  {
+   "i": 2,
+   "text": "Sunt Tanti Geta, expertă în certuri de vecini.",
+   "say": "Sunt Tanti Geta, expertă în certuri de vecini.",
+   "expr": "vesela",
+   "file": "line-02.mp3",
+   "job_id": "9de278f8-c52e-4645-b0a3-72fedb6d1d60"
+  },
+  {
+   "i": 3,
+   "text": "Cearta asta le bate pe toate.",
+   "say": "Cearta asta le bate pe toate.",
+   "expr": "sopteste",
+   "file": "line-03.mp3",
+   "job_id": "4087ca7d-21e0-426d-8775-48194522f60e"
+  },
+  {
+   "i": 4,
+   "text": "1859. Insula San Juan.",
+   "say": "O mie opt sute cincizeci și nouă. Insula San Juan.",
+   "expr": "explica",
+   "file": "line-04.mp3",
+   "job_id": "8dc0e34a-5adb-4054-97db-91163b74f5eb"
+  },
+  {
+   "i": 5,
+   "text": "Americanii zic: e a noastră.",
+   "say": "Americanii zic: e a noastră.",
+   "expr": "banuitoare",
+   "file": "line-05.mp3",
+   "job_id": "9225eaa9-0bd3-403e-8905-1d8a8b1138aa"
+  },
+  {
+   "i": 6,
+   "text": "Britanicii zic: ba e a noastră!",
+   "say": "Britanicii zic: ba e a noastră!",
+   "expr": "suparata",
+   "file": "line-06.mp3",
+   "job_id": "e2cfa16d-fcd3-48b7-9e8b-8f6fad321a2e"
+  },
+  {
+   "i": 7,
+   "text": "Așa că stau amândoi pe ea.",
+   "say": "Așa că stau amândoi pe ea.",
+   "expr": "umeri",
+   "file": "line-07.mp3",
+   "job_id": "1d538a32-0bb3-4314-95be-6227f9de1d87"
+  },
+  {
+   "i": 8,
+   "text": "Lyman, american, cu o grădină de cartofi.",
+   "say": "Lyman, american, cu o grădină de cartofi.",
+   "expr": "explica",
+   "file": "line-08.mp3",
+   "job_id": "ede7bf2b-f1a9-466e-9f8f-a67ad8b20e7c"
+  },
+  {
+   "i": 9,
+   "text": "Vecinul lui, omul britanicilor, avea un porc.",
+   "say": "Vecinul lui, omul britanicilor, avea un porc.",
+   "expr": "banuitoare",
+   "file": "line-09.mp3",
+   "job_id": "26cf9903-e6a2-477d-8dc8-0b4477316208"
+  },
+  {
+   "i": 10,
+   "text": "Porcul intră în grădină…",
+   "say": "Porcul intră în grădină...",
+   "expr": "banuitoare",
+   "file": "line-10.mp3",
+   "job_id": "0e33a9c4-e864-44ca-9ef2-88dd9f6737cc"
+  },
+  {
+   "i": 11,
+   "text": "Și mănâncă cartofii.",
+   "say": "Și mănâncă cartofii.",
+   "expr": "suparata",
+   "file": "line-11.mp3",
+   "job_id": "e67804ad-fcc5-4760-9383-02924c570ecd"
+  },
+  {
+   "i": 12,
+   "text": "Nu era prima dată.",
+   "say": "Nu era prima dată.",
+   "expr": "socata",
+   "file": "line-12.mp3",
+   "job_id": "721e91a8-b4d6-49ff-85e7-223e433381d2"
+  },
+  {
+   "i": 13,
+   "text": "Lyman împușcă porcul.",
+   "say": "Lyman împușcă porcul.",
+   "expr": "socata",
+   "file": "line-13.mp3",
+   "job_id": "5a4bd0f3-30aa-493c-b340-e67585261325"
+  },
+  {
+   "i": 14,
+   "text": "Lyman îi oferă 10 dolari.",
+   "say": "Lyman îi oferă zece dolari.",
+   "expr": "explica",
+   "file": "line-14.mp3",
+   "job_id": "05d8c57c-0e8f-4586-b26b-f4a10d4ba571"
+  },
+  {
+   "i": 15,
+   "text": "Vecinul cere 100.",
+   "say": "Vecinul cere o sută.",
+   "expr": "suparata",
+   "file": "line-15.mp3",
+   "job_id": "fe829793-afac-47cc-b4d5-d221ce16442a"
+  },
+  {
+   "i": 16,
+   "text": "Nu se înțeleg.",
+   "say": "Nu se înțeleg.",
+   "expr": "umeri",
+   "file": "line-16.mp3",
+   "job_id": "57b5a573-3c64-419b-a2a5-e54ff9ded519"
+  },
+  {
+   "i": 17,
+   "text": "Britanicii amenință că-l arestează.",
+   "say": "Britanicii amenință că-l arestează.",
+   "expr": "banuitoare",
+   "file": "line-17.mp3",
+   "job_id": "1e9112a1-48b6-4d94-9d67-556f2c47d68b"
+  },
+  {
+   "i": 18,
+   "text": "Americanii cheamă armata.",
+   "say": "Americanii cheamă armata.",
+   "expr": "suparata",
+   "file": "line-18.mp3",
+   "job_id": "0d881a08-3fec-4928-9caa-bf5460176478"
+  },
+  {
+   "i": 19,
+   "text": "Britanicii trimit corăbii de război.",
+   "say": "Britanicii trimit corăbii de război.",
+   "expr": "mirata",
+   "file": "line-19.mp3",
+   "job_id": "3cd8a150-520a-4734-918e-2f9dae31c118"
+  },
+  {
+   "i": 20,
+   "text": "461 de americani, cu 14 tunuri.",
+   "say": "Patru sute șaizeci și unu de americani, cu paisprezece tunuri.",
+   "expr": "explica",
+   "file": "line-20.mp3",
+   "job_id": "6c651d70-fcbf-4027-a373-6d230f594de8"
+  },
+  {
+   "i": 21,
+   "text": "Contra peste 2.000 de britanici.",
+   "say": "Contra peste două mii de britanici.",
+   "expr": "socata",
+   "file": "line-21.mp3",
+   "job_id": "7537fa12-5061-4da0-88ec-b4e622ebb138"
+  },
+  {
+   "i": 22,
+   "text": "Pentru un porc.",
+   "say": "Pentru un porc.",
+   "expr": "rade",
+   "file": "line-22.mp3",
+   "job_id": "31e17491-9655-4d35-9100-15ba45b0d19f"
+  },
+  {
+   "i": 23,
+   "text": "Guvernatorul britanic ordonă: atacați!",
+   "say": "Guvernatorul britanic ordonă: atacați!",
+   "expr": "sopteste",
+   "file": "line-23.mp3",
+   "job_id": "4ca16a6d-b8c1-4f31-9e53-77fd7a273cc8"
+  },
+  {
+   "i": 24,
+   "text": "Dar amiralul se uită și zice:",
+   "say": "Dar amiralul se uită și zice:",
+   "expr": "mirata",
+   "file": "line-24.mp3",
+   "job_id": "003e70ab-94e5-421a-90c3-1f0cd5690e67"
+  },
+  {
+   "i": 25,
+   "text": "„Nu încep un război pentru un porc.”",
+   "say": "Nu încep un război pentru un porc.",
+   "expr": "vesela",
+   "file": "line-25.mp3",
+   "job_id": "e173062f-fb3b-44eb-97c1-60b9cba087ae"
+  },
+  {
+   "i": 26,
+   "text": "Așa că stau amândoi pe insulă.",
+   "say": "Așa că stau amândoi pe insulă.",
+   "expr": "explica",
+   "file": "line-26.mp3",
+   "job_id": "e4d651de-f60b-430f-a230-438999974f1a"
+  },
+  {
+   "i": 27,
+   "text": "12 ani!",
+   "say": "Doisprezece ani!",
+   "expr": "mirata",
+   "file": "line-27.mp3",
+   "job_id": "1ef4a3bd-7d04-4e0c-b378-a53b234c4053"
+  },
+  {
+   "i": 28,
+   "text": "Fără să tragă un glonț.",
+   "say": "Fără să tragă un glonț.",
+   "expr": "rade",
+   "file": "line-28.mp3",
+   "job_id": "9a17f4b3-0812-4df5-926a-e30f2e7880be"
+  },
+  {
+   "i": 29,
+   "text": "Până la urmă, decide un arbitru:",
+   "say": "Până la urmă, decide un arbitru:",
+   "expr": "explica",
+   "file": "line-29.mp3",
+   "job_id": "8bae4577-e192-4999-80ea-067df2921a14"
+  },
+  {
+   "i": 30,
+   "text": "Kaiserul Germaniei.",
+   "say": "Kaiserul Germaniei.",
+   "expr": "rade",
+   "file": "line-30.mp3",
+   "job_id": "2115517d-6d6e-4def-8992-86d48c8ff1a6"
+  },
+  {
+   "i": 31,
+   "text": "Insulele rămân americane.",
+   "say": "Insulele rămân americane.",
+   "expr": "explica",
+   "file": "line-31.mp3",
+   "job_id": "05495757-7872-440f-b197-3177c41dd17f"
+  },
+  {
+   "i": 32,
+   "text": "Și porcul? Singura victimă.",
+   "say": "Și porcul? Singura victimă.",
+   "expr": "vesela",
+   "file": "line-32.mp3",
+   "job_id": "2335b34f-e00d-43c8-be40-d48d00705b9a"
+  },
+  {
+   "i": 33,
+   "text": "Eu sunt Tanti Geta.",
+   "say": "Eu sunt Tanti Geta.",
+   "expr": "explica",
+   "file": "line-33.mp3",
+   "job_id": "af082fd1-8cbf-43b8-bdad-b63f423b0739"
+  },
+  {
+   "i": 34,
+   "text": "Data viitoare: o armată bătută de păsări.",
+   "say": "Data viitoare: o armată bătută de păsări.",
+   "expr": "banuitoare",
+   "file": "line-34.mp3",
+   "job_id": "242e0687-7200-4cd0-87cf-1cc57e67841c"
+  }
+ ]
+}
