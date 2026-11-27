@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tanti Geta Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f1ea; --panel:#ffffff; --ink:#2b1d2e; --muted:#6d5f70; --line:#e6dbd1;
+    --accent:#e83e7c; --accent-ink:#ffffff; --soft:#fde7ef; --field:#fffdfb;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1a1518; --panel:#251f23; --ink:#f3e9ee; --muted:#b9aab1; --line:#3a3036;
+      --accent:#ff5c95; --accent-ink:#1a1518; --soft:#3a2430; --field:#1f1a1d;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1a1518; --panel:#251f23; --ink:#f3e9ee; --muted:#b9aab1; --line:#3a3036;
+    --accent:#ff5c95; --accent-ink:#1a1518; --soft:#3a2430; --field:#1f1a1d;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Fredoka",system-ui,sans-serif}
+  .wrap{max-width:1120px;margin:0 auto;padding:24px 16px 48px;display:grid;gap:28px;grid-template-columns:1fr}
+  @media (min-width:900px){
+    .wrap{grid-template-columns:minmax(0,1fr) 500px;align-items:start}
+    .stage-col{position:sticky;top:16px}
+  }
+  #stage{display:block;margin:0 auto;width:min(100%, calc(86vh * 9 / 16));height:auto;aspect-ratio:9/16;
+    border-radius:20px;box-shadow:0 12px 40px rgba(40,20,30,.22);background:#000;cursor:pointer}
+  .hint{color:var(--muted);font-size:14px;text-align:center;margin:10px 0 0}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px}
+  h1{margin:0 0 4px;font-size:30px;line-height:1.1}
+  h1 span{color:var(--accent)}
+  .lede{margin:0 0 18px;color:var(--muted)}
+  label.f{display:block;font-weight:600;margin:14px 0 6px}
+  select,textarea,input[type=file]{width:100%;font:inherit;color:var(--ink);background:var(--field);
+    border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+  textarea{min-height:300px;font:14px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;resize:vertical}
+  details.help{margin-top:8px;font-size:14px;color:var(--muted)}
+  details.help summary{cursor:pointer;color:var(--ink);font-weight:600}
+  details.help code{background:var(--soft);padding:1px 5px;border-radius:6px;color:var(--ink)}
+  details.help ul{padding-left:18px;margin:8px 0}
+  fieldset{border:1px solid var(--line);border-radius:14px;margin:16px 0 0;padding:10px 14px 14px}
+  legend{font-weight:600;padding:0 6px}
+  .opt{display:flex;gap:10px;align-items:flex-start;padding:8px 0;cursor:pointer}
+  .opt input{margin-top:5px;accent-color:var(--accent)}
+  .opt small{display:block;color:var(--muted);font-size:13px;line-height:1.35}
+  .row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .row label{display:flex;gap:8px;align-items:center;cursor:pointer}
+  .row select{width:auto}
+  #audioRow{margin-top:6px}
+  #audioInfo{font-size:13px;color:var(--muted);display:block;margin-top:4px}
+  .btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+  button,.btn{font:inherit;font-weight:600;border-radius:14px;padding:12px 14px;border:1px solid var(--line);
+    background:var(--field);color:var(--ink);cursor:pointer;text-align:center;text-decoration:none;display:inline-block}
+  button.primary,.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  #status{min-height:24px;margin:12px 0 0;font-weight:500}
+  #out{margin-top:10px;display:grid;gap:10px}
+  #out video{width:100%;max-height:420px;border-radius:14px;background:#000}
+  .hidden{display:none !important}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="stage-col">
+    <canvas id="stage" width="1080" height="1920" aria-label="Tanti Geta la geam"></canvas>
+    <p class="hint" id="hint">Previzualizare 1080×1920, gata de TikTok.</p>
+  </section>
+
+  <section class="panel">
+    <h1>Tanti Geta <span>studio</span></h1>
+    <p class="lede">Scrii scriptul, alegi de unde vine vocea și apeși „Înregistrează”. Iese un clip vertical cu Tanti Geta la geam, carduri și subtitrări.</p>
+
+    <label class="f" for="preset">Episod gata scris</label>
+    <select id="preset"></select>
+
+    <label class="f" for="script">Script</label>
+    <textarea id="script" spellcheck="false"></textarea>
+    <details class="help">
+      <summary>Cum scriu scriptul</summary>
+      <ul>
+        <li><code># Titlu</code> e titlul episodului, afișat sus.</li>
+        <li><code>[mirată] Text...</code> e o replică. Expresii: <b>normal</b>, <b>mirată</b>, <b>bănuitoare</b>, <b>veselă</b>, <b>supărată</b>, <b>explică</b> (ridică degetul).</li>
+        <li><code>!card 🐊 | Titlu | Detaliu</code> pune un card cu o singură idee.</li>
+        <li><code>!vs 🐊 | Crocodil | detaliu || 🐊 | Aligator | detaliu</code> pune un card de comparație.</li>
+        <li>Un card rămâne pe ecran până la următorul. Replicile lungi sunt tăiate automat în subtitrări mai scurte.</li>
+      </ul>
+    </details>
+
+    <fieldset>
+      <legend>Vocea</legend>
+      <label class="opt"><input type="radio" name="mode" value="mic" checked>
+        <span><b>Microfon live</b> (recomandat)<small>Citești replicile pe măsură ce apar, iar gura ei se mișcă după vocea ta. Treci la replica următoare cu Space sau atingând imaginea.</small></span></label>
+      <label class="opt"><input type="radio" name="mode" value="audio">
+        <span><b>Fișierul meu audio</b><small>Înregistrezi vocea separat (de exemplu cu reportofonul de pe telefon), apoi o încarci aici. Replicile se împart pe durata fișierului.</small></span></label>
+      <div id="audioRow" class="hidden">
+        <input type="file" id="audioFile" accept="audio/*">
+        <span id="audioInfo">Niciun fișier ales.</span>
+      </div>
+      <label class="opt"><input type="radio" name="mode" value="auto">
+        <span><b>Automat, fără sunet</b><small>Gura se mișcă după text. Bun pentru probă sau dacă pui vocea după, în CapCut.</small></span></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Aspect</legend>
+      <div class="row">
+        <label>Fundal
+          <select id="bg">
+            <option value="bloc">Geamul de la bloc</option>
+            <option value="green">Verde (chroma key)</option>
+          </select>
+        </label>
+        <label><input type="checkbox" id="subs" checked> Subtitrări</label>
+        <label><input type="checkbox" id="cards" checked> Carduri</label>
+      </div>
+    </fieldset>
+
+    <div class="btns">
+      <button id="btnPlay">▶ Previzualizează</button>
+      <button id="btnRec" class="primary">⏺ Înregistrează</button>
+      <button id="btnNext" disabled>⏭ Replica următoare</button>
+      <button id="btnStop" disabled>⏹ Stop</button>
+    </div>
+    <p id="status" role="status"></p>
+    <div id="out"></div>
+  </section>
+</main>
+
+<script>
+/* =========================================================
+   Tanti Geta Studio: personaj 2D desenat integral în cod.
+   ========================================================= */
+const W = 1080, H = 1920, TAU = Math.PI * 2;
+const $ = id => document.getElementById(id);
+const cv = $('stage'), ctx = cv.getContext('2d');
+const FONT = '"Fredoka","Trebuchet MS",system-ui,sans-serif';
+const EMOJI = '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Twemoji Mozilla",sans-serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, k) => a + (b - a) * k;
+const easeOutBack = x => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+
+/* ---------- paletă personaj ---------- */
+const OUT = '#3b2620', SKIN = '#f3c4a2', HAIR = '#d3602f', HAIR_D = '#a8441d';
+const ROBE = '#7fa7e6', COLLAR = '#f59bbd', LIP = '#cf2346';
+
+/* ---------- expresii ---------- */
+const EXPR = {
+  normal:     { bl: 0,    br: 0,    frown: 0, eye: 1,    happy: 0, smile: 0.35,  tilt: 0,     blush: 0.45, pupil: 1,    gesture: 0 },
+  mirata:     { bl: 1,    br: 1,    frown: 0, eye: 1.25, happy: 0, smile: 0,     tilt: 0,     blush: 0.35, pupil: 0.75, gesture: 0 },
+  banuitoare: { bl: -0.5, br: 0.9,  frown: 0, eye: 0.55, happy: 0, smile: -0.15, tilt: -0.07, blush: 0.3,  pupil: 1,    gesture: 0 },
+  vesela:     { bl: 0.5,  br: 0.5,  frown: 0, eye: 1,    happy: 1, smile: 1,     tilt: 0.05,  blush: 1,    pupil: 1,    gesture: 0 },
+  suparata:   { bl: -0.3, br: -0.3, frown: 1, eye: 0.85, happy: 0, smile: -0.7,  tilt: 0,     blush: 0.8,  pupil: 0.9,  gesture: 0 },
+  explica:    { bl: 0.6,  br: 0.1,  frown: 0, eye: 1,    happy: 0, smile: 0.3,   tilt: 0.04,  blush: 0.5,  pupil: 1,    gesture: 1 },
+};
+const ALIASES = { surprinsa: 'mirata', uimita: 'mirata', socata: 'mirata', suspicioasa: 'banuitoare',
+  fericita: 'vesela', rade: 'vesela', nervoasa: 'suparata', furioasa: 'suparata', arata: 'explica', deget: 'explica' };
+
+const DEFAULT_CARD = { type: 'card', emoji: '👵', title: 'Tanti Geta', detail: 'Știe tot. Spune tot.' };
+
+/* ---------- flori pe halat (poziții fixe) ---------- */
+function seeded(seed) { return () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }; }
+const ROBE_FLOWERS = (() => { const r = seeded(11), a = [];
+  for (let i = 0; i < 36; i++) a.push({ x: -275 + r() * 550, y: r() * 230, r: 12 + r() * 10, c: ['#ffffff', '#ffb3cf', '#ffe08a'][i % 3] });
+  return a; })();
+
+/* ---------- stare ---------- */
+const S = {
+  p: { ...EXPR.normal }, target: EXPR.normal,
+  mouth: 0, blinkAmt: 1, blinkPhase: -1, nextBlink: 2,
+  look: { x: 0, y: 0 }, lookT: { x: 0, y: 0 }, nextLook: 1,
+  card: null, cardAnim: 1, sub: '', subAnim: 1,
+  countdown: 0, preview: null, ep: null,
+};
+const opts = { bg: 'bloc', subs: true, cards: true };
+
+/* ================= PARSARE SCRIPT ================= */
+function normKey(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim(); }
+function parts(s) { const p = (s || '').split('|').map(x => x.trim()); return { emoji: p[0] || '', title: p[1] || '', detail: p.slice(2).join(' | ') }; }
+function chunkText(text, max = 72) {
+  const sentences = text.match(/[^.!?…]+[.!?…]*["”»]?\s*/g) || [text];
+  const out = []; let cur = '';
+  const push = () => { if (cur.trim()) out.push(cur.trim()); cur = ''; };
+  for (let s of sentences) {
+    s = s.trim(); if (!s) continue;
+    if (s.length > max) {
+      push(); let w = '';
+      for (const word of s.split(/\s+/)) {
+        if ((w + ' ' + word).trim().length > max) { out.push(w.trim()); w = word; } else w = (w + ' ' + word).trim();
+      }
+      cur = w; continue;
+    }
+    if ((cur + ' ' + s).trim().length > max) push();
+    cur = (cur + ' ' + s).trim();
+  }
+  push(); return out;
+}
+function parseScript(src) {
+  const ep = { title: '', items: [], firstCard: null }; let card = null, m;
+  for (const raw of src.split(/\r?\n/)) {
+    const line = raw.trim(); if (!line || line.startsWith('//')) continue;
+    if (line.startsWith('#')) { ep.title = line.replace(/^#+\s*/, ''); continue; }
+    if ((m = line.match(/^!vs\s+(.*)$/i))) { const [a, b] = m[1].split('||'); card = { type: 'vs', a: parts(a), b: parts(b) }; ep.firstCard ||= card; continue; }
+    if ((m = line.match(/^!card\s+(.*)$/i))) { card = { type: 'card', ...parts(m[1]) }; ep.firstCard ||= card; continue; }
+    let expr = 'normal', text = line;
+    if ((m = line.match(/^\[([^\]]*)\]\s*(.*)$/))) { const k = normKey(m[1]); expr = EXPR[k] ? k : (ALIASES[k] || 'normal'); text = m[2]; }
+    if (!text) continue;
+    for (const c of chunkText(text)) ep.items.push({ text: c, expr, card });
+  }
+  return ep;
+}
+
+/* ================= DESEN: utilitare ================= */
+function rr(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+function circ(x, y, r) { ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); }
+function ell(x, y, rx, ry) { ctx.beginPath(); ctx.ellipse(x, y, Math.max(rx, .1), Math.max(ry, .1), 0, 0, TAU); }
+function seg(x1, y1, x2, y2) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); }
+function wrap(text, maxW) {
+  const words = text.split(/\s+/), lines = []; let cur = '';
+  for (const w of words) { const t = cur ? cur + ' ' + w : w; if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t; }
+  if (cur) lines.push(cur); return lines;
+}
+function fitWrap(text, weight, size, maxW, maxLines, minSize = 24) {
+  let lines;
+  for (;;) { ctx.font = `${weight} ${size}px ${FONT}`; lines = wrap(text, maxW); if (lines.length <= maxLines || size <= minSize) break; size -= 2; }
+  return { lines: lines.slice(0, maxLines), size };
+}
+
+/* ================= DESEN: decor ================= */
+function cloud(x, y, k) { for (const [dx, dy, r] of [[0, 0, 50], [55, -20, 60], [115, 0, 48], [55, 18, 50]]) { circ(x + dx * k, y + dy * k, r * k); ctx.fill(); } }
+function drawBackdrop(t) {
+  const g = ctx.createLinearGradient(0, 0, 0, 900); g.addColorStop(0, '#a9dcff'); g.addColorStop(1, '#ffe6cf');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, 900);
+  ctx.fillStyle = 'rgba(255,255,255,.85)';
+  cloud(((t * 12) % 1400) - 250, 330, 1); cloud(((t * 8 + 700) % 1400) - 250, 820, .8);
+  ctx.fillStyle = '#ecdcc0'; ctx.fillRect(0, 880, W, H - 880);
+  ctx.strokeStyle = '#d7c3a0'; ctx.lineWidth = 4;
+  for (let y = 880; y < H; y += 250) seg(0, y, W, y);
+  seg(60, 880, 60, H); seg(1020, 880, 1020, H);
+}
+function curtain(x, dir, t) {
+  const y = 1150, w = 150, h = 630, sway = Math.sin(t * .9 + dir) * 6;
+  ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + dir * w, y);
+  ctx.quadraticCurveTo(x + dir * (w * .45 + sway), y + h * .55, x + dir * w * .9, y + h);
+  ctx.lineTo(x, y + h); ctx.closePath();
+  ctx.fillStyle = 'rgba(250,248,240,.93)'; ctx.fill();
+  ctx.save(); ctx.clip(); ctx.fillStyle = 'rgba(196,184,168,.6)';
+  let row = 0;
+  for (let yy = y + 20; yy < y + h; yy += 34, row++) for (let xx = 10; xx < w; xx += 34) { circ(x + dir * (xx + (row % 2) * 17), yy, 6); ctx.fill(); }
+  ctx.strokeStyle = 'rgba(160,150,135,.5)'; ctx.lineWidth = 3;
+  for (let k = 1; k < 4; k++) { ctx.beginPath(); ctx.moveTo(x + dir * k * 36, y); ctx.quadraticCurveTo(x + dir * (k * 30 + sway), y + h * .5, x + dir * k * 32, y + h); ctx.stroke(); }
+  ctx.restore();
+}
+function drawWindow(t) {
+  ctx.fillStyle = '#f4f1ea'; rr(100, 1120, 880, 680, 14); ctx.fill(); ctx.strokeStyle = OUT; ctx.lineWidth = 6; ctx.stroke();
+  const g = ctx.createLinearGradient(0, 1150, 0, 1780); g.addColorStop(0, '#4a3a40'); g.addColorStop(1, '#2a2024');
+  ctx.fillStyle = g; ctx.fillRect(130, 1150, 820, 630);
+  // covorul de pe perete
+  ctx.fillStyle = '#6b1f2a'; ctx.fillRect(240, 1185, 600, 380);
+  ctx.strokeStyle = '#d9a441'; ctx.lineWidth = 10; ctx.strokeRect(262, 1207, 556, 336);
+  ctx.lineWidth = 4; ctx.strokeRect(284, 1229, 512, 292);
+  for (let i = 0; i < 7; i++) for (let j = 0; j < 4; j++) {
+    const x = 315 + i * 75, y = 1265 + j * 72, s = 20;
+    ctx.fillStyle = (i + j) % 2 ? '#d9a441' : '#2f5d7c';
+    ctx.beginPath(); ctx.moveTo(x, y - s); ctx.lineTo(x + s, y); ctx.lineTo(x, y + s); ctx.lineTo(x - s, y); ctx.closePath(); ctx.fill();
+  }
+  const glow = ctx.createRadialGradient(540, 1200, 20, 540, 1200, 520);
+  glow.addColorStop(0, 'rgba(255,205,130,.22)'); glow.addColorStop(1, 'rgba(255,205,130,0)');
+  ctx.fillStyle = glow; ctx.fillRect(130, 1150, 820, 630);
+  curtain(130, 1, t); curtain(950, -1, t);
+  ctx.fillStyle = '#c9a46a'; ctx.fillRect(122, 1146, 836, 12);
+}
+function flower(x, y, r, c) {
+  ctx.fillStyle = c;
+  for (let k = 0; k < 5; k++) { const a = k * TAU / 5; circ(x + Math.cos(a) * r * .8, y + Math.sin(a) * r * .8, r * .6); ctx.fill(); }
+  ctx.fillStyle = c === '#ffe08a' ? '#e76f51' : '#ffcf3f'; circ(x, y, r * .38); ctx.fill();
+}
+function drawPot(x, t) {
+  ctx.lineWidth = 4; ctx.strokeStyle = '#2f6b25'; ctx.fillStyle = '#4f9a3c';
+  for (const [dx, dy, r] of [[-44, 1655, 32], [42, 1650, 30], [0, 1632, 34], [-20, 1600, 26], [24, 1606, 26]]) { circ(x + dx, dy, r); ctx.fill(); ctx.stroke(); }
+  const sw = Math.sin(t * 1.3 + x) * 4;
+  for (const [dx, dy] of [[-34, 1585], [30, 1575], [0, 1548]]) {
+    const cx = x + dx + sw, cy = dy;
+    for (let k = 0; k < 7; k++) { const a = k * TAU / 7; ctx.fillStyle = '#e63946'; circ(cx + Math.cos(a) * 18, cy + Math.sin(a) * 18, 12); ctx.fill(); }
+    ctx.fillStyle = '#ff8fa3'; circ(cx, cy, 9); ctx.fill();
+  }
+  ctx.fillStyle = '#c8693e'; ctx.strokeStyle = OUT; ctx.lineWidth = 5;
+  ctx.beginPath(); ctx.moveTo(x - 62, 1690); ctx.lineTo(x + 62, 1690); ctx.lineTo(x + 48, 1776); ctx.lineTo(x - 48, 1776); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#d97b4d'; rr(x - 68, 1680, 136, 24, 8); ctx.fill(); ctx.stroke();
+}
+function drawSill() {
+  ctx.fillStyle = 'rgba(0,0,0,.15)'; ctx.fillRect(80, 1834, 920, 18);
+  ctx.fillStyle = '#d9d2c6'; ctx.fillRect(70, 1776, 940, 58);
+  ctx.fillStyle = '#ebe5da'; ctx.fillRect(70, 1776, 940, 16);
+  ctx.strokeStyle = OUT; ctx.lineWidth = 5; ctx.strokeRect(70, 1776, 940, 58);
+}
+function drawPillow() {
+  ctx.fillStyle = '#fbf6ec'; ctx.strokeStyle = OUT; ctx.lineWidth = 6;
+  rr(205, 1700, 670, 94, 44); ctx.fill(); ctx.stroke();
+  ctx.strokeStyle = '#c62835'; ctx.lineWidth = 3; seg(245, 1722, 835, 1722); seg(245, 1774, 835, 1774);
+  for (let x = 252, i = 0; x <= 830; x += 48, i++) {
+    const s = 11; ctx.fillStyle = i % 2 ? '#2b2b2b' : '#c62835';
+    ctx.beginPath(); ctx.moveTo(x, 1748 - s); ctx.lineTo(x + s, 1748); ctx.lineTo(x, 1748 + s); ctx.lineTo(x - s, 1748); ctx.closePath(); ctx.fill();
+  }
+}
+
+/* ================= DESEN: Tanti Geta ================= */
+function drawBody(cx, sh) {
+  ctx.fillStyle = SKIN; ctx.fillRect(cx - 46, sh - 120, 92, 140);
+  ctx.strokeStyle = OUT; ctx.lineWidth = 6; seg(cx - 46, sh - 120, cx - 46, sh); seg(cx + 46, sh - 120, cx + 46, sh);
+  ctx.beginPath();
+  ctx.moveTo(cx - 265, 1800); ctx.lineTo(cx - 262, sh + 95);
+  ctx.quadraticCurveTo(cx - 255, sh + 5, cx - 150, sh - 5); ctx.lineTo(cx + 150, sh - 5);
+  ctx.quadraticCurveTo(cx + 255, sh + 5, cx + 262, sh + 95); ctx.lineTo(cx + 265, 1800); ctx.closePath();
+  ctx.fillStyle = ROBE; ctx.fill();
+  ctx.save(); ctx.clip(); for (const f of ROBE_FLOWERS) flower(cx + f.x, sh + f.y, f.r, f.c); ctx.restore();
+  ctx.strokeStyle = OUT; ctx.lineWidth = 6; ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx - 80, sh - 6); ctx.lineTo(cx, sh + 115); ctx.lineTo(cx + 80, sh - 6); ctx.closePath();
+  ctx.fillStyle = SKIN; ctx.fill();
+  ctx.strokeStyle = COLLAR; ctx.lineWidth = 24; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(cx - 90, sh - 4); ctx.lineTo(cx, sh + 120); ctx.lineTo(cx + 90, sh - 4); ctx.stroke();
+  // mărgele
+  ctx.fillStyle = '#fff6e0'; ctx.strokeStyle = 'rgba(90,60,40,.5)'; ctx.lineWidth = 2;
+  for (let k = 0; k <= 10; k++) { const a = Math.PI * (.15 + .7 * k / 10); circ(cx + Math.cos(a) * 60, sh - 30 + Math.sin(a) * 60, 7); ctx.fill(); ctx.stroke(); }
+}
+function drawMouth(x, y, o, smile) {
+  ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  if (o < 0.07) {
+    ctx.strokeStyle = LIP; ctx.lineWidth = 11;
+    ctx.beginPath(); ctx.moveTo(x - 36, y - smile * 10); ctx.quadraticCurveTo(x, y + smile * 30, x + 36, y - smile * 10); ctx.stroke();
+    return;
+  }
+  const w = 66 + o * 12, h = 8 + o * 58, y0 = y - smile * 8 * (1 - o * .6);
+  ctx.beginPath(); ctx.moveTo(x - w / 2, y0);
+  ctx.quadraticCurveTo(x, y - h * .35 - 6, x + w / 2, y0);
+  ctx.quadraticCurveTo(x, y + h * .9 + smile * 8, x - w / 2, y0); ctx.closePath();
+  ctx.fillStyle = '#5a1426'; ctx.fill();
+  ctx.save(); ctx.clip();
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(x - w / 2, y - h * .35 - 8, w, 10 + h * .22);
+  ctx.fillStyle = '#e8798f'; ell(x, y + h * .5, w * .32, h * .28); ctx.fill();
+  ctx.restore();
+  ctx.strokeStyle = LIP; ctx.lineWidth = 9;
+  ctx.beginPath(); ctx.moveTo(x - w / 2, y0); ctx.quadraticCurveTo(x, y - h * .35 - 6, x + w / 2, y0);
+  ctx.quadraticCurveTo(x, y + h * .9 + smile * 8, x - w / 2, y0); ctx.closePath(); ctx.stroke();
+}
+function drawHead(hx, hy, t) {
+  const P = S.p;
+  ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  // păr spate + bucle laterale
+  ctx.strokeStyle = OUT; ctx.lineWidth = 6; ctx.fillStyle = HAIR;
+  ell(hx, hy - 20, 205, 188); ctx.fill(); ctx.stroke();
+  for (const s of [-1, 1]) { circ(hx + s * 178, hy + 48, 52); ctx.fill(); ctx.stroke(); circ(hx + s * 165, hy + 112, 42); ctx.fill(); ctx.stroke(); }
+  // urechi + cercei
+  ctx.fillStyle = SKIN; for (const s of [-1, 1]) { ell(hx + s * 156, hy + 18, 26, 38); ctx.fill(); ctx.stroke(); }
+  ctx.strokeStyle = '#e3b23c'; ctx.lineWidth = 7;
+  for (const s of [-1, 1]) { ctx.save(); ctx.translate(hx + s * 158, hy + 50); ctx.rotate(Math.sin(t * 2.3 + s) * .22); circ(0, 24, 17); ctx.stroke(); ctx.restore(); }
+  // față
+  ctx.strokeStyle = OUT; ctx.lineWidth = 6; ctx.fillStyle = SKIN; ell(hx, hy + 12, 158, 172); ctx.fill(); ctx.stroke();
+  // breton (contur pentru tot grupul, apoi umplere)
+  const fr = []; for (let k = 0; k < 8; k++) { const a = (205 + k * 130 / 7) * Math.PI / 180; fr.push([hx + Math.cos(a) * 150, hy - 40 + Math.sin(a) * 125]); }
+  ctx.lineWidth = 12; ctx.strokeStyle = OUT; for (const [x, y] of fr) { circ(x, y, 56); ctx.stroke(); }
+  ctx.fillStyle = HAIR; for (const [x, y] of fr) { circ(x, y, 56); ctx.fill(); }
+  ctx.strokeStyle = HAIR_D; ctx.lineWidth = 5;
+  for (const s of [-1, 1]) { ctx.beginPath(); ctx.moveTo(hx + s * 20, hy - 150); ctx.quadraticCurveTo(hx + s * 80, hy - 140, hx + s * 112, hy - 92); ctx.stroke(); }
+  // bigudiuri
+  const cols = ['#ff7eb6', '#6ec6ff', '#ffd84d', '#8ee07a', '#c59bff'];
+  for (let i = 0; i < 5; i++) {
+    const dx = (i - 2) * 72, x = hx + dx, y = hy - 200 + Math.pow(dx / 150, 2) * 55;
+    ctx.save(); ctx.translate(x, y); ctx.rotate(dx / 260);
+    ctx.fillStyle = cols[i]; ctx.strokeStyle = OUT; ctx.lineWidth = 5; rr(-34, -27, 68, 54, 22); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,255,255,.65)'; ctx.lineWidth = 4; for (const lx of [-14, 0, 14]) seg(lx, -18, lx, 18);
+    ctx.restore();
+  }
+  // obraji
+  ctx.fillStyle = `rgba(255,105,130,${.38 * P.blush})`; for (const s of [-1, 1]) { ell(hx + s * 104, hy + 64, 32, 19); ctx.fill(); }
+  // ochi
+  const op = P.eye * S.blinkAmt;
+  for (const s of [-1, 1]) {
+    const ex = hx + s * 64, ey = hy - 8;
+    ctx.fillStyle = '#93c2f2'; ell(ex, ey - 10, 36, 6 + 30 * Math.min(op, 1.25) * (1 - P.happy * .8)); ctx.fill();
+    if (P.happy > .5) {
+      ctx.strokeStyle = OUT; ctx.lineWidth = 7; ctx.beginPath(); ctx.arc(ex, ey + 12, 24, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke();
+      continue;
+    }
+    const ry = 34 * op;
+    if (ry < 5) { ctx.strokeStyle = OUT; ctx.lineWidth = 6; seg(ex - 28, ey, ex + 28, ey); continue; }
+    ctx.fillStyle = '#ffffff'; ell(ex, ey, 30, ry); ctx.fill();
+    ctx.save(); ell(ex, ey, 30, ry); ctx.clip();
+    const pr = 14 * P.pupil;
+    ctx.fillStyle = '#2b1b18'; circ(ex + S.look.x, ey + S.look.y, pr); ctx.fill();
+    ctx.fillStyle = '#ffffff'; circ(ex + S.look.x - 5, ey + S.look.y - 5, 4.5); ctx.fill();
+    ctx.restore();
+    ctx.strokeStyle = OUT; ctx.lineWidth = 6; ctx.beginPath(); ctx.ellipse(ex, ey, 30, ry, 0, Math.PI, TAU); ctx.stroke();
+    ctx.lineWidth = 5; seg(ex + s * 27, ey - ry * .45, ex + s * 41, ey - ry * .85);
+  }
+  // ochelari
+  ctx.strokeStyle = '#b8323f'; ctx.lineWidth = 7; ctx.fillStyle = 'rgba(255,255,255,.12)';
+  for (const s of [-1, 1]) { circ(hx + s * 64, hy - 8, 52); ctx.fill(); ctx.stroke(); seg(hx + s * 116, hy - 14, hx + s * 155, hy - 4); }
+  ctx.beginPath(); ctx.moveTo(hx - 13, hy - 14); ctx.quadraticCurveTo(hx, hy - 26, hx + 13, hy - 14); ctx.stroke();
+  // sprâncene
+  ctx.strokeStyle = '#5a3424'; ctx.lineWidth = 10;
+  for (const s of [-1, 1]) {
+    const ex = hx + s * 64, raise = s < 0 ? P.bl : P.br, y = hy - 76 - raise * 20;
+    ctx.beginPath(); ctx.moveTo(ex - s * 36, y + P.frown * 16); ctx.quadraticCurveTo(ex, y - 14 - raise * 4, ex + s * 42, y + 6 - P.frown * 4); ctx.stroke();
+  }
+  // nas
+  ctx.strokeStyle = '#c98b6b'; ctx.lineWidth = 6;
+  ctx.beginPath(); ctx.moveTo(hx + 4, hy + 24); ctx.quadraticCurveTo(hx - 24, hy + 60, hx + 2, hy + 68); ctx.stroke();
+  // gură + aluniță
+  drawMouth(hx, hy + 112, S.mouth, P.smile);
+  ctx.fillStyle = '#5a3424'; circ(hx + 64, hy + 98, 5); ctx.fill();
+}
+function drawArm(x1, y1, x2, y2) {
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = OUT; ctx.lineWidth = 86; seg(x1, y1, x2, y2);
+  ctx.strokeStyle = ROBE; ctx.lineWidth = 74; seg(x1, y1, x2, y2);
+  ctx.strokeStyle = COLLAR; seg(lerp(x1, x2, .8), lerp(y1, y2, .8), x2, y2);
+}
+function drawHand(x, y, g, t) {
+  ctx.fillStyle = SKIN; ctx.strokeStyle = OUT; ctx.lineWidth = 6;
+  if (g > .4) {
+    const k = clamp((g - .4) / .6, 0, 1);
+    ctx.save(); ctx.translate(x, y); ctx.rotate(Math.sin(t * 9) * .22 * k);
+    rr(-12, -40 - 62 * k, 24, 70 * k + 20, 12); ctx.fill(); ctx.stroke(); ctx.restore();
+  }
+  circ(x, y, 38); ctx.fill(); ctx.stroke();
+}
+function drawGeta(t) {
+  const P = S.p, cx = 540, bob = Math.sin(t * 1.7) * 5;
+  const hy = 1360 + bob, sh = 1575 + bob * .6;
+  drawBody(cx, sh);
+  const tilt = P.tilt + Math.sin(t * .8) * .02 + S.mouth * .025 * Math.sin(t * 6);
+  ctx.save(); ctx.translate(cx, hy + 170); ctx.rotate(tilt); ctx.translate(-cx, -(hy + 170));
+  drawHead(cx, hy, t);
+  ctx.restore();
+  drawSill(); drawPillow();
+  const y = 1738, g = P.gesture;
+  drawArm(cx - 262, y - 8, cx - 92, y); drawHand(cx - 80, y, 0, t);
+  const hxr = lerp(cx + 92, cx + 300, g), hyr = lerp(y, 1500, g);
+  drawArm(cx + 262, y - 8, hxr, hyr); drawHand(hxr, hyr, g, t);
+  drawPot(140, t); drawPot(940, t);
+}
+
+/* ================= DESEN: text, carduri, subtitrări ================= */
+function drawHeader() {
+  const label = 'TANTI GETA ȘTIE TOT';
+  ctx.font = `700 44px ${FONT}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const w = ctx.measureText(label).width;
+  ctx.fillStyle = '#e83e7c'; rr(540 - w / 2 - 36, 50, w + 72, 80, 40); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.fillText(label, 540, 92);
+  const ep = S.ep || S.preview; const title = (ep && ep.title) || 'Tanti Geta vă explică';
+  const { lines, size } = fitWrap(title, 700, 62, 960, 2, 40);
+  ctx.font = `700 ${size}px ${FONT}`; ctx.lineJoin = 'round';
+  lines.forEach((l, i) => {
+    const y = 192 + i * (size + 8);
+    ctx.strokeStyle = '#2b1d2e'; ctx.lineWidth = 12; ctx.strokeText(l, 540, y);
+    ctx.fillStyle = '#fff'; ctx.fillText(l, 540, y);
+  });
+}
+function drawEmoji(e, x, y, size) { if (!e) return; ctx.font = `${size}px ${EMOJI}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#000'; ctx.fillText(e, x, y); }
+function drawCard() {
+  const c = S.card || DEFAULT_CARD, a = clamp(S.cardAnim, 0, 1);
+  ctx.save();
+  ctx.globalAlpha = clamp(a * 2, 0, 1);
+  ctx.translate(540, 600); const s = easeOutBack(a) * .1 + .9; ctx.scale(s, s); ctx.translate(-540, -600);
+  ctx.shadowColor = 'rgba(60,30,40,.25)'; ctx.shadowBlur = 30; ctx.shadowOffsetY = 10;
+  ctx.fillStyle = '#fffaf5'; rr(60, 310, 960, 580, 46); ctx.fill();
+  ctx.shadowColor = 'transparent'; ctx.strokeStyle = '#2b1d2e'; ctx.lineWidth = 6; ctx.stroke();
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  if (c.type === 'vs') {
+    const sides = [[c.a, 302, '#e6f6ea', 80], [c.b || {}, 778, '#e9efff', 555]];
+    for (const [d, x, bg, bx] of sides) {
+      ctx.fillStyle = bg; rr(bx, 332, 445, 536, 34); ctx.fill();
+      drawEmoji(d.emoji, x, 450, 130);
+      const tt = fitWrap(d.title || '', 700, 52, 400, 1, 30);
+      ctx.font = `700 ${tt.size}px ${FONT}`; ctx.fillStyle = '#2b1d2e'; ctx.fillText(tt.lines[0] || '', x, 578);
+      const dd = fitWrap(d.detail || '', 500, 38, 395, 5, 28);
+      ctx.font = `500 ${dd.size}px ${FONT}`; ctx.fillStyle = '#5b4a5e';
+      dd.lines.forEach((l, i) => ctx.fillText(l, x, 645 + i * (dd.size + 8)));
+    }
+    ctx.fillStyle = '#e83e7c'; circ(540, 450, 54); ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 6; ctx.stroke();
+    ctx.font = `700 44px ${FONT}`; ctx.fillStyle = '#fff'; ctx.fillText('VS', 540, 453);
+  } else {
+    const hasE = !!c.emoji, ty = hasE ? 665 : 520;
+    drawEmoji(c.emoji, 540, 485, 180);
+    const tt = fitWrap(c.title || '', 700, 66, 880, 1, 36);
+    ctx.font = `700 ${tt.size}px ${FONT}`; ctx.fillStyle = '#2b1d2e'; ctx.fillText(tt.lines[0] || '', 540, ty);
+    const dd = fitWrap(c.detail || '', 500, 44, 860, hasE ? 3 : 5, 30);
+    ctx.font = `500 ${dd.size}px ${FONT}`; ctx.fillStyle = '#5b4a5e';
+    dd.lines.forEach((l, i) => ctx.fillText(l, 540, ty + 70 + i * (dd.size + 10)));
+  }
+  ctx.restore();
+}
+function drawSub() {
+  if (!S.sub) return;
+  const { lines, size } = fitWrap(S.sub, 700, 52, 920, 3, 38);
+  const lh = size + 12, bh = lines.length * lh + 36, yc = 1012;
+  ctx.font = `700 ${size}px ${FONT}`;
+  const bw = Math.min(1010, Math.max(...lines.map(l => ctx.measureText(l).width)) + 70);
+  const k = .9 + .1 * easeOutBack(clamp(S.subAnim, 0, 1));
+  ctx.save(); ctx.translate(540, yc); ctx.scale(k, k); ctx.translate(-540, -yc);
+  ctx.fillStyle = 'rgba(255,255,255,.97)'; rr(540 - bw / 2, yc - bh / 2, bw, bh, 30); ctx.fill();
+  ctx.strokeStyle = '#e83e7c'; ctx.lineWidth = 6; ctx.stroke();
+  ctx.fillStyle = '#2b1d2e'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  lines.forEach((l, i) => ctx.fillText(l, 540, yc - bh / 2 + 18 + lh / 2 + i * lh));
+  ctx.restore();
+}
+function drawCountdown() {
+  ctx.fillStyle = 'rgba(20,10,15,.5)'; ctx.fillRect(0, 0, W, H);
+  ctx.font = `700 420px ${FONT}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#fff';
+  ctx.fillText(String(S.countdown), 540, 900);
+  ctx.font = `600 56px ${FONT}`; ctx.fillText('Pregătește-te…', 540, 1180);
+}
+function render(t) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  if (opts.bg === 'green') { ctx.fillStyle = '#00b140'; ctx.fillRect(0, 0, W, H); }
+  else { drawBackdrop(t); drawWindow(t); }
+  drawGeta(t);
+  if (opts.bg !== 'green') drawHeader();
+  if (opts.cards) drawCard();
+  if (opts.subs) drawSub();
+  if (S.countdown) drawCountdown();
+}
+
+/* ================= ANIMAȚIE + REDARE ================= */
+const PAUSE = 0.35, LEAD = 0.7;
+const autoDur = text => clamp(text.length / 14, 1.2, 7) + PAUSE;
+function charOpen(ch) {
+  if (!ch) return 0; const c = ch.toLowerCase();
+  if ('aăâeouy'.includes(c)) return .95;
+  if ('iî'.includes(c)) return .55;
+  if (/[a-zșțşţ]/.test(c)) return .3;
+  return .02;
+}
+let actx = null, anaPlay = null, anaMic = null, recDest = null, audioBuf = null, srcNode = null;
+let micStream = null, micSrc = null, rec = null, recChunks = [], PB = null, cancelCd = false, lastT = 0, lastProg = '';
+const lvlBuf = new Float32Array(1024);
+function level(an) {
+  if (!an) return 0; an.getFloatTimeDomainData(lvlBuf);
+  let s = 0; for (let i = 0; i < lvlBuf.length; i++) s += lvlBuf[i] * lvlBuf[i];
+  return clamp((Math.sqrt(s / lvlBuf.length) - .012) * 10, 0, 1);
+}
+function setExpr(k) { S.target = EXPR[k] || EXPR.normal; }
+function setCard(c) { if (c !== S.card) { S.card = c; S.cardAnim = 0; } }
+function buildTimeline(items, total) {
+  const base = items.map(i => autoDur(i.text)), sum = base.reduce((a, b) => a + b, 0);
+  const scale = total ? total / sum : 1; let acc = total ? 0 : LEAD;
+  const starts = [], ends = [], durs = [];
+  for (const b of base) { const d = b * scale; starts.push(acc); durs.push(d); acc += d; ends.push(acc); }
+  return { starts, ends, durs, total: acc };
+}
+function update(t, dt) {
+  let item = null, mouthT = 0, talking = false;
+  if (PB) {
+    if (PB.mode === 'mic') {
+      item = PB.items[PB.idx] || null; mouthT = level(anaMic); talking = true;
+      if (PB.endAt && t >= PB.endAt) finish();
+    } else {
+      const time = PB.mode === 'audio' ? actx.currentTime - PB.t0 : t - PB.t0;
+      while (PB.idx < PB.items.length && time >= PB.ends[PB.idx]) PB.idx++;
+      if (PB.idx < PB.items.length && time >= PB.starts[PB.idx]) item = PB.items[PB.idx];
+      if (PB.mode === 'audio') { mouthT = level(anaPlay); talking = mouthT > 0; }
+      else if (item) {
+        const lt = time - PB.starts[PB.idx], sp = PB.durs[PB.idx] - PAUSE;
+        if (lt < sp) { mouthT = charOpen(item.text[Math.floor(lt / sp * item.text.length)]) * (.78 + .22 * Math.sin(t * 29)); talking = true; }
+      }
+      if (time > PB.total + .9) finish();
+    }
+  }
+  if (PB) {
+    const ci = PB.items[Math.min(PB.idx, PB.items.length - 1)];
+    setCard(ci ? ci.card : null);
+    S.subNext = item ? item.text : '';
+    setExpr(item ? item.expr : (PB.idx >= PB.items.length ? 'vesela' : 'normal'));
+    const prog = `Replica ${Math.min(PB.idx + 1, PB.items.length)} din ${PB.items.length}` + (PB.record ? ' · se înregistrează' : '');
+    if (prog !== lastProg) { lastProg = prog; status(prog); }
+  } else {
+    setCard(S.preview ? S.preview.firstCard : null); S.subNext = ''; setExpr('normal');
+  }
+  if (S.subNext !== S.sub) { S.sub = S.subNext; S.subAnim = 0; }
+  S.subAnim += dt * 5; S.cardAnim += dt * 3;
+  // gură
+  S.mouth += (mouthT - S.mouth) * Math.min(1, dt * (mouthT > S.mouth ? 22 : 14));
+  if (S.mouth < .01) S.mouth = 0;
+  // expresie
+  for (const k in S.target) S.p[k] += (S.target[k] - S.p[k]) * Math.min(1, dt * 7);
+  // clipit
+  S.nextBlink -= dt;
+  if (S.nextBlink <= 0 && S.blinkPhase < 0) { S.blinkPhase = 0; S.nextBlink = 2 + Math.random() * 3; }
+  if (S.blinkPhase >= 0) { S.blinkPhase += dt / .16; if (S.blinkPhase >= 1) { S.blinkPhase = -1; S.blinkAmt = 1; } else S.blinkAmt = 1 - Math.sin(S.blinkPhase * Math.PI) * .95; }
+  // privire
+  S.nextLook -= dt;
+  if (talking) S.lookT = { x: 0, y: 0 };
+  else if (S.nextLook <= 0) { S.nextLook = 1.5 + Math.random() * 2; S.lookT = { x: (Math.random() - .5) * 14, y: (Math.random() - .5) * 6 }; }
+  S.look.x += (S.lookT.x - S.look.x) * Math.min(1, dt * 6); S.look.y += (S.lookT.y - S.look.y) * Math.min(1, dt * 6);
+}
+function frame(now) {
+  const t = now / 1000, dt = lastT ? Math.min(.05, t - lastT) : .016; lastT = t;
+  update(t, dt); render(t); requestAnimationFrame(frame);
+}
+
+/* ================= AUDIO, MICROFON, ÎNREGISTRARE ================= */
+function ensureAudio() {
+  if (!actx) {
+    actx = new (window.AudioContext || window.webkitAudioContext)();
+    anaPlay = actx.createAnalyser(); anaPlay.fftSize = 1024; anaPlay.connect(actx.destination);
+    anaMic = actx.createAnalyser(); anaMic.fftSize = 1024;
+    recDest = actx.createMediaStreamDestination();
+  }
+  if (actx.state === 'suspended') actx.resume();
+}
+async function setupMic() {
+  ensureAudio(); if (micSrc) return;
+  micStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } });
+  micSrc = actx.createMediaStreamSource(micStream); micSrc.connect(anaMic); micSrc.connect(recDest);
+}
+function releaseMic() {
+  if (micStream) micStream.getTracks().forEach(tr => tr.stop());
+  if (micSrc) try { micSrc.disconnect(); } catch (e) {}
+  micStream = null; micSrc = null;
+}
+const canRecord = () => !!(window.MediaRecorder && cv.captureStream);
+function pickMime() {
+  return ['video/mp4;codecs=avc1.42E01E,mp4a.40.2', 'video/mp4', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm']
+    .find(m => MediaRecorder.isTypeSupported(m)) || '';
+}
+function startRecorder(withAudio, title) {
+  const vs = cv.captureStream(30), tracks = [...vs.getVideoTracks()];
+  if (withAudio && recDest) tracks.push(...recDest.stream.getAudioTracks());
+  const mime = pickMime();
+  rec = new MediaRecorder(new MediaStream(tracks), mime ? { mimeType: mime, videoBitsPerSecond: 8e6 } : { videoBitsPerSecond: 8e6 });
+  recChunks = [];
+  rec.ondataavailable = e => { if (e.data && e.data.size) recChunks.push(e.data); };
+  rec.onstop = () => {
+    vs.getTracks().forEach(tr => tr.stop());
+    const type = rec.mimeType || mime || 'video/webm', blob = new Blob(recChunks, { type });
+    showDownload(blob, type.includes('mp4') ? 'mp4' : 'webm', title);
+  };
+  rec.start(500);
+}
+let lastUrl = null;
+function showDownload(blob, ext, title) {
+  if (lastUrl) URL.revokeObjectURL(lastUrl);
+  lastUrl = URL.createObjectURL(blob);
+  const slug = normKey(title || 'episod').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'episod';
+  const out = $('out'); out.innerHTML = '';
+  const a = document.createElement('a'); a.className = 'btn primary'; a.href = lastUrl; a.download = `tanti-geta-${slug}.${ext}`;
+  a.textContent = `⬇ Descarcă clipul (.${ext}, ${(blob.size / 1048576).toFixed(1)} MB)`;
+  const v = document.createElement('video'); v.controls = true; v.playsInline = true; v.src = lastUrl;
+  out.append(a, v);
+  status(ext === 'webm' ? 'Gata! Clipul e .webm; dacă editorul tău nu-l deschide, convertește-l în .mp4.' : 'Gata! Clipul e mai jos.');
+}
+function countdown(n) {
+  cancelCd = false;
+  return new Promise(res => {
+    let k = n; S.countdown = k;
+    const iv = setInterval(() => {
+      k--;
+      if (k <= 0 || cancelCd) { clearInterval(iv); S.countdown = 0; res(!cancelCd); } else S.countdown = k;
+    }, 1000);
+  });
+}
+const getMode = () => document.querySelector('input[name=mode]:checked').value;
+function setButtons(playing, mode) {
+  $('btnPlay').disabled = playing; $('btnRec').disabled = playing; $('btnStop').disabled = !playing;
+  $('btnNext').disabled = !(playing && mode === 'mic');
+  document.querySelectorAll('input[name=mode]').forEach(r => r.disabled = playing);
+  $('hint').textContent = playing && mode === 'mic'
+    ? 'Citește replica, apoi apasă Space sau atinge imaginea pentru următoarea.'
+    : 'Previzualizare 1080×1920, gata de TikTok.';
+}
+async function start(record) {
+  if (PB || S.countdown) return;
+  const mode = getMode(), ep = parseScript($('script').value);
+  if (!ep.items.length) { status('Scriptul e gol. Scrie măcar o replică.'); return; }
+  if (record && !canRecord()) { status('Browserul ăsta nu poate înregistra. Încearcă Chrome sau fă o înregistrare de ecran.'); return; }
+  try {
+    if (mode === 'audio') { ensureAudio(); if (!audioBuf) { status('Alege întâi fișierul audio cu vocea ta.'); return; } }
+    if (mode === 'mic') await setupMic();
+  } catch (e) { status('Nu am primit acces la microfon. Verifică permisiunile browserului.'); return; }
+  S.ep = ep; setButtons(true, mode);
+  if (record) {
+    if (!(await countdown(3))) { S.ep = null; setButtons(false); status('Oprit.'); if (mode === 'mic') releaseMic(); return; }
+    $('out').innerHTML = '';
+    startRecorder(mode !== 'auto', ep.title);
+  }
+  const tl = buildTimeline(ep.items, mode === 'audio' ? audioBuf.duration : 0);
+  PB = { mode, items: ep.items, idx: 0, record, endAt: 0, ...tl };
+  if (mode === 'audio') {
+    srcNode = actx.createBufferSource(); srcNode.buffer = audioBuf;
+    srcNode.connect(anaPlay); srcNode.connect(recDest);
+    PB.t0 = actx.currentTime + .05; srcNode.start(PB.t0);
+  } else PB.t0 = performance.now() / 1000;
+}
+function finish() {
+  if (!PB) return;
+  const { record, mode } = PB; PB = null; S.ep = null; lastProg = '';
+  if (srcNode) { try { srcNode.stop(); } catch (e) {} srcNode.disconnect(); srcNode = null; }
+  if (rec && rec.state !== 'inactive') rec.stop();
+  if (mode === 'mic') releaseMic();
+  setButtons(false);
+  if (!record) status('Gata.');
+}
+function nextLine() {
+  if (!PB || PB.mode !== 'mic') return;
+  if (PB.idx < PB.items.length) PB.idx++;
+  if (PB.idx >= PB.items.length && !PB.endAt) PB.endAt = performance.now() / 1000 + 1;
+}
+function status(msg) { $('status').textContent = msg; }
+
+/* ================= EPISOADE GATA SCRISE ================= */
+const PRESETS = {
+  'Crocodil sau aligator?': `# Crocodil sau aligator? Tanti Geta vă lămurește
+!vs 🐊 | Crocodil | ? || 🐊 | Aligator | ?
+[bănuitoare] Ia stați așa. Voi știți care-i diferența dintre un crocodil și un aligator?
+[explică] Că vecinul de la patru zice că-s totuna. Ei bine, NU sunt, dragă!
+!vs 📐 | Crocodil | Bot ascuțit, în formă de V || 🥄 | Aligator | Bot lat și rotunjit, în formă de U
+[explică] Prima chestie: uitați-vă la bot. Crocodilul are botul ascuțit, ca un V.
+[explică] Aligatorul are botul lat și rotunjit, ca o lopată. Ca un U, maică.
+!vs 😬 | Crocodil | Cu gura închisă, i se văd și dinții de jos || 😌 | Aligator | Cu gura închisă, dinții de jos stau ascunși
+[mirată] A doua: dinții! Crocodilul, și cu gura închisă, tot rânjește la tine. I se vede un dinte mare de jos, pe lateral.
+[normal] Aligatorul e mai discret. Închide gura și nu-i mai vezi dinții de jos. Ca un om educat.
+!vs 🌍 | Crocodil | Africa, Asia, Australia, America || 🇺🇸 | Aligator | Doar în sud-estul SUA și în estul Chinei
+[explică] A treia: unde stau. Aligatorii sunt doar în două locuri: în sud-estul Americii, prin Florida, și în China.
+[explică] Crocodilii-s peste tot: Africa, Asia, Australia, America.
+!vs 🌊 | Crocodil | Suportă și apa sărată || 🏞️ | Aligator | Preferă apa dulce
+[mirată] Și asta m-a dat pe spate: crocodilul are pe limbă niște glande cu care scapă de sare. Așa că poate sta și în apa mării!
+[normal] Aligatorul stă mai mult în apă dulce. Lacuri, mlaștini, râuri.
+!card 👵 | Pe scurt | Bot în V și dinți la vedere: crocodil. Bot în U și zâmbet cuminte: aligator.
+[veselă] Deci, pe scurt: bot ascuțit și dinți la vedere, crocodil. Bot lat și zâmbet cuminte, aligator.
+[bănuitoare] Și să-i spuneți și vecinului de la patru. Pa, pa! Dați follow la Tanti Geta!`,
+
+  'Albina sau viespea?': `# Albina sau viespea? Nu-i totuna!
+!vs 🐝 | Albina | ? || 🍉 | Viespea | ?
+[bănuitoare] Stați, stați! Nu mai fugiți de tot ce bâzâie. Hai să vedem: e albină sau e viespe?
+!vs 🧸 | Albina | Pufoasă, cu perișori, mai grăsuță || ⏳ | Viespea | Netedă, lucioasă, cu talia subțire
+[explică] Albina e pufoasă, are perișori pe ea. Pe perișorii ăia se lipește polenul.
+[veselă] Viespea e netedă și lucioasă și are talia subțire. De-aia se zice „talie de viespe”, dragă!
+!vs 🌼 | Albina | Mănâncă nectar și polen || 🍖 | Viespea | Vânează insecte, dar vine și la dulce
+[explică] Albina stă pe flori, la nectar și polen. Fată harnică.
+[supărată] Viespea vânează alte insecte, dar vine și la pepenele tău, la suc, la cozonac. Obraznica!
+!vs 💔 | Albina | Când te înțeapă, își lasă acul în piele și moare || 🔁 | Viespea | Te poate înțepa de mai multe ori
+[mirată] Și acum partea tristă: albina care te înțeapă își lasă acul în pielea ta și moare, săraca.
+[bănuitoare] Viespea are acul neted. Te poate înțepa și de mai multe ori. Și nu-i pare rău deloc!
+!vs 🍯 | Albina | Face miere || 🚫 | Viespea | Viespile de pe la noi nu fac miere
+[veselă] Și cea mai importantă: albina face miere. Viespea ne face doar nervi.
+!card 👵 | Pe scurt | Pufoasă și pe flori: albină. Lucioasă, cu talie subțire și la pepenele tău: viespe.
+[explică] Deci, pufoasă și pe flori: albină. Lucioasă, cu talie de model și la pepenele tău: viespe.
+[veselă] Lăsați albinuțele în pace, că ele ne polenizează fructele. Pa, pa, și dați follow!`,
+
+  'Stiloul și Petrache Poenaru': `# Stiloul are rădăcini românești?
+!card 🖋️ | Stiloul | Știați că un român a patentat unul dintre primele stilouri?
+[bănuitoare] Voi acum scrieți doar pe telefon, dar ia ziceți: știți cine a patentat unul dintre primele stilouri din lume?
+[mirată] Un român, dragă! Petrache Poenaru îl chema.
+!card 📜 | Paris, 1827 | Poenaru primește în Franța brevet pentru un „condei portăreț” care se alimenta singur cu cerneală
+[explică] În 1827, la Paris, Poenaru a primit brevet pentru un condei care se alimenta singur cu cerneală.
+[veselă] Adică nu mai trebuia să înmoi pana în călimară la fiecare două cuvinte. Revoluție!
+!card 🦢 | Din pană de lebădă | Rezervorul de cerneală era făcut chiar dintr-o pană de lebădă
+[mirată] Și știți din ce era făcut rezervorul? Din pană de lebădă!
+!card 🏫 | Nu doar inventator | A fost și profesor și a muncit mult pentru școlile din Țara Românească
+[explică] Și nu doar atât. Poenaru a fost profesor și a muncit mult pentru școlile din Țara Românească.
+[bănuitoare] Deci data viitoare când scrieți cu stiloul, să vă gândiți la Petrache.
+!card 👵 | Pe scurt | Petrache Poenaru: brevet la Paris, în 1827, pentru un condei cu rezervor de cerneală.
+[veselă] Ce v-a învățat Tanti Geta azi? Că românii au minte! Pa, pa, și dați follow!`,
+
+  'Broasca sau broasca râioasă?': `# Broasca sau broasca râioasă?
+!vs 🐸 | Broasca | ? || 🐸 | Broasca râioasă | ?
+[bănuitoare] Aseară, la bloc, lângă tomberoane, o broască. Toți zbierau: „E râioasă, e râioasă!” Ia să vedem.
+!vs 💧 | Broasca | Piele netedă și umedă || 🪨 | Broasca râioasă | Piele uscată, cu umflături ca niște negi
+[explică] Broasca obișnuită are pielea netedă și umedă, parcă-i dată cu cremă.
+[explică] Broasca râioasă are pielea uscată și plină de umflături. De-aia îi zice râioasă.
+!vs 🦘 | Broasca | Picioare lungi, sare departe || 🚶‍♀️ | Broasca râioasă | Picioare scurte, mai mult merge și țopăie
+[veselă] Broasca are picioare lungi și sare ca la olimpiadă. Râioasa are picioare scurte și merge mai mult pe jos, ca mine la piață.
+!vs 🏞️ | Broasca | Stă aproape de apă || 🌿 | Broasca râioasă | Se descurcă și departe de apă, prin grădini
+[explică] Broasca stă lângă apă. Râioasa se plimbă și prin grădini, prin iarbă, chiar și pe lângă bloc.
+!card ❌ | Mit | „Dacă o atingi, faci negi.” FALS! Negii îi face un virus.
+[mirată] Și acum mitul! Toată copilăria mi-au zis că dacă pun mâna pe broasca râioasă fac negi. Minciuni! Negii îi face un virus, nu broasca.
+!card 🧼 | Totuși... | Are glande cu o substanță iritantă. Nu o pupați și spălați-vă pe mâini!
+[bănuitoare] Dar are niște glande cu o substanță care irită. Deci nu o pupați, că nu-i prinț, și spălați-vă pe mâini.
+[veselă] Gata, acum știți și voi. Pa, pa, și dați follow la Tanti Geta!`,
+};
+
+/* ================= LEGĂTURI UI ================= */
+const LS_KEY = 'tantiGeta.script';
+function lsGet() { try { return localStorage.getItem(LS_KEY); } catch (e) { return null; } }
+function lsSet(v) { try { localStorage.setItem(LS_KEY, v); } catch (e) {} }
+function refreshPreview() { S.preview = parseScript($('script').value); }
+
+const sel = $('preset');
+for (const name of Object.keys(PRESETS)) { const o = document.createElement('option'); o.value = o.textContent = name; sel.append(o); }
+$('script').value = lsGet() || PRESETS[sel.value];
+refreshPreview();
+
+sel.addEventListener('change', () => { $('script').value = PRESETS[sel.value]; lsSet($('script').value); refreshPreview(); });
+let tmr; $('script').addEventListener('input', () => { clearTimeout(tmr); tmr = setTimeout(() => { lsSet($('script').value); refreshPreview(); }, 250); });
+
+document.querySelectorAll('input[name=mode]').forEach(r => r.addEventListener('change', () => {
+  $('audioRow').classList.toggle('hidden', getMode() !== 'audio');
+}));
+$('audioFile').addEventListener('change', async e => {
+  const f = e.target.files[0]; if (!f) return;
+  ensureAudio(); $('audioInfo').textContent = 'Se încarcă…';
+  try {
+    audioBuf = await actx.decodeAudioData(await f.arrayBuffer());
+    const m = Math.floor(audioBuf.duration / 60), s = Math.round(audioBuf.duration % 60);
+    $('audioInfo').textContent = `${f.name}, ${m}:${String(s).padStart(2, '0')}`;
+  } catch (err) { audioBuf = null; $('audioInfo').textContent = 'Nu pot citi fișierul. Încearcă .mp3, .m4a sau .wav.'; }
+});
+$('bg').addEventListener('change', e => opts.bg = e.target.value);
+$('subs').addEventListener('change', e => opts.subs = e.target.checked);
+$('cards').addEventListener('change', e => opts.cards = e.target.checked);
+
+$('btnPlay').addEventListener('click', () => start(false));
+$('btnRec').addEventListener('click', () => start(true));
+$('btnStop').addEventListener('click', () => { if (S.countdown) cancelCd = true; else finish(); });
+$('btnNext').addEventListener('click', nextLine);
+cv.addEventListener('click', nextLine);
+document.addEventListener('keydown', e => {
+  if (!PB || PB.mode !== 'mic') return;
+  if (/^(TEXTAREA|INPUT|SELECT)$/.test(e.target.tagName)) return;
+  if (e.code === 'Space' || e.code === 'ArrowRight') { e.preventDefault(); nextLine(); }
+});
+document.addEventListener('visibilitychange', () => { if (document.hidden && rec && rec.state === 'recording') status('Ține tabul deschis cât înregistrezi, altfel animația se oprește.'); });
+
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
