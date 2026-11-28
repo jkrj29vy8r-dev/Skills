@@ -1,0 +1,166 @@
+{
+ "voice": "Elena",
+ "engine": "Higgsfield text2speech_v2 / ElevenLabs",
+ "voice_id": "ca83ca7f-c186-493d-bd69-0d765fa861b2",
+ "generated": "2026-11-28",
+ "method": "o singură bucată (bucati/bucata-0.mp3), redată continuu; granițele din render/align-voice.py",
+ "lines": [
+  {
+   "i": 0,
+   "text": "Un băiat din București s-a făcut rege în Argentina.",
+   "say": "Un băiat din București s-a făcut rege în Argentina.",
+   "expr": "socata",
+   "file": "line-00.mp3"
+  },
+  {
+   "i": 1,
+   "text": "Cu armată, monede de aur și timbre proprii.",
+   "say": "Cu armată, monede de aur și timbre proprii.",
+   "expr": "banuitoare",
+   "file": "line-01.mp3"
+  },
+  {
+   "i": 2,
+   "text": "Sunt Tanti Geta, și asta e bârfă de export.",
+   "say": "Sunt Tanti Geta, și asta e bârfă de export.",
+   "expr": "vesela",
+   "file": "line-02.mp3"
+  },
+  {
+   "i": 3,
+   "text": "Îl cheamă Iuliu Popper. Născut la București, în 1857.",
+   "say": "Îl cheamă Iuliu Poper. Născut la București, în anul o mie opt sute cincizeci și șapte.",
+   "expr": "explica",
+   "file": "line-03.mp3"
+  },
+  {
+   "i": 4,
+   "text": "Face școala de ingineri la Paris, apoi colindă lumea.",
+   "say": "Face școala de ingineri la Paris, apoi colindă lumea.",
+   "expr": "explica",
+   "file": "line-04.mp3"
+  },
+  {
+   "i": 5,
+   "text": "Ajunge în Buenos Aires și aude un zvon: aur, la capătul lumii.",
+   "say": "Ajunge în Buenos Aires și aude un zvon: aur, la capătul lumii.",
+   "expr": "mirata",
+   "file": "line-05.mp3"
+  },
+  {
+   "i": 6,
+   "text": "Pleacă în Țara de Foc. Și chiar găsește aurul.",
+   "say": "Pleacă în Țara de Foc. Și chiar găsește aurul.",
+   "expr": "explica",
+   "file": "line-06.mp3"
+  },
+  {
+   "i": 7,
+   "text": "Acum îi trebuie o țară. Își face armată, cu uniforme.",
+   "say": "Acum îi trebuie o țară. Își face armată, cu uniforme.",
+   "expr": "rade",
+   "file": "line-07.mp3"
+  },
+  {
+   "i": 8,
+   "text": "Bate monede de aur, cu numele lui pe ele.",
+   "say": "Bate monede de aur, cu numele lui pe ele.",
+   "expr": "socata",
+   "file": "line-08.mp3"
+  },
+  {
+   "i": 9,
+   "text": "Și scoate timbre. Ca o țară adevărată!",
+   "say": "Și scoate timbre. Ca o țară adevărată!",
+   "expr": "rade",
+   "file": "line-09.mp3"
+  },
+  {
+   "i": 10,
+   "text": "Pe hărți, botează munți după regina României: Carmen Sylva.",
+   "say": "Pe hărți, botează munți după regina României: Carmen Silva.",
+   "expr": "mirata",
+   "file": "line-10.mp3"
+  },
+  {
+   "i": 11,
+   "text": "Cu autoritățile se ceartă ani de zile.",
+   "say": "Cu autoritățile se ceartă ani de zile.",
+   "expr": "suparata",
+   "file": "line-11.mp3"
+  },
+  {
+   "i": 12,
+   "text": "Dar povestea are și o parte neagră: oamenii lui au ucis indigeni selk’nam.",
+   "say": "Dar povestea are și o parte neagră: oamenii lui au ucis indigeni selcnam.",
+   "expr": "suparata",
+   "file": "line-12.mp3"
+  },
+  {
+   "i": 13,
+   "text": "În 1893, la doar 35 de ani, moare brusc, în Buenos Aires.",
+   "say": "În anul o mie opt sute nouăzeci și trei, la doar treizeci și cinci de ani, moare brusc, în Buenos Aires.",
+   "expr": "explica",
+   "file": "line-13.mp3"
+  },
+  {
+   "i": 14,
+   "text": "Unii zic că a fost otrăvit.",
+   "say": "Unii zic că a fost otrăvit.",
+   "expr": "sopteste",
+   "file": "line-14.mp3"
+  },
+  {
+   "i": 15,
+   "text": "Iar „regatul” lui dispare odată cu el.",
+   "say": "Iar regatul lui dispare odată cu el.",
+   "expr": "umeri",
+   "file": "line-15.mp3"
+  },
+  {
+   "i": 16,
+   "text": "Deci un român a avut armată, bani și timbre. Eu n-am nici loc de parcare.",
+   "say": "Deci un român a avut armată, bani și timbre. Eu n-am nici loc de parcare.",
+   "expr": "rade",
+   "file": "line-16.mp3"
+  },
+  {
+   "i": 17,
+   "text": "Eu sunt Tanti Geta.",
+   "say": "Eu sunt Tanti Geta.",
+   "expr": "explica",
+   "file": "line-17.mp3"
+  },
+  {
+   "i": 18,
+   "text": "Data viitoare: 91 de tone de aur românesc care n-au mai venit înapoi.",
+   "say": "Data viitoare: nouăzeci și una de tone de aur românesc, care n-au mai venit înapoi.",
+   "expr": "banuitoare",
+   "file": "line-18.mp3"
+  }
+ ],
+ "chunk_jobs": [
+  "7ba52264-8d25-4dd1-a075-778ad20e3812"
+ ],
+ "take": "bucati/bucata-0.mp3",
+ "cuts": [
+  3.48,
+  7.02,
+  11.0,
+  17.71,
+  21.32,
+  26.57,
+  30.12,
+  34.09,
+  36.99,
+  40.17,
+  44.94,
+  47.92,
+  53.27,
+  60.45,
+  62.47,
+  65.08,
+  70.17,
+  72.53
+ ]
+}
