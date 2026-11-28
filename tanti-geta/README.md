@@ -215,3 +215,18 @@ Fiecare se termină cu „Eu sunt Tanti Geta” și „Data viitoare:” cu epis
 - Legenda mărțișorului
 
 Înainte să filmezi, verifică faptele din fiecare episod nou. Tanti Geta are voie să bârfească, dar nu să mintă.
+
+## Efecte cinematice (din „Castelul lui Dracula”)
+
+În `beats`, pe lângă `s.add/set/move/clear`:
+
+| Apel | Ce face |
+|---|---|
+| `s.night(v, d)` / `s.day(d)` | cer de noapte cu lună, stele și ceață (v între 0 și 1) |
+| `s.lightning(delay)` | fulger desenat + bliț + tunet |
+| `s.heart(n, delay, gap)` | bătăi de inimă (sunet + puls roșu pe ecran) |
+| `s.fx(nume, delay)` | orice sunet, cu întârziere exactă: `organ`, `howl` (lup), `squeak` (lilieci), `creak` (ușă), `riser`, `impact`, `chime`, plus cele vechi |
+| `s.punch(v)` | zoom scurt de impact |
+
+Opțiuni de episod: `night: true` (începe noaptea), `music: 'spooky'` (muzică de groază sub voce, cu ducking), `animIntro: true` (prima scenă se animă, nu apare gata făcută).
+Elemente noi: `bran`, `poenari`, `counter`, `book`, `romania` (cu `pins`, `x2`), `bats`, `bat`, `heart` (`casket`), `barrier`, `fridge`, `bloc`, persoane `count`, `vlad`, `stoker`, `queen`, `paznic`. Checklist-ul acceptă `cross: [0, 2]` și `crossText`.
